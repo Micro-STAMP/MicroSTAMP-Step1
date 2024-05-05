@@ -11,26 +11,26 @@ import org.springframework.web.bind.annotation.PathVariable;
 public class PageController {
 
     @Autowired
-    private ProjectEntityRepository projectEntityRepository;
+    private ProjectRepository ProjectRepository;
 
     @Autowired
-    private SystemGoalEntityRepository systemGoalEntityRepository;
+    private SystemGoalRepository SystemGoalRepository;
 
     @Autowired
-    private AssumptionEntityRepository assumptionEntityRepository;
+    private AssumptionRepository AssumptionRepository;
 
     @Autowired
-    private LossEntityRepository lossEntityRepository;
+    private LossRepository LossRepository;
 
     @Autowired
-    private HazardEntityRepository hazardEntityRepository;
+    private HazardRepository HazardRepository;
 
     @Autowired
-    private SystemSafetyConstraintEntityRepository systemSafetyConstraintEntityRepository;
+    private SystemSafetyConstraintRepository SystemSafetyConstraintRepository;
 
     @GetMapping("/home")
     public String projects(Model model){
-        model.addAttribute("projects", projectEntityRepository.findAll());
+        model.addAttribute("projects", ProjectRepository.findAll());
         return "projects";
     }
 
@@ -41,11 +41,11 @@ public class PageController {
 
     @GetMapping("/{projectId}")
     public String projectIndexPage(@PathVariable Long projectId, Model model){
-        model.addAttribute("systemGoals", systemGoalEntityRepository.findByProjectId(projectId).get());
-        model.addAttribute("assumptions", assumptionEntityRepository.findByProjectId(projectId).get());
-        model.addAttribute("losses", lossEntityRepository.findByProjectId(projectId).get());
-        model.addAttribute("hazards", hazardEntityRepository.findByProjectId(projectId).get());
-        model.addAttribute("systemSafetyConstraints", systemSafetyConstraintEntityRepository.findByProjectId(projectId).get());
+        model.addAttribute("systemGoals", SystemGoalRepository.findByProjectId(projectId).get());
+        model.addAttribute("assumptions", AssumptionRepository.findByProjectId(projectId).get());
+        model.addAttribute("losses", LossRepository.findByProjectId(projectId).get());
+        model.addAttribute("hazards", HazardRepository.findByProjectId(projectId).get());
+        model.addAttribute("systemSafetyConstraints", SystemSafetyConstraintRepository.findByProjectId(projectId).get());
 
         model.addAttribute("project_id", projectId);
 
@@ -54,17 +54,17 @@ public class PageController {
 
     @GetMapping("/guests")
     public String guestsProjects(Model model){
-        model.addAttribute("projects", projectEntityRepository.findProjectsForGuests().get());
+        model.addAttribute("projects", ProjectRepository.findProjectsForGuests().get());
         return "guestsProjects";
     }
 
     @GetMapping("/guests/{projectId}")
     public String guestsProjectIndexPage(@PathVariable Long projectId, Model model){
-        model.addAttribute("systemGoals", systemGoalEntityRepository.findByProjectId(projectId).get());
-        model.addAttribute("assumptions", assumptionEntityRepository.findByProjectId(projectId).get());
-        model.addAttribute("losses", lossEntityRepository.findByProjectId(projectId).get());
-        model.addAttribute("hazards", hazardEntityRepository.findByProjectId(projectId).get());
-        model.addAttribute("systemSafetyConstraints", systemSafetyConstraintEntityRepository.findByProjectId(projectId).get());
+        model.addAttribute("systemGoals", SystemGoalRepository.findByProjectId(projectId).get());
+        model.addAttribute("assumptions", AssumptionRepository.findByProjectId(projectId).get());
+        model.addAttribute("losses", LossRepository.findByProjectId(projectId).get());
+        model.addAttribute("hazards", HazardRepository.findByProjectId(projectId).get());
+        model.addAttribute("systemSafetyConstraints", SystemSafetyConstraintRepository.findByProjectId(projectId).get());
 
         model.addAttribute("project_id", projectId);
 

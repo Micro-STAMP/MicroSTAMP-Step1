@@ -1,8 +1,8 @@
 package microstamp.step1.controller;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
-import microstamp.step1.business.AssumptionBusiness;
-import microstamp.step1.data.AssumptionEntity;
+import microstamp.step1.service.AssumptionService;
+import microstamp.step1.data.Assumption;
 import microstamp.step1.dto.AssumptionDto;
 import microstamp.step1.exception.Step1NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,37 +18,37 @@ import java.util.List;
 public class AssumptionController {
 
     @Autowired
-    private AssumptionBusiness assumptionBusiness;
+    private AssumptionService assumptionService;
 
     @GetMapping
     public List findAll(){
-        return assumptionBusiness.findAll();
+        return assumptionService.findAll();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<AssumptionEntity> findById(@PathVariable(name = "id") Long id) throws Step1NotFoundException {
-        return new ResponseEntity<>(assumptionBusiness.findById(id), HttpStatus.OK);
+    public ResponseEntity<Assumption> findById(@PathVariable(name = "id") Long id) throws Step1NotFoundException {
+        return new ResponseEntity<>(assumptionService.findById(id), HttpStatus.OK);
     }
 
     @GetMapping("/findByProjectId/{id}")
-    public ResponseEntity<List<AssumptionEntity>> findByProjectId(@PathVariable(name = "id") Long id) throws Step1NotFoundException {
-        return new ResponseEntity<>(assumptionBusiness.findByProjectId(id), HttpStatus.OK);
+    public ResponseEntity<List<Assumption>> findByProjectId(@PathVariable(name = "id") Long id) throws Step1NotFoundException {
+        return new ResponseEntity<>(assumptionService.findByProjectId(id), HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<AssumptionEntity> insert(@RequestBody AssumptionDto assumptionDto){
-        return new ResponseEntity<>(assumptionBusiness.insert(assumptionDto), HttpStatus.CREATED);
+    public ResponseEntity<Assumption> insert(@RequestBody AssumptionDto assumptionDto){
+        return new ResponseEntity<>(assumptionService.insert(assumptionDto), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Void> update(@PathVariable(name = "id") Long id, @RequestBody AssumptionDto assumptionDto) throws Step1NotFoundException{
-        assumptionBusiness.update(id, assumptionDto);
+        assumptionService.update(id, assumptionDto);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable(name = "id") Long id) throws Step1NotFoundException{
-        assumptionBusiness.delete(id);
+        assumptionService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

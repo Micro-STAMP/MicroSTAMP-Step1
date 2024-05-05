@@ -1,7 +1,7 @@
 package microstamp.step1.controller;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
-import microstamp.step1.business.*;
+import microstamp.step1.service.*;
 import microstamp.step1.data.*;
 import microstamp.step1.exception.Step1NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,51 +17,51 @@ import java.util.List;
 public class GuestController {
 
     @Autowired
-    private ProjectBusiness projectBusiness;
+    private ProjectService projectService;
 
     @Autowired
-    private SystemGoalBusiness systemGoalBusiness;
+    private SystemGoalService systemGoalService;
 
     @Autowired
-    private AssumptionBusiness assumptionBusiness;
+    private AssumptionService assumptionService;
 
     @Autowired
-    private LossBusiness lossBusiness;
+    private LossService lossService;
 
     @Autowired
-    private HazardBusiness hazardBusiness;
+    private HazardService hazardService;
 
     @Autowired
-    private SystemSafetyConstraintBusiness systemSafetyConstraintBusiness;
+    private SystemSafetyConstraintService systemSafetyConstraintService;
 
     @GetMapping("/projects")
-    public ResponseEntity<List<ProjectEntity>> findGuestsProjects(){
-        return new ResponseEntity<>(projectBusiness.findGuestsProjects(), HttpStatus.OK);
+    public ResponseEntity<List<Project>> findGuestsProjects(){
+        return new ResponseEntity<>(projectService.findGuestsProjects(), HttpStatus.OK);
     }
 
     @GetMapping("/systemgoals/{id}")
-    public ResponseEntity<List<SystemGoalEntity>> findGuestsSystemGoals(@PathVariable(name = "id") Long id) throws Step1NotFoundException {
-        return new ResponseEntity<>(systemGoalBusiness.findByProjectId(id), HttpStatus.OK);
+    public ResponseEntity<List<SystemGoal>> findGuestsSystemGoals(@PathVariable(name = "id") Long id) throws Step1NotFoundException {
+        return new ResponseEntity<>(systemGoalService.findByProjectId(id), HttpStatus.OK);
     }
 
     @GetMapping("/assumptions/{id}")
-    public ResponseEntity<List<AssumptionEntity>> findGuestsAssumptions(@PathVariable(name = "id") Long id) throws Step1NotFoundException {
-        return new ResponseEntity<>(assumptionBusiness.findByProjectId(id), HttpStatus.OK);
+    public ResponseEntity<List<Assumption>> findGuestsAssumptions(@PathVariable(name = "id") Long id) throws Step1NotFoundException {
+        return new ResponseEntity<>(assumptionService.findByProjectId(id), HttpStatus.OK);
     }
 
     @GetMapping("/losses/{id}")
-    public ResponseEntity<List<LossEntity>> findGuestsLosses(@PathVariable(name = "id") Long id) throws Step1NotFoundException {
-        return new ResponseEntity<>(lossBusiness.findByProjectId(id), HttpStatus.OK);
+    public ResponseEntity<List<Loss>> findGuestsLosses(@PathVariable(name = "id") Long id) throws Step1NotFoundException {
+        return new ResponseEntity<>(lossService.findByProjectId(id), HttpStatus.OK);
     }
 
     @GetMapping("/hazards/{id}")
-    public ResponseEntity<List<HazardEntity>> findGuestsHazards(@PathVariable(name = "id") Long id) throws Step1NotFoundException {
-        return new ResponseEntity<>(hazardBusiness.findByProjectId(id), HttpStatus.OK);
+    public ResponseEntity<List<Hazard>> findGuestsHazards(@PathVariable(name = "id") Long id) throws Step1NotFoundException {
+        return new ResponseEntity<>(hazardService.findByProjectId(id), HttpStatus.OK);
     }
 
     @GetMapping("/systemsafetyconstraints/{id}")
-    public ResponseEntity<List<SystemSafetyConstraintEntity>> findGuestsSystemSafetyConstraints(@PathVariable(name = "id") Long id) throws Step1NotFoundException {
-        return new ResponseEntity<>(systemSafetyConstraintBusiness.findByProjectId(id), HttpStatus.OK);
+    public ResponseEntity<List<SystemSafetyConstraint>> findGuestsSystemSafetyConstraints(@PathVariable(name = "id") Long id) throws Step1NotFoundException {
+        return new ResponseEntity<>(systemSafetyConstraintService.findByProjectId(id), HttpStatus.OK);
     }
 
 }

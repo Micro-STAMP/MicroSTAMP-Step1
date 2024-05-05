@@ -1,7 +1,7 @@
 package microstamp.step1.configuration;
 
-import microstamp.step1.data.UserEntity;
-import microstamp.step1.repository.UserEntityRepository;
+import microstamp.step1.data.User;
+import microstamp.step1.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -10,11 +10,11 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
-    private UserEntityRepository userEntityRepository;
+    private UserRepository UserRepository;
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        UserEntity user = userEntityRepository.getUserByUsername(s);
+        User user = UserRepository.getUserByUsername(s);
 
         if(user == null){
             throw new UsernameNotFoundException("Could not find user!");

@@ -1,8 +1,8 @@
 package microstamp.step1.controller;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
-import microstamp.step1.business.SystemSafetyConstraintBusiness;
-import microstamp.step1.data.SystemSafetyConstraintEntity;
+import microstamp.step1.service.SystemSafetyConstraintService;
+import microstamp.step1.data.SystemSafetyConstraint;
 import microstamp.step1.dto.SystemSafetyConstraintDto;
 import microstamp.step1.exception.Step1NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,37 +18,37 @@ import java.util.List;
 public class SystemSafetyConstraintController {
 
     @Autowired
-    private SystemSafetyConstraintBusiness systemSafetyConstraintBusiness;
+    private SystemSafetyConstraintService systemSafetyConstraintService;
 
     @GetMapping
     public List findAll(){
-        return systemSafetyConstraintBusiness.findAll();
+        return systemSafetyConstraintService.findAll();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<SystemSafetyConstraintEntity> findById(@PathVariable(name = "id") Long id) throws Step1NotFoundException {
-        return new ResponseEntity<>(systemSafetyConstraintBusiness.findById(id), HttpStatus.OK);
+    public ResponseEntity<SystemSafetyConstraint> findById(@PathVariable(name = "id") Long id) throws Step1NotFoundException {
+        return new ResponseEntity<>(systemSafetyConstraintService.findById(id), HttpStatus.OK);
     }
 
     @GetMapping("/findByProjectId/{id}")
-    public ResponseEntity<List<SystemSafetyConstraintEntity>> findByProjectId(@PathVariable(name = "id") Long id) throws Step1NotFoundException {
-        return new ResponseEntity<>(systemSafetyConstraintBusiness.findByProjectId(id), HttpStatus.OK);
+    public ResponseEntity<List<SystemSafetyConstraint>> findByProjectId(@PathVariable(name = "id") Long id) throws Step1NotFoundException {
+        return new ResponseEntity<>(systemSafetyConstraintService.findByProjectId(id), HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<SystemSafetyConstraintEntity> insert(@RequestBody SystemSafetyConstraintDto systemSafetyConstraintDto){
-        return new ResponseEntity<>(systemSafetyConstraintBusiness.insert(systemSafetyConstraintDto), HttpStatus.CREATED);
+    public ResponseEntity<SystemSafetyConstraint> insert(@RequestBody SystemSafetyConstraintDto systemSafetyConstraintDto){
+        return new ResponseEntity<>(systemSafetyConstraintService.insert(systemSafetyConstraintDto), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Void> update(@PathVariable(name = "id") Long id, @RequestBody SystemSafetyConstraintDto systemSafetyConstraintDto) throws Step1NotFoundException{
-        systemSafetyConstraintBusiness.update(id, systemSafetyConstraintDto);
+        systemSafetyConstraintService.update(id, systemSafetyConstraintDto);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable(name = "id") Long id) throws Step1NotFoundException{
-        systemSafetyConstraintBusiness.delete(id);
+        systemSafetyConstraintService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

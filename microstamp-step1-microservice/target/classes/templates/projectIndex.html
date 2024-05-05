@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Home</title>
+
+    <link th:rel="stylesheet" th:href="@{assets/jquery-treetable/jquery.treetable.css}"/>
+    <link th:rel="stylesheet" th:href="@{assets/jquery-treetable/jquery.treetable.theme.default.css}"/>
+    <link th:rel="stylesheet" th:href="@{webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+</head>
+<body>
+    <div class="container" align="Left" style="margin-left: 2em; color: black;">
+        <h1 style="margin-top: 0.5cm;">MicroSTAMP Step 1</h1>
+        <br/>
+        <div align="Left">
+            <div class="container" style="margin-left: 2%;">
+                <h2 style="display : inline-block;">System Goals</h2>
+                <div th:switch="${systemGoals.size}">
+                    <h5 th:case='0'>No System Goals yet!</h5>
+                    <div th:case="*">
+                        <div class="row" style="margin-top: -3%;">
+                            <div class="col mt-5">
+                                <table id="systemGoalsTable" class="table">
+                                    <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Id</th>
+                                        <th>Action</th>
+                                    </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br/>
+
+            <div class="container" style="margin-left: 2%;">
+                <h2 style="display : inline-block;">Assumptions</h2>
+                <div th:switch="${assumptions.size}">
+                    <h5 th:case='0'>No Assumptions yet!</h5>
+                    <div th:case="*">
+                        <div class="row" style="margin-top: -3%;">
+                            <div class="col mt-5">
+                                <table id="assumptionsTable" class="table">
+                                    <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Id</th>
+                                        <th>Action</th>
+                                    </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br/>
+
+            <div class="container" style="margin-left: 2%;">
+                <h2 style="display : inline-block;">Losses</h2>
+                <div th:switch="${losses.size}">
+                    <h5 th:case='0'>No Losses yet!</h5>
+                    <div th:case="*">
+                        <div class="row" style="margin-top: -3%;">
+                            <div class="col mt-5">
+                                <table id="lossesTable" class="table">
+                                    <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Id</th>
+                                        <th>Action</th>
+                                    </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br/>
+
+            <div class="container" style="margin-left: 2%;">
+                <h2 style="display : inline-block;">Hazards</h2>
+                <button id="expandAllHazardsButton" style="display : inline-block; vertical-align : top; float : right;" type="button" class="btn btn-primary" onclick=expandAllHazards()>Expand All</button>
+                <div th:switch="${hazards.size}">
+                    <h5 th:case='0'>No Hazards yet!</h5>
+                    <div th:case="*">
+                        <div class="row" style="margin-top: -3%;">
+                            <div class="col mt-5">
+                                <table id="hazardsTable" class="table">
+                                    <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Id</th>
+                                        <th>Action</th>
+                                    </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br/>
+
+            <div class="container" style="margin-left: 2%;">
+                <h2 style="display : inline-block;">System Safety Constraints</h2>
+                <button id="expandAllSystemSafetyConstraintsButton" style="display : inline-block; vertical-align : top; float : right;" type="button" class="btn btn-primary" onclick=expandAllSystemSafetyConstraints()>Expand All</button>
+                <div th:switch="${systemSafetyConstraints.size}">
+                    <h5 th:case='0'>No System Safety Constraints yet!</h5>
+                    <div th:case="*">
+                        <div class="row" style="margin-top: -3%;">
+                            <div class="col mt-5">
+                                <table id="systemSafetyConstraintsTable" class="table">
+                                    <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Id</th>
+                                        <th>Action</th>
+                                    </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br/>
+
+            <input type="hidden" id="project_id" th:value="${project_id}"/>
+            <br/>
+        </div>
+        <br/>
+        <div>
+            <div align="Left">
+
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addSystemGoalModal" >Add System Goal</button>
+
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addAssumptionModal" >Add Assumption</button>
+
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addLossModal" >Add Loss</button>
+
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addHazardModal" >Add Hazard</button>
+
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addSystemSafetyConstraintModal" >Add System Safety Constraint</button>
+
+                <a th:href="@{/home}" style="float: right;">
+                    <input type="button" class="btn btn-secondary" value="Return"/>
+                </a>
+                <br/>
+            </div>
+            <br/>
+        </div>
+    </div>
+
+    <div class="modal fade" id="namelessRestrictionModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Exception</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick=returnNamelessRestriction()>
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Exception: can't create a entity without a name !
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick=returnNamelessRestriction()>Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="addSystemGoalModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add System Goal</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="system-goal-name" class="col-form-label">Name:</label>
+                            <input type="text" class="form-control" id="system-goal-name">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick=addSystemGoal()>Add System Goal</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="editSystemGoalModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit System Goal</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="system-goal-edit-name" class="col-form-label">Name:</label>
+                            <input type="text" class="form-control" id="system-goal-edit-name">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick=editSystemGoal()>Edit System Goal</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="confirmSystemGoalDeleteModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Delete System Goal</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to delete the following System Goal ?
+                    <br/><br/>
+                    <span id="system_goal_delete_name"></span>
+                    <br/>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick = deleteSystemGoal()>Delete System Goal</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="addAssumptionModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add Assumption</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="assumption-name" class="col-form-label">Name:</label>
+                            <input type="text" class="form-control" id="assumption-name">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick=addAssumption()>Add Assumption</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="editAssumptionModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Assumption</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="assumption-edit-name" class="col-form-label">Name:</label>
+                            <input type="text" class="form-control" id="assumption-edit-name">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick=editAssumption()>Edit Assumption</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="confirmAssumptionDeleteModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Delete Assumption</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to delete the following Assumption ?
+                    <br/><br/>
+                    <span id="assumption_delete_name"></span>
+                    <br/>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick = deleteAssumption()>Delete Assumption</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="addLossModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add Loss</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="loss-name" class="col-form-label">Name:</label>
+                            <input type="text" class="form-control" id="loss-name">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick=addLoss()>Add Loss</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="editLossModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Loss</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="loss-edit-name" class="col-form-label">Name:</label>
+                            <input type="text" class="form-control" id="loss-edit-name">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick=editLoss()>Edit Loss</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="confirmLossDeleteModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Delete Loss</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to delete the following Loss ?
+                    <br/><br/>
+                    <span id="loss_delete_name"></span>
+                    <br/>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick = deleteLoss()>Delete Loss</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="addHazardModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add Hazard</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="hazard-name" class="col-form-label">Name:</label>
+                            <input type="text" class="form-control" id="hazard-name">
+                        </div>
+                        <div class="form-group">
+                            <label for="hazard-losses" class="col-form-label">Losses:</label>
+                            <select id="hazard-losses" class="form-control" multiple>
+                                <option th:each="l : ${losses}" th:value="${l.id}" th:text="${l.name}"/>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="hazard-father" class="col-form-label">Father:</label>
+                            <select id="hazard-father" class="form-control">
+                                <option value="null">NO FATHER</option>
+                                <option th:each="h : ${hazards}" th:value="${h.id}" th:text="${h.name}"/>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick=addHazard()>Add Hazard</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="editHazardModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Hazard</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="hazard-edit-name" class="col-form-label">Name:</label>
+                            <input type="text" class="form-control" id="hazard-edit-name">
+                        </div>
+                        <div class="form-group">
+                            <label for="hazard-edit-losses" class="col-form-label">Losses:</label>
+                            <select id="hazard-edit-losses" class="form-control" multiple>
+                                <option th:each="l : ${losses}" th:value="${l.id}" th:text="${l.name}"/>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="hazard-edit-father" class="col-form-label">Father:</label>
+                            <select id="hazard-edit-father" class="form-control">
+                                <option value="null">NO FATHER</option>
+                                <option th:each="h : ${hazards}" th:value="${h.id}" th:text="${h.name}"/>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick=editHazard()>Edit Hazard</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="confirmHazardDeleteModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Delete Hazard</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to delete the following Hazard ?
+                    <br/><br/>
+                    <span id="hazard_delete_name"></span>
+                    <br/>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick = deleteHazard()>Delete Hazard</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="addSystemSafetyConstraintModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add System Safety Constraint</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="system-safety-constraint-name" class="col-form-label">Name:</label>
+                            <input type="text" class="form-control" id="system-safety-constraint-name">
+                        </div>
+                        <div class="form-group">
+                            <label for="system-safety-constraint-hazards" class="col-form-label">Hazards:</label>
+                            <select id="system-safety-constraint-hazards" class="form-control" multiple>
+                                <option th:each="h : ${hazards}" th:value="${h.id}" th:text="${h.name}"/>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick=addSystemSafetyConstraint()>Add System Safety Constraint</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="editSystemSafetyConstraintModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit System Safety Constraint</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="system-safety-constraint-edit-name" class="col-form-label">Name:</label>
+                            <input type="text" class="form-control" id="system-safety-constraint-edit-name">
+                        </div>
+                        <div class="form-group">
+                            <label for="system-safety-constraint-edit-hazards" class="col-form-label">Hazards:</label>
+                            <select id="system-safety-constraint-edit-hazards" class="form-control" multiple>
+                                <option th:each="h : ${hazards}" th:value="${h.id}" th:text="${h.name}"/>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick=editSystemSafetyConstraint()>Edit System Safety Constraint</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="confirmSystemSafetyConstraintDeleteModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Delete System Safety Constraint</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to delete the following System Safety Constraint ?
+                    <br/><br/>
+                    <span id="system_safety_constraint_delete_name"></span>
+                    <br/>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick = deleteSystemSafetyConstraint()>Delete System Safety Constraint</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js" type="text/javascript"></script>
+    <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+    <script src="/assets/jquery-treetable/jquery.treetable.js"></script>
+
+    <script th:src="@{/js/index.js}"></script>
+    <script th:src="@{/js/systemGoals.js}"></script>
+    <script th:src="@{/js/assumptions.js}"></script>
+    <script th:src="@{/js/losses.js}"></script>
+    <script th:src="@{/js/hazards.js}"></script>
+    <script th:src="@{/js/systemSafetyConstraints.js}"></script>
+
+</body>
+</html>

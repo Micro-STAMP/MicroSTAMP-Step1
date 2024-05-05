@@ -1,8 +1,8 @@
 package microstamp.step1.controller;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
-import microstamp.step1.business.SystemGoalBusiness;
-import microstamp.step1.data.SystemGoalEntity;
+import microstamp.step1.service.SystemGoalService;
+import microstamp.step1.data.SystemGoal;
 import microstamp.step1.dto.SystemGoalDto;
 import microstamp.step1.exception.Step1NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,37 +18,37 @@ import java.util.List;
 public class SystemGoalController {
 
     @Autowired
-    private SystemGoalBusiness systemGoalBusiness;
+    private SystemGoalService systemGoalService;
 
     @GetMapping
     public List findAll(){
-        return systemGoalBusiness.findAll();
+        return systemGoalService.findAll();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<SystemGoalEntity> findById(@PathVariable(name = "id") Long id) throws Step1NotFoundException {
-        return new ResponseEntity<>(systemGoalBusiness.findById(id), HttpStatus.OK);
+    public ResponseEntity<SystemGoal> findById(@PathVariable(name = "id") Long id) throws Step1NotFoundException {
+        return new ResponseEntity<>(systemGoalService.findById(id), HttpStatus.OK);
     }
 
     @GetMapping("/findByProjectId/{id}")
-    public ResponseEntity<List<SystemGoalEntity>> findByProjectId(@PathVariable(name = "id") Long id) throws Step1NotFoundException {
-        return new ResponseEntity<>(systemGoalBusiness.findByProjectId(id), HttpStatus.OK);
+    public ResponseEntity<List<SystemGoal>> findByProjectId(@PathVariable(name = "id") Long id) throws Step1NotFoundException {
+        return new ResponseEntity<>(systemGoalService.findByProjectId(id), HttpStatus.OK);
     }
 
     @PostMapping
     public ResponseEntity<SystemGoalDto> insert(@RequestBody SystemGoalDto systemGoalDto){
-        return new ResponseEntity<>(systemGoalBusiness.insert(systemGoalDto), HttpStatus.CREATED);
+        return new ResponseEntity<>(systemGoalService.insert(systemGoalDto), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Void> update(@PathVariable(name = "id") Long id, @RequestBody SystemGoalDto systemGoalDto) throws Step1NotFoundException{
-        systemGoalBusiness.update(id, systemGoalDto);
+        systemGoalService.update(id, systemGoalDto);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable(name = "id") Long id) throws Step1NotFoundException{
-        systemGoalBusiness.delete(id);
+        systemGoalService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
