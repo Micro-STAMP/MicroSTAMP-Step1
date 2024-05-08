@@ -74,6 +74,16 @@
             <scope>test</scope>
         </dependency>
         <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>bootstrap</artifactId>
+            <version>4.0.0-2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>webjars-locator</artifactId>
+            <version>0.30</version>
+        </dependency>
+        <dependency>
             <groupId>microstamp</groupId>
             <artifactId>microstamp-step1-data</artifactId>
             <version>1.0.0</version>
