@@ -35,3 +35,7 @@ out/
 
 ### VS Code ###
 .vscode/
+
+microstamp-step1-microservice/target/**
+microstamp-step1-data/target/**
+microstamp-step1-dto/target/**
