@@ -36,7 +36,7 @@ public class SystemGoalController {
     }
 
     @PostMapping
-    public ResponseEntity<SystemGoalDto> insert(@RequestBody SystemGoalDto systemGoalDto){
+    public ResponseEntity<SystemGoal> insert(@RequestBody SystemGoalDto systemGoalDto){
         return new ResponseEntity<>(systemGoalService.insert(systemGoalDto), HttpStatus.CREATED);
     }
 

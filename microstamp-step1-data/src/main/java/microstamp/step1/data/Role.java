@@ -1,9 +1,11 @@
 package microstamp.step1.data;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 @Entity(name = "roles")
 @Table(name = "roles")
+@Data
 public class Role {
 
     @Id
@@ -13,19 +15,4 @@ public class Role {
 
     private String name;
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 }

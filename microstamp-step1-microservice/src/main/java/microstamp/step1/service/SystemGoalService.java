@@ -1,6 +1,5 @@
 package microstamp.step1.service;
 
-import microstamp.step1.converters.SystemGoalConverter;
 import microstamp.step1.data.Project;
 import microstamp.step1.data.SystemGoal;
 import microstamp.step1.dto.SystemGoalDto;
@@ -38,13 +37,13 @@ public class SystemGoalService {
         return systemGoalEntities;
     }
 
-    public SystemGoalDto insert(SystemGoalDto systemGoalDto){
+    public SystemGoal insert(SystemGoalDto systemGoalDto){
         SystemGoal SystemGoal = new SystemGoal();
         SystemGoal.setName(systemGoalDto.getName());
         Project Project = ProjectRepository.getById(systemGoalDto.getProjectId());
         Project.getSystemGoalEntities().add(SystemGoal);
         ProjectRepository.save(Project);
-        return SystemGoalConverter.toDto(SystemGoal, Project.getId());
+        return SystemGoal;
     }
 
     public void update(Long id, SystemGoalDto systemGoalDto) throws Step1NotFoundException{

@@ -102,6 +102,9 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>microstamp.step1.Step1Application</mainClass>
+                </configuration>
             </plugin>
         </plugins>
     </build>
