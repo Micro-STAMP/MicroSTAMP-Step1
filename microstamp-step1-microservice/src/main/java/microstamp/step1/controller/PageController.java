@@ -39,7 +39,7 @@ public class PageController {
         return projects(model);
     }
 
-    @GetMapping("/{projectId}")
+    @GetMapping("/{projectId:\\d+}")
     public String projectIndexPage(@PathVariable Long projectId, Model model){
         model.addAttribute("systemGoals", SystemGoalRepository.findByProjectId(projectId).get());
         model.addAttribute("assumptions", AssumptionRepository.findByProjectId(projectId).get());
@@ -70,5 +70,4 @@ public class PageController {
 
         return "guestsProjectIndex";
     }
-
 }
