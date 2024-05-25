@@ -16,46 +16,46 @@ import java.util.List;
 public class LossService {
 
     @Autowired
-    private LossRepository LossRepository;
+    private LossRepository lossRepository;
 
     @Autowired
-    private ProjectRepository ProjectRepository;
+    private ProjectRepository projectRepository;
 
     public List<Loss> findAll(){
-        return LossRepository.findAll();
+        return lossRepository.findAll();
     }
 
     public Loss findById(Long id) throws Step1NotFoundException {
-        return LossRepository.findById(id)
+        return lossRepository.findById(id)
                 .orElseThrow(() -> new Step1NotFoundException("Loss not found with id: " + id));
     }
 
     public List<Loss> findByProjectId(Long id) throws Step1NotFoundException{
-        return LossRepository.findByProjectId(id)
+        return lossRepository.findByProjectId(id)
                 .orElseThrow(() -> new Step1NotFoundException("Losses not found with projectId: " + id));
     }
 
     public Loss insert(LossDto lossDto){
-        Loss Loss = new Loss();
-        Loss.setName(lossDto.getName());
-        Project Project = ProjectRepository.findById(lossDto.getProjectId()).orElseThrow(() -> new Step1NotFoundException("Project not found with id: " + lossDto.getProjectId()));
-        Project.getLossEntities().add(Loss);
-        ProjectRepository.save(Project);
-        return Loss;
+        Loss loss = new Loss();
+        loss.setName(lossDto.getName());
+        Project project = projectRepository.findById(lossDto.getProjectId()).orElseThrow(() -> new Step1NotFoundException("Project not found with id: " + lossDto.getProjectId()));
+        project.getLossEntities().add(loss);
+        projectRepository.save(project);
+        return loss;
     }
 
     public void update(Long id, LossDto lossDto) throws Step1NotFoundException{
-        LossRepository.findById(id)
+        lossRepository.findById(id)
                 .map(record -> {
                     record.setName(lossDto.getName());
-                    return LossRepository.save(record);
+                    return lossRepository.save(record);
                 }).orElseThrow(() -> new Step1NotFoundException("Loss not found with id: " + id));
     }
 
     public void delete(Long id) throws Step1NotFoundException{
-        LossRepository.findById(id)
+        lossRepository.findById(id)
                 .map(record -> {
-                    LossRepository.deleteById(id);
+                    lossRepository.deleteById(id);
                     return ResponseEntity.ok().build();
                 }).orElseThrow(() -> new Step1NotFoundException("Loss not found with id: " + id));
     }

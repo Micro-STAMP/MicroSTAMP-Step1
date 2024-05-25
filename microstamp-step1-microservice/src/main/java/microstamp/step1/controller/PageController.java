@@ -13,26 +13,26 @@ import java.util.Collections;
 public class PageController {
 
     @Autowired
-    private ProjectRepository ProjectRepository;
+    private ProjectRepository projectRepository;
 
     @Autowired
-    private SystemGoalRepository SystemGoalRepository;
+    private SystemGoalRepository systemGoalRepository;
 
     @Autowired
-    private AssumptionRepository AssumptionRepository;
+    private AssumptionRepository assumptionRepository;
 
     @Autowired
-    private LossRepository LossRepository;
+    private LossRepository lossRepository;
 
     @Autowired
-    private HazardRepository HazardRepository;
+    private HazardRepository hazardRepository;
 
     @Autowired
-    private SystemSafetyConstraintRepository SystemSafetyConstraintRepository;
+    private SystemSafetyConstraintRepository systemSafetyConstraintRepository;
 
     @GetMapping("/home")
     public String projects(Model model){
-        model.addAttribute("projects", ProjectRepository.findAll());
+        model.addAttribute("projects", projectRepository.findAll());
         return "projects";
     }
 
@@ -43,11 +43,11 @@ public class PageController {
 
     @GetMapping("/{projectId:\\d+}")
     public String projectIndexPage(@PathVariable Long projectId, Model model){
-        model.addAttribute("systemGoals", SystemGoalRepository.findByProjectId(projectId).orElseGet(Collections::emptyList));
-        model.addAttribute("assumptions", AssumptionRepository.findByProjectId(projectId).orElseGet(Collections::emptyList));
-        model.addAttribute("losses", LossRepository.findByProjectId(projectId).orElseGet(Collections::emptyList));
-        model.addAttribute("hazards", HazardRepository.findByProjectId(projectId).orElseGet(Collections::emptyList));
-        model.addAttribute("systemSafetyConstraints", SystemSafetyConstraintRepository.findByProjectId(projectId).orElseGet(Collections::emptyList));
+        model.addAttribute("systemGoals", systemGoalRepository.findByProjectId(projectId).orElseGet(Collections::emptyList));
+        model.addAttribute("assumptions", assumptionRepository.findByProjectId(projectId).orElseGet(Collections::emptyList));
+        model.addAttribute("losses", lossRepository.findByProjectId(projectId).orElseGet(Collections::emptyList));
+        model.addAttribute("hazards", hazardRepository.findByProjectId(projectId).orElseGet(Collections::emptyList));
+        model.addAttribute("systemSafetyConstraints", systemSafetyConstraintRepository.findByProjectId(projectId).orElseGet(Collections::emptyList));
 
         model.addAttribute("project_id", projectId);
 
@@ -56,17 +56,17 @@ public class PageController {
 
     @GetMapping("/guests")
     public String guestsProjects(Model model){
-        model.addAttribute("projects", ProjectRepository.findProjectsForGuests().orElseGet(Collections::emptyList));
+        model.addAttribute("projects", projectRepository.findProjectsForGuests().orElseGet(Collections::emptyList));
         return "guestsProjects";
     }
 
     @GetMapping("/guests/{projectId}")
     public String guestsProjectIndexPage(@PathVariable Long projectId, Model model){
-        model.addAttribute("systemGoals", SystemGoalRepository.findByProjectId(projectId).orElseGet(Collections::emptyList));
-        model.addAttribute("assumptions", AssumptionRepository.findByProjectId(projectId).orElseGet(Collections::emptyList));
-        model.addAttribute("losses", LossRepository.findByProjectId(projectId).orElseGet(Collections::emptyList));
-        model.addAttribute("hazards", HazardRepository.findByProjectId(projectId).orElseGet(Collections::emptyList));
-        model.addAttribute("systemSafetyConstraints", SystemSafetyConstraintRepository.findByProjectId(projectId).orElseGet(Collections::emptyList));
+        model.addAttribute("systemGoals", systemGoalRepository.findByProjectId(projectId).orElseGet(Collections::emptyList));
+        model.addAttribute("assumptions", assumptionRepository.findByProjectId(projectId).orElseGet(Collections::emptyList));
+        model.addAttribute("losses", lossRepository.findByProjectId(projectId).orElseGet(Collections::emptyList));
+        model.addAttribute("hazards", hazardRepository.findByProjectId(projectId).orElseGet(Collections::emptyList));
+        model.addAttribute("systemSafetyConstraints", systemSafetyConstraintRepository.findByProjectId(projectId).orElseGet(Collections::emptyList));
 
         model.addAttribute("project_id", projectId);
 

@@ -19,70 +19,70 @@ import java.util.Optional;
 public class HazardService {
 
     @Autowired
-    private HazardRepository HazardRepository;
+    private HazardRepository hazardRepository;
 
     @Autowired
-    private LossRepository LossRepository;
+    private LossRepository lossRepository;
 
     @Autowired
-    private ProjectRepository ProjectRepository;
+    private ProjectRepository projectRepository;
 
     public List<Hazard> findAll(){
-        return HazardRepository.findAll();
+        return hazardRepository.findAll();
     }
 
     public Hazard findById(Long id) throws Step1NotFoundException {
-        return HazardRepository.findById(id)
+        return hazardRepository.findById(id)
                 .orElseThrow(() -> new Step1NotFoundException("Hazard not found with id: " + id));
     }
 
     public List<Hazard> findByProjectId(Long id) throws Step1NotFoundException{
-        return HazardRepository.findByProjectId(id)
+        return hazardRepository.findByProjectId(id)
                 .orElseThrow(() -> new Step1NotFoundException("Hazards not found with projectId: " + id));
     }
 
     public Hazard insert(HazardDto hazardDto){
-        Hazard Hazard = new Hazard();
-        Hazard.setName(hazardDto.getName());
+        Hazard hazard = new Hazard();
+        hazard.setName(hazardDto.getName());
 
         List<Loss> lossEntities = new ArrayList<>();
         if(hazardDto.getLossIds() != null) {
             for (Long id : hazardDto.getLossIds())
-                lossEntities.add(LossRepository.findById(id).orElseThrow(() -> new Step1NotFoundException("Loss not found with id: " + id)));
+                lossEntities.add(lossRepository.findById(id).orElseThrow(() -> new Step1NotFoundException("Loss not found with id: " + id)));
         }
-        Hazard.setLossEntities(lossEntities);
+        hazard.setLossEntities(lossEntities);
 
         if(hazardDto.getFatherId() != null){
-            Hazard father = HazardRepository.findById(hazardDto.getFatherId()).orElseThrow(() -> new Step1NotFoundException("Hazard not found with id: " + hazardDto.getFatherId()));
-            Hazard.setFather(father);
+            Hazard father = hazardRepository.findById(hazardDto.getFatherId()).orElseThrow(() -> new Step1NotFoundException("Hazard not found with id: " + hazardDto.getFatherId()));
+            hazard.setFather(father);
         }else{
-            Hazard.setFather(null);
+            hazard.setFather(null);
         }
 
-        Project Project = ProjectRepository.findById(hazardDto.getProjectId()).orElseThrow(() -> new Step1NotFoundException("Project not found with id: " + hazardDto.getProjectId()));
-        Project.getHazardEntities().add(Hazard);
-        ProjectRepository.save(Project);
-        return Hazard;
+        Project project = projectRepository.findById(hazardDto.getProjectId()).orElseThrow(() -> new Step1NotFoundException("Project not found with id: " + hazardDto.getProjectId()));
+        project.getHazardEntities().add(hazard);
+        projectRepository.save(project);
+        return hazard;
     }
 
     public void update(Long id, HazardDto hazardDto) throws Step1NotFoundException{
-        HazardRepository.findById(id)
+        hazardRepository.findById(id)
                 .map(record -> {
                     record.setName(hazardDto.getName());
                     List<Loss> lossEntities = new ArrayList<>();
                     if(hazardDto.getLossIds() != null) {
                         for (Long lossId : hazardDto.getLossIds())
-                            lossEntities.add(LossRepository.findById(lossId).orElseThrow(() -> new Step1NotFoundException("Loss not found with id: " + lossId)));
+                            lossEntities.add(lossRepository.findById(lossId).orElseThrow(() -> new Step1NotFoundException("Loss not found with id: " + lossId)));
                     }
                     record.setLossEntities(lossEntities);
                     if(hazardDto.getFatherId() != null){
-                        Hazard father = HazardRepository.findById(hazardDto.getFatherId()).orElseThrow(() -> new Step1NotFoundException("Hazard not found with id: " + hazardDto.getFatherId()));
+                        Hazard father = hazardRepository.findById(hazardDto.getFatherId()).orElseThrow(() -> new Step1NotFoundException("Hazard not found with id: " + hazardDto.getFatherId()));
                         record.setFather(father);
                     }else{
                         record.setFather(null);
                     }
 
-                    return HazardRepository.save(record);
+                    return hazardRepository.save(record);
                 }).orElseThrow(() -> new Step1NotFoundException("Hazard not found with id: " + id));
     }
 
@@ -92,7 +92,7 @@ public class HazardService {
 
     public void deleteHazardAndChildren(Long id){
 
-        Optional<List<Hazard>> optionalChildren = HazardRepository.findHazardChildren(id);
+        Optional<List<Hazard>> optionalChildren = hazardRepository.findHazardChildren(id);
 
         if (optionalChildren.isPresent()) {
             List<Hazard> children = optionalChildren.get();
@@ -100,8 +100,8 @@ public class HazardService {
                 deleteHazardAndChildren(h.getId());
             }
         }
-        HazardRepository.deleteLossesAssociated(id);
-        HazardRepository.deleteById(id);
+        hazardRepository.deleteLossesAssociated(id);
+        hazardRepository.deleteById(id);
     }
 
 }

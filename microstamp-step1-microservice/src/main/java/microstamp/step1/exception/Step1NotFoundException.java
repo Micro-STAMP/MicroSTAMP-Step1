@@ -10,8 +10,4 @@ public class Step1NotFoundException extends RuntimeException{
         super(message);
     }
 
-    public Step1NotFoundException(final Throwable cause){
-        super(cause);
-    }
-
 }

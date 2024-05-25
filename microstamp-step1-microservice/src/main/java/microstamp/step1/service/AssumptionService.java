@@ -16,48 +16,47 @@ import java.util.List;
 public class AssumptionService {
 
     @Autowired
-    private AssumptionRepository AssumptionRepository;
+    private AssumptionRepository assumptionRepository;
 
     @Autowired
-    private ProjectRepository ProjectRepository;
+    private ProjectRepository projectRepository;
 
     public List<Assumption> findAll(){
-        return AssumptionRepository.findAll();
+        return assumptionRepository.findAll();
     }
 
     public Assumption findById(Long id) throws Step1NotFoundException{
-        return AssumptionRepository.findById(id)
+        return assumptionRepository.findById(id)
                 .orElseThrow(() -> new Step1NotFoundException("Assumption not found with id: " + id));
     }
 
     public List<Assumption> findByProjectId(Long id) throws Step1NotFoundException{
-        return AssumptionRepository.findByProjectId(id)
+        return assumptionRepository.findByProjectId(id)
                 .orElseThrow(() -> new Step1NotFoundException("Assumptions not found with projectId: " + id));
     }
 
     public Assumption insert(AssumptionDto assumptionDto){
-        Assumption Assumption = new Assumption();
-        Assumption.setName(assumptionDto.getName());
-        Project Project = ProjectRepository.findById(assumptionDto.getProjectId()).orElseThrow(() -> new Step1NotFoundException(("Project not found with id: " + assumptionDto.getProjectId())));
-        Project.getAssumptionEntities().add(Assumption);
-        ProjectRepository.save(Project);
-        return Assumption;
+        Assumption assumption = new Assumption();
+        assumption.setName(assumptionDto.getName());
+        Project project = projectRepository.findById(assumptionDto.getProjectId()).orElseThrow(() -> new Step1NotFoundException(("Project not found with id: " + assumptionDto.getProjectId())));
+        project.getAssumptionEntities().add(assumption);
+        projectRepository.save(project);
+        return assumption;
     }
 
     public void update(Long id, AssumptionDto assumptionDto) throws Step1NotFoundException{
-        AssumptionRepository.findById(id)
+        assumptionRepository.findById(id)
                 .map(record -> {
                     record.setName(assumptionDto.getName());
-                    return AssumptionRepository.save(record);
+                    return assumptionRepository.save(record);
                 }).orElseThrow(() -> new Step1NotFoundException("Assumption not found with id: " + id));
     }
 
     public void delete(Long id) throws Step1NotFoundException{
-        AssumptionRepository.findById(id)
+        assumptionRepository.findById(id)
                 .map(record -> {
-                    AssumptionRepository.deleteById(id);
+                    assumptionRepository.deleteById(id);
                     return ResponseEntity.ok().build();
                 }).orElseThrow(() -> new Step1NotFoundException("Assumption not found with id: " + id));
     }
-
 }

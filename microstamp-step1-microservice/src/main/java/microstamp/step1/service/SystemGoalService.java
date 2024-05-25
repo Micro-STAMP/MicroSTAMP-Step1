@@ -16,46 +16,46 @@ import java.util.List;
 public class SystemGoalService {
 
     @Autowired
-    private SystemGoalRepository SystemGoalRepository;
+    private SystemGoalRepository systemGoalRepository;
 
     @Autowired
-    private ProjectRepository ProjectRepository;
+    private ProjectRepository projectRepository;
 
     public List<SystemGoal> findAll(){
-        return SystemGoalRepository.findAll();
+        return systemGoalRepository.findAll();
     }
 
     public SystemGoal findById(Long id) throws Step1NotFoundException{
-        return SystemGoalRepository.findById(id)
+        return systemGoalRepository.findById(id)
                 .orElseThrow(() -> new Step1NotFoundException("SystemGoal not found with id: " + id));
     }
 
     public List<SystemGoal> findByProjectId(Long id) throws Step1NotFoundException{
-        return SystemGoalRepository.findByProjectId(id)
+        return systemGoalRepository.findByProjectId(id)
                 .orElseThrow(() -> new Step1NotFoundException("SystemGoals not found with projectId: " + id));
     }
 
     public SystemGoal insert(SystemGoalDto systemGoalDto){
-        SystemGoal SystemGoal = new SystemGoal();
-        SystemGoal.setName(systemGoalDto.getName());
-        Project Project = ProjectRepository.findById(systemGoalDto.getProjectId()).orElseThrow(() -> new Step1NotFoundException("Project not found with id: " + systemGoalDto.getProjectId()));
-        Project.getSystemGoalEntities().add(SystemGoal);
-        ProjectRepository.save(Project);
-        return SystemGoal;
+        SystemGoal systemGoal = new SystemGoal();
+        systemGoal.setName(systemGoalDto.getName());
+        Project project = projectRepository.findById(systemGoalDto.getProjectId()).orElseThrow(() -> new Step1NotFoundException("Project not found with id: " + systemGoalDto.getProjectId()));
+        project.getSystemGoalEntities().add(systemGoal);
+        projectRepository.save(project);
+        return systemGoal;
     }
 
     public void update(Long id, SystemGoalDto systemGoalDto) throws Step1NotFoundException{
-        SystemGoalRepository.findById(id)
+        systemGoalRepository.findById(id)
                 .map(record -> {
                     record.setName(systemGoalDto.getName());
-                    return SystemGoalRepository.save(record);
+                    return systemGoalRepository.save(record);
                 }).orElseThrow(() -> new Step1NotFoundException("SystemGoal not found with id: " + id));
     }
 
     public void delete(Long id) throws Step1NotFoundException{
-        SystemGoalRepository.findById(id)
+        systemGoalRepository.findById(id)
                 .map(record -> {
-                    SystemGoalRepository.deleteById(id);
+                    systemGoalRepository.deleteById(id);
                     return ResponseEntity.ok().build();
                 }).orElseThrow(() -> new Step1NotFoundException("SystemGoal not found with id: " + id));
     }
