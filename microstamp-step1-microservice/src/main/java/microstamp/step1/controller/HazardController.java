@@ -21,8 +21,8 @@ public class HazardController {
     private HazardService hazardService;
 
     @GetMapping
-    public List findAll(){
-        return hazardService.findAll();
+    public ResponseEntity<List<Hazard>> findAll(){
+        return new ResponseEntity<>(hazardService.findAll(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")

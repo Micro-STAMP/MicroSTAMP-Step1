@@ -25,27 +25,23 @@ public class ProjectService {
     }
 
     public Project findById(Long id) throws Step1NotFoundException{
-        Project Project = ProjectRepository.findById(id)
+        return ProjectRepository.findById(id)
                 .orElseThrow(() -> new Step1NotFoundException("Project not found with id: " + id));
-        return Project;
     }
 
     public Project findByUrl(String url) throws Step1NotFoundException{
-        Project Project = ProjectRepository.findByUrl(url)
+        return ProjectRepository.findByUrl(url)
                 .orElseThrow(() -> new Step1NotFoundException("Project not found with url: " + url));
-        return Project;
     }
 
     public List<Project> findByUserId(long id) throws Step1NotFoundException{
-        List<Project> projectEntities = ProjectRepository.findProjectsByUserId(id)
+        return ProjectRepository.findProjectsByUserId(id)
                 .orElseThrow(() -> new Step1NotFoundException("Projects not found for user: " + id));
-        return projectEntities;
     }
 
     public List<Project> findGuestsProjects() throws Step1NotFoundException{
-        List<Project> projectEntities = ProjectRepository.findProjectsForGuests()
+        return ProjectRepository.findProjectsForGuests()
                 .orElseThrow(() -> new Step1NotFoundException("Projects for guests not found"));
-        return projectEntities;
     }
 
     public Project insert(ProjectDto projectDto){
@@ -54,7 +50,7 @@ public class ProjectService {
         Project.setDescription(projectDto.getDescription());
         Project.setUrl(projectDto.getUrl());
         Project.setType(projectDto.getType());
-        UserRepository.findById(projectDto.getUserId()).get().getProjects().add(Project);
+        UserRepository.findById(projectDto.getUserId()).orElseThrow(() -> new Step1NotFoundException("User not found with id: " + projectDto.getUserId())).getProjects().add(Project);
         ProjectRepository.save(Project);
         return Project;
     }

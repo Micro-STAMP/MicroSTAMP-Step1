@@ -21,8 +21,8 @@ public class AssumptionController {
     private AssumptionService assumptionService;
 
     @GetMapping
-    public List findAll(){
-        return assumptionService.findAll();
+    public ResponseEntity<List<Assumption>> findAll(){
+        return new ResponseEntity<>(assumptionService.findAll(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")

@@ -21,8 +21,8 @@ public class LossController {
     private LossService lossService;
 
     @GetMapping
-    public List findAll(){
-        return lossService.findAll();
+    public ResponseEntity<List<Loss>> findAll(){
+        return new ResponseEntity<>(lossService.findAll(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")

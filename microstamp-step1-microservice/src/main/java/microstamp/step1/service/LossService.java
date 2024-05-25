@@ -26,21 +26,19 @@ public class LossService {
     }
 
     public Loss findById(Long id) throws Step1NotFoundException {
-        Loss Loss = LossRepository.findById(id)
+        return LossRepository.findById(id)
                 .orElseThrow(() -> new Step1NotFoundException("Loss not found with id: " + id));
-        return Loss;
     }
 
     public List<Loss> findByProjectId(Long id) throws Step1NotFoundException{
-        List<Loss> lossEntities = LossRepository.findByProjectId(id)
+        return LossRepository.findByProjectId(id)
                 .orElseThrow(() -> new Step1NotFoundException("Losses not found with projectId: " + id));
-        return lossEntities;
     }
 
     public Loss insert(LossDto lossDto){
         Loss Loss = new Loss();
         Loss.setName(lossDto.getName());
-        Project Project = ProjectRepository.findById(lossDto.getProjectId()).get();
+        Project Project = ProjectRepository.findById(lossDto.getProjectId()).orElseThrow(() -> new Step1NotFoundException("Project not found with id: " + lossDto.getProjectId()));
         Project.getLossEntities().add(Loss);
         ProjectRepository.save(Project);
         return Loss;

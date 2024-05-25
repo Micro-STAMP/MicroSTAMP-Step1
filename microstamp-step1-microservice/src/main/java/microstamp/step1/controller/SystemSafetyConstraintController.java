@@ -21,8 +21,8 @@ public class SystemSafetyConstraintController {
     private SystemSafetyConstraintService systemSafetyConstraintService;
 
     @GetMapping
-    public List findAll(){
-        return systemSafetyConstraintService.findAll();
+    public ResponseEntity<List<SystemSafetyConstraint>> findAll(){
+        return new ResponseEntity<>(systemSafetyConstraintService.findAll(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")

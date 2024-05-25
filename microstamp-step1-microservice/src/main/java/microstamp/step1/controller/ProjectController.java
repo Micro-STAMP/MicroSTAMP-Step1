@@ -21,8 +21,8 @@ public class ProjectController {
     private ProjectService projectService;
 
     @GetMapping
-    public List findAll(){
-        return projectService.findAll();
+    public ResponseEntity<List<Project>> findAll(){
+        return new ResponseEntity<>(projectService.findAll(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")

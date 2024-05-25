@@ -13,7 +13,7 @@ import java.util.Set;
 
 public class MyUserDetails implements UserDetails {
 
-    private User user;
+    private final User user;
 
     public MyUserDetails(User user){
         this.user = user;
@@ -62,13 +62,5 @@ public class MyUserDetails implements UserDetails {
 
     public long getUserId(){
         return user.getId();
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 }

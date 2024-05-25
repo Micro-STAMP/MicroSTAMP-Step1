@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class HazardService {
@@ -31,15 +32,13 @@ public class HazardService {
     }
 
     public Hazard findById(Long id) throws Step1NotFoundException {
-        Hazard Hazard = HazardRepository.findById(id)
+        return HazardRepository.findById(id)
                 .orElseThrow(() -> new Step1NotFoundException("Hazard not found with id: " + id));
-        return Hazard;
     }
 
     public List<Hazard> findByProjectId(Long id) throws Step1NotFoundException{
-        List<Hazard> hazardEntities = HazardRepository.findByProjectId(id)
+        return HazardRepository.findByProjectId(id)
                 .orElseThrow(() -> new Step1NotFoundException("Hazards not found with projectId: " + id));
-        return hazardEntities;
     }
 
     public Hazard insert(HazardDto hazardDto){
@@ -49,16 +48,18 @@ public class HazardService {
         List<Loss> lossEntities = new ArrayList<>();
         if(hazardDto.getLossIds() != null) {
             for (Long id : hazardDto.getLossIds())
-                lossEntities.add(LossRepository.findById(id).get());
+                lossEntities.add(LossRepository.findById(id).orElseThrow(() -> new Step1NotFoundException("Loss not found with id: " + id)));
         }
         Hazard.setLossEntities(lossEntities);
-        try{
-            Hazard father = HazardRepository.findById(hazardDto.getFatherId()).get();
+
+        if(hazardDto.getFatherId() != null){
+            Hazard father = HazardRepository.findById(hazardDto.getFatherId()).orElseThrow(() -> new Step1NotFoundException("Hazard not found with id: " + hazardDto.getFatherId()));
             Hazard.setFather(father);
-        }catch (Exception ex){
+        }else{
             Hazard.setFather(null);
         }
-        Project Project = ProjectRepository.findById(hazardDto.getProjectId()).get();
+
+        Project Project = ProjectRepository.findById(hazardDto.getProjectId()).orElseThrow(() -> new Step1NotFoundException("Project not found with id: " + hazardDto.getProjectId()));
         Project.getHazardEntities().add(Hazard);
         ProjectRepository.save(Project);
         return Hazard;
@@ -71,15 +72,16 @@ public class HazardService {
                     List<Loss> lossEntities = new ArrayList<>();
                     if(hazardDto.getLossIds() != null) {
                         for (Long lossId : hazardDto.getLossIds())
-                            lossEntities.add(LossRepository.findById(lossId).get());
+                            lossEntities.add(LossRepository.findById(lossId).orElseThrow(() -> new Step1NotFoundException("Loss not found with id: " + lossId)));
                     }
                     record.setLossEntities(lossEntities);
-                    try{
-                        Hazard father = HazardRepository.findById(hazardDto.getFatherId()).get();
+                    if(hazardDto.getFatherId() != null){
+                        Hazard father = HazardRepository.findById(hazardDto.getFatherId()).orElseThrow(() -> new Step1NotFoundException("Hazard not found with id: " + hazardDto.getFatherId()));
                         record.setFather(father);
-                    }catch(Exception ex){
+                    }else{
                         record.setFather(null);
                     }
+
                     return HazardRepository.save(record);
                 }).orElseThrow(() -> new Step1NotFoundException("Hazard not found with id: " + id));
     }
@@ -89,9 +91,14 @@ public class HazardService {
     }
 
     public void deleteHazardAndChildren(Long id){
-        List<Hazard> children = HazardRepository.findHazardChildren(id).get();
-        for(Hazard h : children){
-            deleteHazardAndChildren(h.getId());
+
+        Optional<List<Hazard>> optionalChildren = HazardRepository.findHazardChildren(id);
+
+        if (optionalChildren.isPresent()) {
+            List<Hazard> children = optionalChildren.get();
+            for (Hazard h : children) {
+                deleteHazardAndChildren(h.getId());
+            }
         }
         HazardRepository.deleteLossesAssociated(id);
         HazardRepository.deleteById(id);

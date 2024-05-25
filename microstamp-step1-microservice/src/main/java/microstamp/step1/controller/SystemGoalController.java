@@ -21,8 +21,8 @@ public class SystemGoalController {
     private SystemGoalService systemGoalService;
 
     @GetMapping
-    public List findAll(){
-        return systemGoalService.findAll();
+    public ResponseEntity<List<SystemGoal>> findAll(){
+        return new ResponseEntity<>(systemGoalService.findAll(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")

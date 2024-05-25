@@ -26,21 +26,19 @@ public class SystemGoalService {
     }
 
     public SystemGoal findById(Long id) throws Step1NotFoundException{
-        SystemGoal SystemGoal = SystemGoalRepository.findById(id)
+        return SystemGoalRepository.findById(id)
                 .orElseThrow(() -> new Step1NotFoundException("SystemGoal not found with id: " + id));
-        return SystemGoal;
     }
 
     public List<SystemGoal> findByProjectId(Long id) throws Step1NotFoundException{
-        List<SystemGoal> systemGoalEntities = SystemGoalRepository.findByProjectId(id)
+        return SystemGoalRepository.findByProjectId(id)
                 .orElseThrow(() -> new Step1NotFoundException("SystemGoals not found with projectId: " + id));
-        return systemGoalEntities;
     }
 
     public SystemGoal insert(SystemGoalDto systemGoalDto){
         SystemGoal SystemGoal = new SystemGoal();
         SystemGoal.setName(systemGoalDto.getName());
-        Project Project = ProjectRepository.getById(systemGoalDto.getProjectId());
+        Project Project = ProjectRepository.findById(systemGoalDto.getProjectId()).orElseThrow(() -> new Step1NotFoundException("Project not found with id: " + systemGoalDto.getProjectId()));
         Project.getSystemGoalEntities().add(SystemGoal);
         ProjectRepository.save(Project);
         return SystemGoal;
