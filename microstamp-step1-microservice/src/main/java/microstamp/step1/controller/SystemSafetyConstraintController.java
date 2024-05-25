@@ -30,7 +30,7 @@ public class SystemSafetyConstraintController {
         return new ResponseEntity<>(systemSafetyConstraintService.findById(id), HttpStatus.OK);
     }
 
-    @GetMapping("/findByProjectId/{id}")
+    @GetMapping("/project/{id}")
     public ResponseEntity<List<SystemSafetyConstraint>> findByProjectId(@PathVariable(name = "id") Long id) throws Step1NotFoundException {
         return new ResponseEntity<>(systemSafetyConstraintService.findByProjectId(id), HttpStatus.OK);
     }

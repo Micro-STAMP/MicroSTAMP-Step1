@@ -30,7 +30,7 @@ public class LossController {
         return new ResponseEntity<>(lossService.findById(id), HttpStatus.OK);
     }
 
-    @GetMapping("/findByProjectId/{id}")
+    @GetMapping("/project/{id}")
     public ResponseEntity<List<Loss>> findByProjectId(@PathVariable(name = "id") Long id) throws Step1NotFoundException {
         return new ResponseEntity<>(lossService.findByProjectId(id), HttpStatus.OK);
     }

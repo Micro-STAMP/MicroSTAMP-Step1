@@ -30,7 +30,7 @@ public class SystemGoalController {
         return new ResponseEntity<>(systemGoalService.findById(id), HttpStatus.OK);
     }
 
-    @GetMapping("/findByProjectId/{id}")
+    @GetMapping("/project/{id}")
     public ResponseEntity<List<SystemGoal>> findByProjectId(@PathVariable(name = "id") Long id) throws Step1NotFoundException {
         return new ResponseEntity<>(systemGoalService.findByProjectId(id), HttpStatus.OK);
     }

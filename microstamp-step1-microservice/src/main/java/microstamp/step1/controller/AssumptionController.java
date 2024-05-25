@@ -30,7 +30,7 @@ public class AssumptionController {
         return new ResponseEntity<>(assumptionService.findById(id), HttpStatus.OK);
     }
 
-    @GetMapping("/findByProjectId/{id}")
+    @GetMapping("/project/{id}")
     public ResponseEntity<List<Assumption>> findByProjectId(@PathVariable(name = "id") Long id) throws Step1NotFoundException {
         return new ResponseEntity<>(assumptionService.findByProjectId(id), HttpStatus.OK);
     }

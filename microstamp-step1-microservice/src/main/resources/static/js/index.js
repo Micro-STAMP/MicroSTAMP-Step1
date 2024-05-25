@@ -13,7 +13,7 @@ $(window).ready(function () {
 
     $.ajax({
         "type": 'get',
-        "url": '/systemgoals/findByProjectId/' + project_id,
+        "url": '/systemgoals/project/' + project_id,
         "dataType": "json",
         "success": function (data) {
             $.each(data, function (idx, obj) {
@@ -30,7 +30,7 @@ $(window).ready(function () {
 
     $.ajax({
         "type": 'get',
-        "url": '/assumptions/findByProjectId/' + project_id,
+        "url": '/assumptions/project/' + project_id,
         "dataType": "json",
         "success": function (data) {
             $.each(data, function (idx, obj) {
@@ -47,7 +47,7 @@ $(window).ready(function () {
 
     $.ajax({
         "type": 'get',
-        "url": '/losses/findByProjectId/' + project_id,
+        "url": '/losses/project/' + project_id,
         "dataType": "json",
         "success": function (data) {
             $.each(data, function (idx, obj) {
@@ -64,7 +64,7 @@ $(window).ready(function () {
 
    $.ajax({
         "type": 'get',
-        "url": '/hazards/findByProjectId/' + project_id,
+        "url": '/hazards/project/' + project_id,
         "dataType": "json",
         "success": function (data) {
             var backup = data;
@@ -93,7 +93,7 @@ $(window).ready(function () {
         var project_id = $("#project_id").val();
         $.ajax({
             "type": 'get',
-            "url": '/systemsafetyconstraints/findByProjectId/' + project_id,
+            "url": '/systemsafetyconstraints/project/' + project_id,
             "dataType": "json",
             "success": function (data) {
                 $.each(data, function (idx, obj) {

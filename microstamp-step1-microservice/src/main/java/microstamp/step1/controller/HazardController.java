@@ -30,7 +30,7 @@ public class HazardController {
         return new ResponseEntity<>(hazardService.findById(id), HttpStatus.OK);
     }
 
-    @GetMapping("/findByProjectId/{id}")
+    @GetMapping("/project/{id}")
     public ResponseEntity<List<Hazard>> findByProjectId(@PathVariable(name = "id") Long id) throws Step1NotFoundException {
         return new ResponseEntity<>(hazardService.findByProjectId(id), HttpStatus.OK);
     }
