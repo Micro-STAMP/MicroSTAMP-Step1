@@ -15,18 +15,18 @@ public class MyUserDetails implements UserDetails {
 
     private final User user;
 
-    public MyUserDetails(User user){
+    public MyUserDetails(User user) {
         this.user = user;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-       Set<Role> roles = user.getRoles();
-       List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+        Set<Role> roles = user.getRoles();
+        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
 
-       for(Role role : roles){
-           authorities.add(new SimpleGrantedAuthority(role.getName()));
-       }
+        for (Role role : roles) {
+            authorities.add(new SimpleGrantedAuthority(role.getName()));
+        }
         return authorities;
     }
 
@@ -60,7 +60,7 @@ public class MyUserDetails implements UserDetails {
         return user.isEnabled();
     }
 
-    public long getUserId(){
+    public long getUserId() {
         return user.getId();
     }
 }

@@ -1,10 +1,10 @@
 package microstamp.step1.controller;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
-import microstamp.step1.service.AssumptionService;
 import microstamp.step1.data.Assumption;
 import microstamp.step1.dto.AssumptionDto;
 import microstamp.step1.exception.Step1NotFoundException;
+import microstamp.step1.service.AssumptionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +21,7 @@ public class AssumptionController {
     private AssumptionService assumptionService;
 
     @GetMapping
-    public ResponseEntity<List<Assumption>> findAll(){
+    public ResponseEntity<List<Assumption>> findAll() {
         return new ResponseEntity<>(assumptionService.findAll(), HttpStatus.OK);
     }
 
@@ -36,18 +36,18 @@ public class AssumptionController {
     }
 
     @PostMapping
-    public ResponseEntity<Assumption> insert(@RequestBody AssumptionDto assumptionDto){
+    public ResponseEntity<Assumption> insert(@RequestBody AssumptionDto assumptionDto) {
         return new ResponseEntity<>(assumptionService.insert(assumptionDto), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> update(@PathVariable(name = "id") Long id, @RequestBody AssumptionDto assumptionDto) throws Step1NotFoundException{
+    public ResponseEntity<Void> update(@PathVariable(name = "id") Long id, @RequestBody AssumptionDto assumptionDto) throws Step1NotFoundException {
         assumptionService.update(id, assumptionDto);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable(name = "id") Long id) throws Step1NotFoundException{
+    public ResponseEntity<Void> delete(@PathVariable(name = "id") Long id) throws Step1NotFoundException {
         assumptionService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }

@@ -21,21 +21,21 @@ public class AssumptionService {
     @Autowired
     private ProjectRepository projectRepository;
 
-    public List<Assumption> findAll(){
+    public List<Assumption> findAll() {
         return assumptionRepository.findAll();
     }
 
-    public Assumption findById(Long id) throws Step1NotFoundException{
+    public Assumption findById(Long id) throws Step1NotFoundException {
         return assumptionRepository.findById(id)
                 .orElseThrow(() -> new Step1NotFoundException("Assumption not found with id: " + id));
     }
 
-    public List<Assumption> findByProjectId(Long id) throws Step1NotFoundException{
+    public List<Assumption> findByProjectId(Long id) throws Step1NotFoundException {
         return assumptionRepository.findByProjectId(id)
                 .orElseThrow(() -> new Step1NotFoundException("Assumptions not found with projectId: " + id));
     }
 
-    public Assumption insert(AssumptionDto assumptionDto){
+    public Assumption insert(AssumptionDto assumptionDto) {
         Assumption assumption = new Assumption();
         assumption.setName(assumptionDto.getName());
         Project project = projectRepository.findById(assumptionDto.getProjectId()).orElseThrow(() -> new Step1NotFoundException(("Project not found with id: " + assumptionDto.getProjectId())));
@@ -44,7 +44,7 @@ public class AssumptionService {
         return assumption;
     }
 
-    public void update(Long id, AssumptionDto assumptionDto) throws Step1NotFoundException{
+    public void update(Long id, AssumptionDto assumptionDto) throws Step1NotFoundException {
         assumptionRepository.findById(id)
                 .map(record -> {
                     record.setName(assumptionDto.getName());
@@ -52,7 +52,7 @@ public class AssumptionService {
                 }).orElseThrow(() -> new Step1NotFoundException("Assumption not found with id: " + id));
     }
 
-    public void delete(Long id) throws Step1NotFoundException{
+    public void delete(Long id) throws Step1NotFoundException {
         assumptionRepository.findById(id)
                 .map(record -> {
                     assumptionRepository.deleteById(id);

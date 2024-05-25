@@ -1,10 +1,10 @@
 package microstamp.step1.controller;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
-import microstamp.step1.service.ProjectService;
 import microstamp.step1.data.Project;
 import microstamp.step1.dto.ProjectDto;
 import microstamp.step1.exception.Step1NotFoundException;
+import microstamp.step1.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +21,7 @@ public class ProjectController {
     private ProjectService projectService;
 
     @GetMapping
-    public ResponseEntity<List<Project>> findAll(){
+    public ResponseEntity<List<Project>> findAll() {
         return new ResponseEntity<>(projectService.findAll(), HttpStatus.OK);
     }
 
@@ -36,23 +36,23 @@ public class ProjectController {
     }
 
     @GetMapping(path = {"user/{id}"})
-    public ResponseEntity<List<Project>> findByUserId(@PathVariable long id){
+    public ResponseEntity<List<Project>> findByUserId(@PathVariable long id) {
         return new ResponseEntity<>(projectService.findByUserId(id), HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<Project> insert(@RequestBody ProjectDto projectDto){
+    public ResponseEntity<Project> insert(@RequestBody ProjectDto projectDto) {
         return new ResponseEntity<>(projectService.insert(projectDto), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> update(@PathVariable(name = "id") Long id, @RequestBody ProjectDto projectDto) throws Step1NotFoundException{
+    public ResponseEntity<Void> update(@PathVariable(name = "id") Long id, @RequestBody ProjectDto projectDto) throws Step1NotFoundException {
         projectService.update(id, projectDto);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable(name = "id") Long id) throws Step1NotFoundException{
+    public ResponseEntity<Void> delete(@PathVariable(name = "id") Long id) throws Step1NotFoundException {
         projectService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }

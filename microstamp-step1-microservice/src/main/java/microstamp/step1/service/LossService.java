@@ -21,7 +21,7 @@ public class LossService {
     @Autowired
     private ProjectRepository projectRepository;
 
-    public List<Loss> findAll(){
+    public List<Loss> findAll() {
         return lossRepository.findAll();
     }
 
@@ -30,12 +30,12 @@ public class LossService {
                 .orElseThrow(() -> new Step1NotFoundException("Loss not found with id: " + id));
     }
 
-    public List<Loss> findByProjectId(Long id) throws Step1NotFoundException{
+    public List<Loss> findByProjectId(Long id) throws Step1NotFoundException {
         return lossRepository.findByProjectId(id)
                 .orElseThrow(() -> new Step1NotFoundException("Losses not found with projectId: " + id));
     }
 
-    public Loss insert(LossDto lossDto){
+    public Loss insert(LossDto lossDto) {
         Loss loss = new Loss();
         loss.setName(lossDto.getName());
         Project project = projectRepository.findById(lossDto.getProjectId()).orElseThrow(() -> new Step1NotFoundException("Project not found with id: " + lossDto.getProjectId()));
@@ -44,7 +44,7 @@ public class LossService {
         return loss;
     }
 
-    public void update(Long id, LossDto lossDto) throws Step1NotFoundException{
+    public void update(Long id, LossDto lossDto) throws Step1NotFoundException {
         lossRepository.findById(id)
                 .map(record -> {
                     record.setName(lossDto.getName());
@@ -52,7 +52,7 @@ public class LossService {
                 }).orElseThrow(() -> new Step1NotFoundException("Loss not found with id: " + id));
     }
 
-    public void delete(Long id) throws Step1NotFoundException{
+    public void delete(Long id) throws Step1NotFoundException {
         lossRepository.findById(id)
                 .map(record -> {
                     lossRepository.deleteById(id);

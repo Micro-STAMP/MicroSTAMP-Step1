@@ -21,21 +21,21 @@ public class SystemGoalService {
     @Autowired
     private ProjectRepository projectRepository;
 
-    public List<SystemGoal> findAll(){
+    public List<SystemGoal> findAll() {
         return systemGoalRepository.findAll();
     }
 
-    public SystemGoal findById(Long id) throws Step1NotFoundException{
+    public SystemGoal findById(Long id) throws Step1NotFoundException {
         return systemGoalRepository.findById(id)
                 .orElseThrow(() -> new Step1NotFoundException("SystemGoal not found with id: " + id));
     }
 
-    public List<SystemGoal> findByProjectId(Long id) throws Step1NotFoundException{
+    public List<SystemGoal> findByProjectId(Long id) throws Step1NotFoundException {
         return systemGoalRepository.findByProjectId(id)
                 .orElseThrow(() -> new Step1NotFoundException("SystemGoals not found with projectId: " + id));
     }
 
-    public SystemGoal insert(SystemGoalDto systemGoalDto){
+    public SystemGoal insert(SystemGoalDto systemGoalDto) {
         SystemGoal systemGoal = new SystemGoal();
         systemGoal.setName(systemGoalDto.getName());
         Project project = projectRepository.findById(systemGoalDto.getProjectId()).orElseThrow(() -> new Step1NotFoundException("Project not found with id: " + systemGoalDto.getProjectId()));
@@ -44,7 +44,7 @@ public class SystemGoalService {
         return systemGoal;
     }
 
-    public void update(Long id, SystemGoalDto systemGoalDto) throws Step1NotFoundException{
+    public void update(Long id, SystemGoalDto systemGoalDto) throws Step1NotFoundException {
         systemGoalRepository.findById(id)
                 .map(record -> {
                     record.setName(systemGoalDto.getName());
@@ -52,7 +52,7 @@ public class SystemGoalService {
                 }).orElseThrow(() -> new Step1NotFoundException("SystemGoal not found with id: " + id));
     }
 
-    public void delete(Long id) throws Step1NotFoundException{
+    public void delete(Long id) throws Step1NotFoundException {
         systemGoalRepository.findById(id)
                 .map(record -> {
                     systemGoalRepository.deleteById(id);

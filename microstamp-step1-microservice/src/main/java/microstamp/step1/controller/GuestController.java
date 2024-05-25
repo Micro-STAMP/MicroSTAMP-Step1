@@ -1,13 +1,16 @@
 package microstamp.step1.controller;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
-import microstamp.step1.service.*;
 import microstamp.step1.data.*;
 import microstamp.step1.exception.Step1NotFoundException;
+import microstamp.step1.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -35,7 +38,7 @@ public class GuestController {
     private SystemSafetyConstraintService systemSafetyConstraintService;
 
     @GetMapping("/projects")
-    public ResponseEntity<List<Project>> findGuestsProjects(){
+    public ResponseEntity<List<Project>> findGuestsProjects() {
         return new ResponseEntity<>(projectService.findGuestsProjects(), HttpStatus.OK);
     }
 

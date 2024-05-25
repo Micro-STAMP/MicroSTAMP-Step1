@@ -20,31 +20,31 @@ public class ProjectService {
     @Autowired
     private UserRepository userRepository;
 
-    public List<Project> findAll(){
+    public List<Project> findAll() {
         return projectRepository.findAll();
     }
 
-    public Project findById(Long id) throws Step1NotFoundException{
+    public Project findById(Long id) throws Step1NotFoundException {
         return projectRepository.findById(id)
                 .orElseThrow(() -> new Step1NotFoundException("Project not found with id: " + id));
     }
 
-    public Project findByUrl(String url) throws Step1NotFoundException{
+    public Project findByUrl(String url) throws Step1NotFoundException {
         return projectRepository.findByUrl(url)
                 .orElseThrow(() -> new Step1NotFoundException("Project not found with url: " + url));
     }
 
-    public List<Project> findByUserId(long id) throws Step1NotFoundException{
+    public List<Project> findByUserId(long id) throws Step1NotFoundException {
         return projectRepository.findProjectsByUserId(id)
                 .orElseThrow(() -> new Step1NotFoundException("Projects not found for user: " + id));
     }
 
-    public List<Project> findGuestsProjects() throws Step1NotFoundException{
+    public List<Project> findGuestsProjects() throws Step1NotFoundException {
         return projectRepository.findProjectsForGuests()
                 .orElseThrow(() -> new Step1NotFoundException("Projects for guests not found"));
     }
 
-    public Project insert(ProjectDto projectDto){
+    public Project insert(ProjectDto projectDto) {
         Project project = new Project();
         project.setName(projectDto.getName());
         project.setDescription(projectDto.getDescription());
@@ -55,7 +55,7 @@ public class ProjectService {
         return project;
     }
 
-    public void update(Long id, ProjectDto projectDto) throws Step1NotFoundException{
+    public void update(Long id, ProjectDto projectDto) throws Step1NotFoundException {
         projectRepository.findById(id)
                 .map(record -> {
                     record.setName(projectDto.getName());
@@ -66,7 +66,7 @@ public class ProjectService {
                 }).orElseThrow(() -> new Step1NotFoundException("Project not found with id: " + id));
     }
 
-    public void delete(Long id) throws Step1NotFoundException{
+    public void delete(Long id) throws Step1NotFoundException {
         projectRepository.findById(id)
                 .map(record -> {
                     projectRepository.deleteById(id);

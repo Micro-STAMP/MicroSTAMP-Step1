@@ -1,7 +1,5 @@
 package microstamp.step1.data;
 
-import jakarta.persistence.Entity;
-
 import jakarta.persistence.*;
 import lombok.Data;
 

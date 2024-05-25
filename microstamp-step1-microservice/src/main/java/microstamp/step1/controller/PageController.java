@@ -31,18 +31,18 @@ public class PageController {
     private SystemSafetyConstraintRepository systemSafetyConstraintRepository;
 
     @GetMapping("/home")
-    public String projects(Model model){
+    public String projects(Model model) {
         model.addAttribute("projects", projectRepository.findAll());
         return "projects";
     }
 
     @GetMapping("/")
-    public String redirectHome(Model model){
+    public String redirectHome(Model model) {
         return projects(model);
     }
 
     @GetMapping("/{projectId:\\d+}")
-    public String projectIndexPage(@PathVariable Long projectId, Model model){
+    public String projectIndexPage(@PathVariable Long projectId, Model model) {
         model.addAttribute("systemGoals", systemGoalRepository.findByProjectId(projectId).orElseGet(Collections::emptyList));
         model.addAttribute("assumptions", assumptionRepository.findByProjectId(projectId).orElseGet(Collections::emptyList));
         model.addAttribute("losses", lossRepository.findByProjectId(projectId).orElseGet(Collections::emptyList));
@@ -55,13 +55,13 @@ public class PageController {
     }
 
     @GetMapping("/guests")
-    public String guestsProjects(Model model){
+    public String guestsProjects(Model model) {
         model.addAttribute("projects", projectRepository.findProjectsForGuests().orElseGet(Collections::emptyList));
         return "guestsProjects";
     }
 
     @GetMapping("/guests/{projectId}")
-    public String guestsProjectIndexPage(@PathVariable Long projectId, Model model){
+    public String guestsProjectIndexPage(@PathVariable Long projectId, Model model) {
         model.addAttribute("systemGoals", systemGoalRepository.findByProjectId(projectId).orElseGet(Collections::emptyList));
         model.addAttribute("assumptions", assumptionRepository.findByProjectId(projectId).orElseGet(Collections::emptyList));
         model.addAttribute("losses", lossRepository.findByProjectId(projectId).orElseGet(Collections::emptyList));
