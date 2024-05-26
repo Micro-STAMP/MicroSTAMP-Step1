@@ -30,12 +30,11 @@ public class AssumptionService {
                 .orElseThrow(() -> new Step1NotFoundException("Assumption not found with id: " + id));
     }
 
-    public List<Assumption> findByProjectId(Long id) throws Step1NotFoundException {
-        return assumptionRepository.findByProjectId(id)
-                .orElseThrow(() -> new Step1NotFoundException("Assumptions not found with projectId: " + id));
+    public List<Assumption> findByProjectId(Long id) {
+        return assumptionRepository.findByProjectId(id);
     }
 
-    public Assumption insert(AssumptionDto assumptionDto) {
+    public Assumption insert(AssumptionDto assumptionDto) throws Step1NotFoundException {
         Assumption assumption = new Assumption();
         assumption.setName(assumptionDto.getName());
         Project project = projectRepository.findById(assumptionDto.getProjectId()).orElseThrow(() -> new Step1NotFoundException(("Project not found with id: " + assumptionDto.getProjectId())));

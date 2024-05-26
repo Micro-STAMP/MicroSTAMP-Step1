@@ -31,12 +31,12 @@ public class SystemGoalController {
     }
 
     @GetMapping("/project/{id}")
-    public ResponseEntity<List<SystemGoal>> findByProjectId(@PathVariable(name = "id") Long id) throws Step1NotFoundException {
+    public ResponseEntity<List<SystemGoal>> findByProjectId(@PathVariable(name = "id") Long id) {
         return new ResponseEntity<>(systemGoalService.findByProjectId(id), HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<SystemGoal> insert(@RequestBody SystemGoalDto systemGoalDto) {
+    public ResponseEntity<SystemGoal> insert(@RequestBody SystemGoalDto systemGoalDto) throws Step1NotFoundException {
         return new ResponseEntity<>(systemGoalService.insert(systemGoalDto), HttpStatus.CREATED);
     }
 

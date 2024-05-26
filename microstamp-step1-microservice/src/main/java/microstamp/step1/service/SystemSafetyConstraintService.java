@@ -36,12 +36,11 @@ public class SystemSafetyConstraintService {
                 .orElseThrow(() -> new Step1NotFoundException("SystemSafetyConstraint not found with id: " + id));
     }
 
-    public List<SystemSafetyConstraint> findByProjectId(Long id) throws Step1NotFoundException {
-        return systemSafetyConstraintRepository.findByProjectId(id)
-                .orElseThrow(() -> new Step1NotFoundException("SystemSafetyConstraint not found with projectId: " + id));
+    public List<SystemSafetyConstraint> findByProjectId(Long id) {
+        return systemSafetyConstraintRepository.findByProjectId(id);
     }
 
-    public SystemSafetyConstraint insert(SystemSafetyConstraintDto systemSafetyConstraintDto) {
+    public SystemSafetyConstraint insert(SystemSafetyConstraintDto systemSafetyConstraintDto) throws Step1NotFoundException {
         SystemSafetyConstraint systemSafetyConstraint = new SystemSafetyConstraint();
         systemSafetyConstraint.setName(systemSafetyConstraintDto.getName());
 
@@ -77,7 +76,7 @@ public class SystemSafetyConstraintService {
     public void delete(Long id) throws Step1NotFoundException {
         systemSafetyConstraintRepository.findById(id)
                 .map(record -> {
-                    systemSafetyConstraintRepository.deleteHazardsAssociated(id);
+                    systemSafetyConstraintRepository.deleteHazardsAssociation(id);
                     systemSafetyConstraintRepository.deleteById(id);
                     return ResponseEntity.ok().build();
                 }).orElseThrow(() -> new Step1NotFoundException("SystemSafetyConstraint not found with id: " + id));

@@ -31,12 +31,12 @@ public class HazardController {
     }
 
     @GetMapping("/project/{id}")
-    public ResponseEntity<List<Hazard>> findByProjectId(@PathVariable(name = "id") Long id) throws Step1NotFoundException {
+    public ResponseEntity<List<Hazard>> findByProjectId(@PathVariable(name = "id") Long id) {
         return new ResponseEntity<>(hazardService.findByProjectId(id), HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<Hazard> insert(@RequestBody HazardDto hazardDto) {
+    public ResponseEntity<Hazard> insert(@RequestBody HazardDto hazardDto) throws Step1NotFoundException {
         return new ResponseEntity<>(hazardService.insert(hazardDto), HttpStatus.CREATED);
     }
 

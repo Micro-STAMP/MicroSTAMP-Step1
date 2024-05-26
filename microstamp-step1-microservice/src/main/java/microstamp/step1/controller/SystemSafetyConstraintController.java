@@ -31,12 +31,12 @@ public class SystemSafetyConstraintController {
     }
 
     @GetMapping("/project/{id}")
-    public ResponseEntity<List<SystemSafetyConstraint>> findByProjectId(@PathVariable(name = "id") Long id) throws Step1NotFoundException {
+    public ResponseEntity<List<SystemSafetyConstraint>> findByProjectId(@PathVariable(name = "id") Long id) {
         return new ResponseEntity<>(systemSafetyConstraintService.findByProjectId(id), HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<SystemSafetyConstraint> insert(@RequestBody SystemSafetyConstraintDto systemSafetyConstraintDto) {
+    public ResponseEntity<SystemSafetyConstraint> insert(@RequestBody SystemSafetyConstraintDto systemSafetyConstraintDto) throws Step1NotFoundException {
         return new ResponseEntity<>(systemSafetyConstraintService.insert(systemSafetyConstraintDto), HttpStatus.CREATED);
     }
 

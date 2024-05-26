@@ -29,22 +29,19 @@ public class ProjectService {
                 .orElseThrow(() -> new Step1NotFoundException("Project not found with id: " + id));
     }
 
-    public Project findByUrl(String url) throws Step1NotFoundException {
-        return projectRepository.findByUrl(url)
-                .orElseThrow(() -> new Step1NotFoundException("Project not found with url: " + url));
+    public Project findByUrl(String url) {
+        return projectRepository.findByUrl(url);
     }
 
-    public List<Project> findByUserId(long id) throws Step1NotFoundException {
-        return projectRepository.findProjectsByUserId(id)
-                .orElseThrow(() -> new Step1NotFoundException("Projects not found for user: " + id));
+    public List<Project> findByUserId(long id) {
+        return projectRepository.findProjectsByUserId(id);
     }
 
-    public List<Project> findGuestsProjects() throws Step1NotFoundException {
-        return projectRepository.findProjectsForGuests()
-                .orElseThrow(() -> new Step1NotFoundException("Projects for guests not found"));
+    public List<Project> findGuestsProjects() {
+        return projectRepository.findProjectsForGuests();
     }
 
-    public Project insert(ProjectDto projectDto) {
+    public Project insert(ProjectDto projectDto) throws Step1NotFoundException {
         Project project = new Project();
         project.setName(projectDto.getName());
         project.setDescription(projectDto.getDescription());

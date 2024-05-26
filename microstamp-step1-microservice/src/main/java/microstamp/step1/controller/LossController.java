@@ -31,12 +31,12 @@ public class LossController {
     }
 
     @GetMapping("/project/{id}")
-    public ResponseEntity<List<Loss>> findByProjectId(@PathVariable(name = "id") Long id) throws Step1NotFoundException {
+    public ResponseEntity<List<Loss>> findByProjectId(@PathVariable(name = "id") Long id) {
         return new ResponseEntity<>(lossService.findByProjectId(id), HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<Loss> insert(@RequestBody LossDto lossDto) {
+    public ResponseEntity<Loss> insert(@RequestBody LossDto lossDto) throws Step1NotFoundException {
         return new ResponseEntity<>(lossService.insert(lossDto), HttpStatus.CREATED);
     }
 

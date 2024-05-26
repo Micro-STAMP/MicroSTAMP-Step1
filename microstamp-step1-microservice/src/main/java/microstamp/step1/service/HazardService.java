@@ -13,7 +13,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Component
 public class HazardService {
@@ -36,12 +35,11 @@ public class HazardService {
                 .orElseThrow(() -> new Step1NotFoundException("Hazard not found with id: " + id));
     }
 
-    public List<Hazard> findByProjectId(Long id) throws Step1NotFoundException {
-        return hazardRepository.findByProjectId(id)
-                .orElseThrow(() -> new Step1NotFoundException("Hazards not found with projectId: " + id));
+    public List<Hazard> findByProjectId(Long id) {
+        return hazardRepository.findByProjectId(id);
     }
 
-    public Hazard insert(HazardDto hazardDto) {
+    public Hazard insert(HazardDto hazardDto) throws Step1NotFoundException {
         Hazard hazard = new Hazard();
         hazard.setName(hazardDto.getName());
 
@@ -92,15 +90,11 @@ public class HazardService {
 
     public void deleteHazardAndChildren(Long id) {
 
-        Optional<List<Hazard>> optionalChildren = hazardRepository.findHazardChildren(id);
+        for (Hazard h : hazardRepository.findHazardChildren(id))
+            deleteHazardAndChildren(h.getId());
 
-        if (optionalChildren.isPresent()) {
-            List<Hazard> children = optionalChildren.get();
-            for (Hazard h : children) {
-                deleteHazardAndChildren(h.getId());
-            }
-        }
-        hazardRepository.deleteLossesAssociated(id);
+        hazardRepository.deleteLossesAssociation(id);
+        hazardRepository.deleteSystemSafetyConstraintsAssociation(id);
         hazardRepository.deleteById(id);
     }
 

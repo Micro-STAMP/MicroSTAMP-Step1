@@ -8,19 +8,22 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Transactional
 @Repository
 public interface HazardRepository extends JpaRepository<Hazard, Long> {
 
     @Query(value = "SELECT * FROM hazards WHERE project_id = ?1", nativeQuery = true)
-    Optional<List<Hazard>> findByProjectId(Long id);
+    List<Hazard> findByProjectId(Long id);
 
     @Query(value = "SELECT * FROM hazards WHERE father_id = ?1", nativeQuery = true)
-    Optional<List<Hazard>> findHazardChildren(Long id);
+    List<Hazard> findHazardChildren(Long id);
 
-    @Modifying(clearAutomatically = true)
+    @Modifying
     @Query(value = "DELETE FROM hazard_loss WHERE hazard_id = ?1", nativeQuery = true)
-    void deleteLossesAssociated(Long id);
+    void deleteLossesAssociation(Long id);
+
+    @Modifying
+    @Query(value = "DELETE FROM system_safety_constraint_hazard WHERE hazard_id = ?1", nativeQuery = true)
+    void deleteSystemSafetyConstraintsAssociation(Long id);
 }

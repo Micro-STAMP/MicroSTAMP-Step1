@@ -30,12 +30,11 @@ public class LossService {
                 .orElseThrow(() -> new Step1NotFoundException("Loss not found with id: " + id));
     }
 
-    public List<Loss> findByProjectId(Long id) throws Step1NotFoundException {
-        return lossRepository.findByProjectId(id)
-                .orElseThrow(() -> new Step1NotFoundException("Losses not found with projectId: " + id));
+    public List<Loss> findByProjectId(Long id) {
+        return lossRepository.findByProjectId(id);
     }
 
-    public Loss insert(LossDto lossDto) {
+    public Loss insert(LossDto lossDto) throws Step1NotFoundException {
         Loss loss = new Loss();
         loss.setName(lossDto.getName());
         Project project = projectRepository.findById(lossDto.getProjectId()).orElseThrow(() -> new Step1NotFoundException("Project not found with id: " + lossDto.getProjectId()));
@@ -55,6 +54,7 @@ public class LossService {
     public void delete(Long id) throws Step1NotFoundException {
         lossRepository.findById(id)
                 .map(record -> {
+                    lossRepository.deleteHazardsAssociation(id);
                     lossRepository.deleteById(id);
                     return ResponseEntity.ok().build();
                 }).orElseThrow(() -> new Step1NotFoundException("Loss not found with id: " + id));

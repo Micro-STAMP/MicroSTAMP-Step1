@@ -6,12 +6,11 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 public interface SystemGoalRepository extends JpaRepository<SystemGoal, Long> {
 
     @Query(value = "SELECT * FROM system_goals WHERE project_id = ?1", nativeQuery = true)
-    Optional<List<SystemGoal>> findByProjectId(Long id);
+    List<SystemGoal> findByProjectId(Long id);
 
 }

@@ -30,12 +30,11 @@ public class SystemGoalService {
                 .orElseThrow(() -> new Step1NotFoundException("SystemGoal not found with id: " + id));
     }
 
-    public List<SystemGoal> findByProjectId(Long id) throws Step1NotFoundException {
-        return systemGoalRepository.findByProjectId(id)
-                .orElseThrow(() -> new Step1NotFoundException("SystemGoals not found with projectId: " + id));
+    public List<SystemGoal> findByProjectId(Long id) {
+        return systemGoalRepository.findByProjectId(id);
     }
 
-    public SystemGoal insert(SystemGoalDto systemGoalDto) {
+    public SystemGoal insert(SystemGoalDto systemGoalDto) throws Step1NotFoundException {
         SystemGoal systemGoal = new SystemGoal();
         systemGoal.setName(systemGoalDto.getName());
         Project project = projectRepository.findById(systemGoalDto.getProjectId()).orElseThrow(() -> new Step1NotFoundException("Project not found with id: " + systemGoalDto.getProjectId()));

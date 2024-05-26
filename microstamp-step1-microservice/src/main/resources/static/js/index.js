@@ -119,7 +119,6 @@ function addChildren(id, backup){
    $.each(backup, function (idx, obj) {
         if(obj.father != null){
             if(obj.father.id == id){
-            console.log(obj);
                 $("#hazardsTable").append("<tr data-tt-id=\"" + obj.id + "\" data-tt-parent-id=\"" + obj.father.id + "\"><td>" + obj.name + "</td><td>" + obj.id + "</td><td><button style='cursor: pointer; border-radius: 5px;' data-toggle='modal' data-target='#editHazardModal' onclick = loadEditHazard(this.id) type='button' id=\"" + obj.id + "\"><span class='fa fa-pencil' aria-hidden='true'></span></button><button style='cursor: pointer; border-radius: 5px;' data-toggle='modal' data-target='#confirmHazardDeleteModal' type='button' id=\"" + obj.id + "\" onclick = loadHazardToBeDeleted(this.id)><span class='fa fa-trash'></span></button></td></tr>");
                 if(obj.lossEntities.length > 0){
                     $("#hazardsTable").append("<tr data-tt-id=\"" + obj.id + "-l" + "\" data-tt-parent-id=\"" + obj.id + "\"><td>" + "Losses Associated" + "</td><td>" + "</td><td></td></tr>");

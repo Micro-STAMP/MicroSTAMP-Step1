@@ -7,8 +7,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import java.util.Collections;
-
 @Controller
 public class PageController {
 
@@ -43,11 +41,11 @@ public class PageController {
 
     @GetMapping("/{projectId:\\d+}")
     public String projectIndexPage(@PathVariable Long projectId, Model model) {
-        model.addAttribute("systemGoals", systemGoalRepository.findByProjectId(projectId).orElseGet(Collections::emptyList));
-        model.addAttribute("assumptions", assumptionRepository.findByProjectId(projectId).orElseGet(Collections::emptyList));
-        model.addAttribute("losses", lossRepository.findByProjectId(projectId).orElseGet(Collections::emptyList));
-        model.addAttribute("hazards", hazardRepository.findByProjectId(projectId).orElseGet(Collections::emptyList));
-        model.addAttribute("systemSafetyConstraints", systemSafetyConstraintRepository.findByProjectId(projectId).orElseGet(Collections::emptyList));
+        model.addAttribute("systemGoals", systemGoalRepository.findByProjectId(projectId));
+        model.addAttribute("assumptions", assumptionRepository.findByProjectId(projectId));
+        model.addAttribute("losses", lossRepository.findByProjectId(projectId));
+        model.addAttribute("hazards", hazardRepository.findByProjectId(projectId));
+        model.addAttribute("systemSafetyConstraints", systemSafetyConstraintRepository.findByProjectId(projectId));
 
         model.addAttribute("project_id", projectId);
 
@@ -56,17 +54,17 @@ public class PageController {
 
     @GetMapping("/guests")
     public String guestsProjects(Model model) {
-        model.addAttribute("projects", projectRepository.findProjectsForGuests().orElseGet(Collections::emptyList));
+        model.addAttribute("projects", projectRepository.findProjectsForGuests());
         return "guestsProjects";
     }
 
     @GetMapping("/guests/{projectId}")
     public String guestsProjectIndexPage(@PathVariable Long projectId, Model model) {
-        model.addAttribute("systemGoals", systemGoalRepository.findByProjectId(projectId).orElseGet(Collections::emptyList));
-        model.addAttribute("assumptions", assumptionRepository.findByProjectId(projectId).orElseGet(Collections::emptyList));
-        model.addAttribute("losses", lossRepository.findByProjectId(projectId).orElseGet(Collections::emptyList));
-        model.addAttribute("hazards", hazardRepository.findByProjectId(projectId).orElseGet(Collections::emptyList));
-        model.addAttribute("systemSafetyConstraints", systemSafetyConstraintRepository.findByProjectId(projectId).orElseGet(Collections::emptyList));
+        model.addAttribute("systemGoals", systemGoalRepository.findByProjectId(projectId));
+        model.addAttribute("assumptions", assumptionRepository.findByProjectId(projectId));
+        model.addAttribute("losses", lossRepository.findByProjectId(projectId));
+        model.addAttribute("hazards", hazardRepository.findByProjectId(projectId));
+        model.addAttribute("systemSafetyConstraints", systemSafetyConstraintRepository.findByProjectId(projectId));
 
         model.addAttribute("project_id", projectId);
 

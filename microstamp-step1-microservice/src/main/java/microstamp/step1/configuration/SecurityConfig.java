@@ -22,7 +22,7 @@ public class SecurityConfig {
     private static final String[] AUTH_WHITELIST = {
             "/login/**",
             "/guests/**",
-            "/guests-request/**",
+            "/guests/**",
             "/static/**",
             "/webjars/**",
             "/assets/**",

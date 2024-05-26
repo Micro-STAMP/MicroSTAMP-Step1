@@ -30,8 +30,8 @@ public class ProjectController {
         return new ResponseEntity<>(projectService.findById(id), HttpStatus.OK);
     }
 
-    @GetMapping("/findByUrl/{url}")
-    public ResponseEntity<Project> findByUrl(@PathVariable(name = "url") String url) throws Step1NotFoundException {
+    @GetMapping("/url/{url}")
+    public ResponseEntity<Project> findByUrl(@PathVariable(name = "url") String url) {
         return new ResponseEntity<>(projectService.findByUrl(url), HttpStatus.OK);
     }
 
@@ -41,7 +41,7 @@ public class ProjectController {
     }
 
     @PostMapping
-    public ResponseEntity<Project> insert(@RequestBody ProjectDto projectDto) {
+    public ResponseEntity<Project> insert(@RequestBody ProjectDto projectDto) throws Step1NotFoundException {
         return new ResponseEntity<>(projectService.insert(projectDto), HttpStatus.CREATED);
     }
 

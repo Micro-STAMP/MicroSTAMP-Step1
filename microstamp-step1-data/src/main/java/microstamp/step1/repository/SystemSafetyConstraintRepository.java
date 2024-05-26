@@ -8,17 +8,16 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Transactional
 @Repository
 public interface SystemSafetyConstraintRepository extends JpaRepository<SystemSafetyConstraint, Long> {
 
     @Query(value = "SELECT * FROM system_safety_constraints WHERE project_id = ?1", nativeQuery = true)
-    Optional<List<SystemSafetyConstraint>> findByProjectId(Long id);
+    List<SystemSafetyConstraint> findByProjectId(Long id);
 
-    @Modifying(clearAutomatically = true)
+    @Modifying
     @Query(value = "DELETE FROM system_safety_constraint_hazard WHERE system_safety_constraint_id = ?1", nativeQuery = true)
-    void deleteHazardsAssociated(Long id);
+    void deleteHazardsAssociation(Long id);
 
 }
