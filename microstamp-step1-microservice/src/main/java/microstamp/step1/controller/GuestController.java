@@ -19,51 +19,36 @@ import java.util.List;
 public class GuestController {
 
     @Autowired
-    private ProjectService projectService;
-
-    @Autowired
-    private SystemGoalService systemGoalService;
-
-    @Autowired
-    private AssumptionService assumptionService;
-
-    @Autowired
-    private LossService lossService;
-
-    @Autowired
-    private HazardService hazardService;
-
-    @Autowired
-    private SystemSafetyConstraintService systemSafetyConstraintService;
+    private GuestService guestService;
 
     @GetMapping("/projects")
     public ResponseEntity<List<Project>> findGuestsProjects() {
-        return new ResponseEntity<>(projectService.findGuestsProjects(), HttpStatus.OK);
+        return new ResponseEntity<>(guestService.findProjects(), HttpStatus.OK);
     }
 
     @GetMapping("/system-goals/project/{id}")
     public ResponseEntity<List<SystemGoal>> findGuestsSystemGoals(@PathVariable(name = "id") Long id) {
-        return new ResponseEntity<>(systemGoalService.findByProjectId(id), HttpStatus.OK);
+        return new ResponseEntity<>(guestService.findSystemGoalsByProjectId(id), HttpStatus.OK);
     }
 
     @GetMapping("/assumptions/project/{id}")
     public ResponseEntity<List<Assumption>> findGuestsAssumptions(@PathVariable(name = "id") Long id) {
-        return new ResponseEntity<>(assumptionService.findByProjectId(id), HttpStatus.OK);
+        return new ResponseEntity<>(guestService.findAssumptionsByProjectId(id), HttpStatus.OK);
     }
 
     @GetMapping("/losses/project/{id}")
     public ResponseEntity<List<Loss>> findGuestsLosses(@PathVariable(name = "id") Long id) {
-        return new ResponseEntity<>(lossService.findByProjectId(id), HttpStatus.OK);
+        return new ResponseEntity<>(guestService.findLossesByProjectId(id), HttpStatus.OK);
     }
 
     @GetMapping("/hazards/project/{id}")
     public ResponseEntity<List<Hazard>> findGuestsHazards(@PathVariable(name = "id") Long id) {
-        return new ResponseEntity<>(hazardService.findByProjectId(id), HttpStatus.OK);
+        return new ResponseEntity<>(guestService.findHazardsByProjectId(id), HttpStatus.OK);
     }
 
     @GetMapping("/system-safety-constraints/project/{id}")
     public ResponseEntity<List<SystemSafetyConstraint>> findGuestsSystemSafetyConstraints(@PathVariable(name = "id") Long id) {
-        return new ResponseEntity<>(systemSafetyConstraintService.findByProjectId(id), HttpStatus.OK);
+        return new ResponseEntity<>(guestService.findSystemSafetyConstraintsByProjectId(id), HttpStatus.OK);
     }
 
 }
