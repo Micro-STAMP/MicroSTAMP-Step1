@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/systemsafetyconstraints")
+@RequestMapping("/system-safety-constraints")
 @Tag(name = "SystemSafetyConstraint")
 public class SystemSafetyConstraintController {
 

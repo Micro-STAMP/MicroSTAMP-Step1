@@ -5,7 +5,7 @@ import lombok.Data;
 
 import java.util.List;
 
-@Entity(name = "system_safety_constraints")
+@Entity(name = "SystemSafetyConstraint")
 @Table(name = "system_safety_constraints")
 @Data
 public class SystemSafetyConstraint {

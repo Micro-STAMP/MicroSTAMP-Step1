@@ -2,7 +2,7 @@ $(window).ready(function () {
     var project_id = $("#project_id").val();
     $.ajax({
         "type": 'get',
-        "url": '/guests/systemgoals/project/' + project_id,
+        "url": '/guests/system-goals/project/' + project_id,
         "dataType": "json",
         "success": function (data) {
             $.each(data, function (idx, obj) {
@@ -82,7 +82,7 @@ $(window).ready(function () {
             var project_id = $("#project_id").val();
             $.ajax({
                 "type": 'get',
-                "url": '/guests/systemsafetyconstraints/project/' + project_id,
+                "url": '/guests/system-safety-constraints/project/' + project_id,
                 "dataType": "json",
                 "success": function (data) {
                     $.each(data, function (idx, obj) {

@@ -15,7 +15,7 @@ function addSystemGoal() {
         $("#namelessRestrictionModal").modal("show");
     }else{
         $.ajax({
-            url: '/systemgoals',
+            url: '/system-goals',
             type: 'post',
             dataType: 'text',
             contentType: 'application/json',
@@ -30,7 +30,7 @@ function addSystemGoal() {
 function loadEditSystemGoal(id){
     systemGoalSelected = id;
     $.ajax({
-        url: '/systemgoals/'+ id,
+        url: '/system-goals/'+ id,
         type: 'get',
         success: function (data) {
             $("#system-goal-edit-name").val(data.name);
@@ -51,7 +51,7 @@ function editSystemGoal() {
         $("#namelessRestrictionModal").modal("show");
     }else{
         $.ajax({
-            url: '/systemgoals/' + systemGoalSelected,
+            url: '/system-goals/' + systemGoalSelected,
             type: 'put',
             dataType: 'text',
             contentType: 'application/json',
@@ -66,7 +66,7 @@ function editSystemGoal() {
 function loadSystemGoalToBeDeleted(id){
     systemGoalToBeDeleted = id;
     $.ajax({
-        url: '/systemgoals/'+ id,
+        url: '/system-goals/'+ id,
         type: 'get',
         success: function (data) {
              $("#system_goal_delete_name").text(data.name);
@@ -76,7 +76,7 @@ function loadSystemGoalToBeDeleted(id){
 
 function deleteSystemGoal(){
     $.ajax({
-        url: '/systemgoals/'+ systemGoalToBeDeleted,
+        url: '/system-goals/'+ systemGoalToBeDeleted,
         type: 'delete',
         success: function (data) {
             location.reload();

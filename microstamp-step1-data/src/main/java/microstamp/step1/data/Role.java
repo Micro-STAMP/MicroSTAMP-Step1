@@ -3,7 +3,7 @@ package microstamp.step1.data;
 import jakarta.persistence.*;
 import lombok.Data;
 
-@Entity(name = "roles")
+@Entity(name = "Role")
 @Table(name = "roles")
 @Data
 public class Role {

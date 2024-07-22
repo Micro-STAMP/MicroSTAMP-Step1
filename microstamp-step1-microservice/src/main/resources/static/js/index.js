@@ -13,7 +13,7 @@ $(window).ready(function () {
 
     $.ajax({
         "type": 'get',
-        "url": '/systemgoals/project/' + project_id,
+        "url": '/system-goals/project/' + project_id,
         "dataType": "json",
         "success": function (data) {
             $.each(data, function (idx, obj) {
@@ -93,7 +93,7 @@ $(window).ready(function () {
         var project_id = $("#project_id").val();
         $.ajax({
             "type": 'get',
-            "url": '/systemsafetyconstraints/project/' + project_id,
+            "url": '/system-safety-constraints/project/' + project_id,
             "dataType": "json",
             "success": function (data) {
                 $.each(data, function (idx, obj) {

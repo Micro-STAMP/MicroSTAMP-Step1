@@ -40,48 +40,55 @@ public class HazardService {
     }
 
     public Hazard insert(HazardDto hazardDto) throws Step1NotFoundException {
+        Project project = projectRepository.findById(hazardDto.getProjectId())
+                .orElseThrow(() -> new Step1NotFoundException("Project not found with id: " + hazardDto.getProjectId()));
+
         Hazard hazard = new Hazard();
         hazard.setName(hazardDto.getName());
 
         List<Loss> lossEntities = new ArrayList<>();
         if (hazardDto.getLossIds() != null) {
             for (Long id : hazardDto.getLossIds())
-                lossEntities.add(lossRepository.findById(id).orElseThrow(() -> new Step1NotFoundException("Loss not found with id: " + id)));
+                lossEntities.add(lossRepository.findById(id)
+                        .orElseThrow(() -> new Step1NotFoundException("Loss not found with id: " + id)));
         }
         hazard.setLossEntities(lossEntities);
 
         if (hazardDto.getFatherId() != null) {
-            Hazard father = hazardRepository.findById(hazardDto.getFatherId()).orElseThrow(() -> new Step1NotFoundException("Hazard not found with id: " + hazardDto.getFatherId()));
+            Hazard father = hazardRepository.findById(hazardDto.getFatherId())
+                    .orElseThrow(() -> new Step1NotFoundException("Hazard not found with id: " + hazardDto.getFatherId()));
             hazard.setFather(father);
         } else {
             hazard.setFather(null);
         }
 
-        Project project = projectRepository.findById(hazardDto.getProjectId()).orElseThrow(() -> new Step1NotFoundException("Project not found with id: " + hazardDto.getProjectId()));
         project.getHazardEntities().add(hazard);
         projectRepository.save(project);
         return hazard;
     }
 
     public void update(Long id, HazardDto hazardDto) throws Step1NotFoundException {
-        hazardRepository.findById(id)
-                .map(record -> {
-                    record.setName(hazardDto.getName());
-                    List<Loss> lossEntities = new ArrayList<>();
-                    if (hazardDto.getLossIds() != null) {
-                        for (Long lossId : hazardDto.getLossIds())
-                            lossEntities.add(lossRepository.findById(lossId).orElseThrow(() -> new Step1NotFoundException("Loss not found with id: " + lossId)));
-                    }
-                    record.setLossEntities(lossEntities);
-                    if (hazardDto.getFatherId() != null) {
-                        Hazard father = hazardRepository.findById(hazardDto.getFatherId()).orElseThrow(() -> new Step1NotFoundException("Hazard not found with id: " + hazardDto.getFatherId()));
-                        record.setFather(father);
-                    } else {
-                        record.setFather(null);
-                    }
+        Hazard hazard = hazardRepository.findById(id)
+                .orElseThrow(() -> new Step1NotFoundException("Hazard not found with id: " + id));
 
-                    return hazardRepository.save(record);
-                }).orElseThrow(() -> new Step1NotFoundException("Hazard not found with id: " + id));
+        hazard.setName(hazardDto.getName());
+        List<Loss> lossEntities = new ArrayList<>();
+        if (hazardDto.getLossIds() != null) {
+            for (Long lossId : hazardDto.getLossIds())
+                lossEntities.add(lossRepository.findById(lossId)
+                        .orElseThrow(() -> new Step1NotFoundException("Loss not found with id: " + lossId)));
+        }
+
+        hazard.setLossEntities(lossEntities);
+        if (hazardDto.getFatherId() != null) {
+            Hazard father = hazardRepository.findById(hazardDto.getFatherId())
+                    .orElseThrow(() -> new Step1NotFoundException("Hazard not found with id: " + hazardDto.getFatherId()));
+            hazard.setFather(father);
+        } else {
+            hazard.setFather(null);
+        }
+
+        hazardRepository.save(hazard);
     }
 
     public void delete(Long id) throws Step1NotFoundException {

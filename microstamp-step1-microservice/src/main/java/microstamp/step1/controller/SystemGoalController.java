@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/systemgoals")
+@RequestMapping("/system-goals")
 @Tag(name = "SystemGoal")
 public class SystemGoalController {
 

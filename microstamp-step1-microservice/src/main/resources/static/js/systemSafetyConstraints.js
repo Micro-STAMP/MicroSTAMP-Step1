@@ -16,7 +16,7 @@ function addSystemSafetyConstraint() {
         $("#namelessRestrictionModal").modal("show");
     }else{
         $.ajax({
-            url: '/systemsafetyconstraints',
+            url: '/system-safety-constraints',
             type: 'post',
             dataType: 'text',
             contentType: 'application/json',
@@ -31,7 +31,7 @@ function addSystemSafetyConstraint() {
 function loadEditSystemSafetyConstraint(id){
     systemSafetyConstraintSelected = id;
     $.ajax({
-        url: '/systemsafetyconstraints/'+ id,
+        url: '/system-safety-constraints/'+ id,
         type: 'get',
         success: function (data) {
             $("#system-safety-constraint-edit-name").val(data.name);
@@ -53,7 +53,7 @@ function editSystemSafetyConstraint() {
         $("#namelessRestrictionModal").modal("show");
     }else{
         $.ajax({
-            url: '/systemsafetyconstraints/' + systemSafetyConstraintSelected,
+            url: '/system-safety-constraints/' + systemSafetyConstraintSelected,
             type: 'put',
             dataType: 'text',
             contentType: 'application/json',
@@ -68,7 +68,7 @@ function editSystemSafetyConstraint() {
 function loadSystemSafetyConstraintToBeDeleted(id){
     systemSafetyConstraintToBeDeleted = id;
     $.ajax({
-        url: '/systemsafetyconstraints/'+ id,
+        url: '/system-safety-constraints/'+ id,
         type: 'get',
         success: function (data) {
              $("#system_safety_constraint_delete_name").text(data.name);
@@ -78,7 +78,7 @@ function loadSystemSafetyConstraintToBeDeleted(id){
 
 function deleteSystemSafetyConstraint(){
     $.ajax({
-        url: '/systemsafetyconstraints/'+ systemSafetyConstraintToBeDeleted,
+        url: '/system-safety-constraints/'+ systemSafetyConstraintToBeDeleted,
         type: 'delete',
         success: function (data) {
             location.reload();

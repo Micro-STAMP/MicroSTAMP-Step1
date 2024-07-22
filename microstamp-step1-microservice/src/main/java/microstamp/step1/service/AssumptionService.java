@@ -7,7 +7,6 @@ import microstamp.step1.exception.Step1NotFoundException;
 import microstamp.step1.repository.AssumptionRepository;
 import microstamp.step1.repository.ProjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -35,27 +34,30 @@ public class AssumptionService {
     }
 
     public Assumption insert(AssumptionDto assumptionDto) throws Step1NotFoundException {
+        Project project = projectRepository.findById(assumptionDto.getProjectId())
+                .orElseThrow(() -> new Step1NotFoundException(("Project not found with id: " + assumptionDto.getProjectId())));
+
         Assumption assumption = new Assumption();
         assumption.setName(assumptionDto.getName());
-        Project project = projectRepository.findById(assumptionDto.getProjectId()).orElseThrow(() -> new Step1NotFoundException(("Project not found with id: " + assumptionDto.getProjectId())));
+
         project.getAssumptionEntities().add(assumption);
         projectRepository.save(project);
+
         return assumption;
     }
 
     public void update(Long id, AssumptionDto assumptionDto) throws Step1NotFoundException {
-        assumptionRepository.findById(id)
-                .map(record -> {
-                    record.setName(assumptionDto.getName());
-                    return assumptionRepository.save(record);
-                }).orElseThrow(() -> new Step1NotFoundException("Assumption not found with id: " + id));
+        Assumption assumption = assumptionRepository.findById(id)
+                .orElseThrow(() -> new Step1NotFoundException("Assumption not found with id: " + id));
+
+        assumption.setName(assumptionDto.getName());
+
+        assumptionRepository.save(assumption);
     }
 
     public void delete(Long id) throws Step1NotFoundException {
-        assumptionRepository.findById(id)
-                .map(record -> {
-                    assumptionRepository.deleteById(id);
-                    return ResponseEntity.ok().build();
-                }).orElseThrow(() -> new Step1NotFoundException("Assumption not found with id: " + id));
+        Assumption assumption = assumptionRepository.findById(id)
+                .orElseThrow(() -> new Step1NotFoundException("Assumption not found with id: " + id));
+        assumptionRepository.deleteById(assumption.getId());
     }
 }

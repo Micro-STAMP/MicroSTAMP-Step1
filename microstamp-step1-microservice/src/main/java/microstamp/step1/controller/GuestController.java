@@ -41,7 +41,7 @@ public class GuestController {
         return new ResponseEntity<>(projectService.findGuestsProjects(), HttpStatus.OK);
     }
 
-    @GetMapping("/systemgoals/project/{id}")
+    @GetMapping("/system-goals/project/{id}")
     public ResponseEntity<List<SystemGoal>> findGuestsSystemGoals(@PathVariable(name = "id") Long id) {
         return new ResponseEntity<>(systemGoalService.findByProjectId(id), HttpStatus.OK);
     }
@@ -61,7 +61,7 @@ public class GuestController {
         return new ResponseEntity<>(hazardService.findByProjectId(id), HttpStatus.OK);
     }
 
-    @GetMapping("/systemsafetyconstraints/project/{id}")
+    @GetMapping("/system-safety-constraints/project/{id}")
     public ResponseEntity<List<SystemSafetyConstraint>> findGuestsSystemSafetyConstraints(@PathVariable(name = "id") Long id) {
         return new ResponseEntity<>(systemSafetyConstraintService.findByProjectId(id), HttpStatus.OK);
     }

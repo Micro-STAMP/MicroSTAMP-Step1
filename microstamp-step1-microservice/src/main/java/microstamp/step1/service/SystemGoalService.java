@@ -7,7 +7,6 @@ import microstamp.step1.exception.Step1NotFoundException;
 import microstamp.step1.repository.ProjectRepository;
 import microstamp.step1.repository.SystemGoalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -35,28 +34,30 @@ public class SystemGoalService {
     }
 
     public SystemGoal insert(SystemGoalDto systemGoalDto) throws Step1NotFoundException {
+        Project project = projectRepository.findById(systemGoalDto.getProjectId())
+                .orElseThrow(() -> new Step1NotFoundException("Project not found with id: " + systemGoalDto.getProjectId()));
+
         SystemGoal systemGoal = new SystemGoal();
         systemGoal.setName(systemGoalDto.getName());
-        Project project = projectRepository.findById(systemGoalDto.getProjectId()).orElseThrow(() -> new Step1NotFoundException("Project not found with id: " + systemGoalDto.getProjectId()));
+
         project.getSystemGoalEntities().add(systemGoal);
         projectRepository.save(project);
+
         return systemGoal;
     }
 
     public void update(Long id, SystemGoalDto systemGoalDto) throws Step1NotFoundException {
-        systemGoalRepository.findById(id)
-                .map(record -> {
-                    record.setName(systemGoalDto.getName());
-                    return systemGoalRepository.save(record);
-                }).orElseThrow(() -> new Step1NotFoundException("SystemGoal not found with id: " + id));
+        SystemGoal systemGoal = systemGoalRepository.findById(id)
+                .orElseThrow(() -> new Step1NotFoundException("SystemGoal not found with id: " + id));
+
+        systemGoal.setName(systemGoalDto.getName());
+
+        systemGoalRepository.save(systemGoal);
     }
 
     public void delete(Long id) throws Step1NotFoundException {
-        systemGoalRepository.findById(id)
-                .map(record -> {
-                    systemGoalRepository.deleteById(id);
-                    return ResponseEntity.ok().build();
-                }).orElseThrow(() -> new Step1NotFoundException("SystemGoal not found with id: " + id));
+        SystemGoal systemGoal = systemGoalRepository.findById(id)
+                .orElseThrow(() -> new Step1NotFoundException("SystemGoal not found with id: " + id));
+        systemGoalRepository.deleteById(systemGoal.getId());
     }
-
 }

@@ -7,7 +7,6 @@ import microstamp.step1.exception.Step1NotFoundException;
 import microstamp.step1.repository.LossRepository;
 import microstamp.step1.repository.ProjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -35,29 +34,30 @@ public class LossService {
     }
 
     public Loss insert(LossDto lossDto) throws Step1NotFoundException {
+        Project project = projectRepository.findById(lossDto.getProjectId())
+                .orElseThrow(() -> new Step1NotFoundException("Project not found with id: " + lossDto.getProjectId()));
+
         Loss loss = new Loss();
         loss.setName(lossDto.getName());
-        Project project = projectRepository.findById(lossDto.getProjectId()).orElseThrow(() -> new Step1NotFoundException("Project not found with id: " + lossDto.getProjectId()));
+
         project.getLossEntities().add(loss);
         projectRepository.save(project);
+
         return loss;
     }
 
     public void update(Long id, LossDto lossDto) throws Step1NotFoundException {
-        lossRepository.findById(id)
-                .map(record -> {
-                    record.setName(lossDto.getName());
-                    return lossRepository.save(record);
-                }).orElseThrow(() -> new Step1NotFoundException("Loss not found with id: " + id));
+        Loss loss = lossRepository.findById(id)
+                .orElseThrow(() -> new Step1NotFoundException("Loss not found with id: " + id));
+
+        loss.setName(lossDto.getName());
+
+        lossRepository.save(loss);
     }
 
     public void delete(Long id) throws Step1NotFoundException {
-        lossRepository.findById(id)
-                .map(record -> {
-                    lossRepository.deleteHazardsAssociation(id);
-                    lossRepository.deleteById(id);
-                    return ResponseEntity.ok().build();
-                }).orElseThrow(() -> new Step1NotFoundException("Loss not found with id: " + id));
+        Loss loss = lossRepository.findById(id)
+                .orElseThrow(() -> new Step1NotFoundException("Loss not found with id: " + id));
+        lossRepository.deleteById(loss.getId());
     }
-
 }
