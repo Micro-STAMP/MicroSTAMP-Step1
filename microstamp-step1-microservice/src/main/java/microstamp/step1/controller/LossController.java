@@ -1,6 +1,7 @@
 package microstamp.step1.controller;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import microstamp.step1.data.Loss;
 import microstamp.step1.dto.LossDto;
 import microstamp.step1.exception.Step1NotFoundException;
@@ -36,12 +37,12 @@ public class LossController {
     }
 
     @PostMapping
-    public ResponseEntity<Loss> insert(@RequestBody LossDto lossDto) throws Step1NotFoundException {
+    public ResponseEntity<Loss> insert(@Valid @RequestBody LossDto lossDto) throws Step1NotFoundException {
         return new ResponseEntity<>(lossService.insert(lossDto), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> update(@PathVariable(name = "id") Long id, @RequestBody LossDto lossDto) throws Step1NotFoundException {
+    public ResponseEntity<Void> update(@PathVariable(name = "id") Long id, @Valid @RequestBody LossDto lossDto) throws Step1NotFoundException {
         lossService.update(id, lossDto);
         return new ResponseEntity<>(HttpStatus.OK);
     }

@@ -1,6 +1,7 @@
 package microstamp.step1.controller;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import microstamp.step1.data.Assumption;
 import microstamp.step1.dto.AssumptionDto;
 import microstamp.step1.exception.Step1NotFoundException;
@@ -36,12 +37,12 @@ public class AssumptionController {
     }
 
     @PostMapping
-    public ResponseEntity<Assumption> insert(@RequestBody AssumptionDto assumptionDto) throws Step1NotFoundException {
+    public ResponseEntity<Assumption> insert(@Valid @RequestBody AssumptionDto assumptionDto) throws Step1NotFoundException {
         return new ResponseEntity<>(assumptionService.insert(assumptionDto), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> update(@PathVariable(name = "id") Long id, @RequestBody AssumptionDto assumptionDto) throws Step1NotFoundException {
+    public ResponseEntity<Void> update(@PathVariable(name = "id") Long id, @Valid @RequestBody AssumptionDto assumptionDto) throws Step1NotFoundException {
         assumptionService.update(id, assumptionDto);
         return new ResponseEntity<>(HttpStatus.OK);
     }

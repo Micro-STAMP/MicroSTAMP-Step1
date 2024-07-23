@@ -7,24 +7,16 @@ function addSystemGoal() {
         projectId: $("#project_id").val(),
     }
 
-    $('#target').html('sending..');
-
-    if($("#system-goal-name").val() == ""){
-        $("#addSystemGoalModal").modal("hide");
-        actual_modal = 0;
-        $("#namelessRestrictionModal").modal("show");
-    }else{
-        $.ajax({
-            url: '/system-goals',
-            type: 'post',
-            dataType: 'text',
-            contentType: 'application/json',
-            success: function (data) {
-                location.reload();
-            },
-            data: JSON.stringify(systemGoal)
-        });
-    }
+    $.ajax({
+        url: '/system-goals',
+        type: 'post',
+        dataType: 'text',
+        contentType: 'application/json',
+        success: function (data) {
+            location.reload();
+        },
+        data: JSON.stringify(systemGoal)
+    });
 }
 
 function loadEditSystemGoal(id){
@@ -43,24 +35,16 @@ function editSystemGoal() {
         name: $("#system-goal-edit-name").val(),
     }
 
-    $('#target').html('sending..');
-
-    if($("#system-goal-edit-name").val() == ""){
-        $("#editSystemGoalModal").modal("hide");
-        actual_modal = 1;
-        $("#namelessRestrictionModal").modal("show");
-    }else{
-        $.ajax({
-            url: '/system-goals/' + systemGoalSelected,
-            type: 'put',
-            dataType: 'text',
-            contentType: 'application/json',
-            success: function (data) {
-                location.reload();
-            },
-            data: JSON.stringify(systemGoal)
-        });
-    }
+    $.ajax({
+        url: '/system-goals/' + systemGoalSelected,
+        type: 'put',
+        dataType: 'text',
+        contentType: 'application/json',
+        success: function (data) {
+            location.reload();
+        },
+        data: JSON.stringify(systemGoal)
+    });
 }
 
 function loadSystemGoalToBeDeleted(id){

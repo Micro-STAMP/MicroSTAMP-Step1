@@ -8,24 +8,16 @@ function addSystemSafetyConstraint() {
         hazardsId: $("#system-safety-constraint-hazards").val(),
     }
 
-    $('#target').html('sending..');
-
-    if($("#system-safety-constraint-name").val() == ""){
-        $("#addSystemSafetyConstraintModal").modal("hide");
-        actual_modal = 0;
-        $("#namelessRestrictionModal").modal("show");
-    }else{
-        $.ajax({
-            url: '/system-safety-constraints',
-            type: 'post',
-            dataType: 'text',
-            contentType: 'application/json',
-            success: function (data) {
-                location.reload();
-            },
-            data: JSON.stringify(systemSafetyConstraint)
-        });
-    }
+    $.ajax({
+        url: '/system-safety-constraints',
+        type: 'post',
+        dataType: 'text',
+        contentType: 'application/json',
+        success: function (data) {
+            location.reload();
+        },
+        data: JSON.stringify(systemSafetyConstraint)
+    });
 }
 
 function loadEditSystemSafetyConstraint(id){
@@ -45,24 +37,16 @@ function editSystemSafetyConstraint() {
         hazardsId: $("#system-safety-constraint-edit-hazards").val(),
     }
 
-    $('#target').html('sending..');
-
-    if($("#system-safety-constraint-edit-name").val() == ""){
-        $("#editSystemSafetyConstraintModal").modal("hide");
-        actual_modal = 1;
-        $("#namelessRestrictionModal").modal("show");
-    }else{
-        $.ajax({
-            url: '/system-safety-constraints/' + systemSafetyConstraintSelected,
-            type: 'put',
-            dataType: 'text',
-            contentType: 'application/json',
-            success: function (data) {
-                location.reload();
-            },
-            data: JSON.stringify(systemSafetyConstraint)
-        });
-    }
+    $.ajax({
+        url: '/system-safety-constraints/' + systemSafetyConstraintSelected,
+        type: 'put',
+        dataType: 'text',
+        contentType: 'application/json',
+        success: function (data) {
+            location.reload();
+        },
+        data: JSON.stringify(systemSafetyConstraint)
+    });
 }
 
 function loadSystemSafetyConstraintToBeDeleted(id){

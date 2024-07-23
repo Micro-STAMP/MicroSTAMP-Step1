@@ -1,6 +1,7 @@
 package microstamp.step1.controller;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import microstamp.step1.data.SystemSafetyConstraint;
 import microstamp.step1.dto.SystemSafetyConstraintDto;
 import microstamp.step1.exception.Step1NotFoundException;
@@ -36,12 +37,12 @@ public class SystemSafetyConstraintController {
     }
 
     @PostMapping
-    public ResponseEntity<SystemSafetyConstraint> insert(@RequestBody SystemSafetyConstraintDto systemSafetyConstraintDto) throws Step1NotFoundException {
+    public ResponseEntity<SystemSafetyConstraint> insert(@Valid @RequestBody SystemSafetyConstraintDto systemSafetyConstraintDto) throws Step1NotFoundException {
         return new ResponseEntity<>(systemSafetyConstraintService.insert(systemSafetyConstraintDto), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> update(@PathVariable(name = "id") Long id, @RequestBody SystemSafetyConstraintDto systemSafetyConstraintDto) throws Step1NotFoundException {
+    public ResponseEntity<Void> update(@PathVariable(name = "id") Long id, @Valid @RequestBody SystemSafetyConstraintDto systemSafetyConstraintDto) throws Step1NotFoundException {
         systemSafetyConstraintService.update(id, systemSafetyConstraintDto);
         return new ResponseEntity<>(HttpStatus.OK);
     }

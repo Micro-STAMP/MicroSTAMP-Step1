@@ -96,10 +96,6 @@
                         <label class="col-form-label" for="project-edit-name">Name:</label>
                         <input class="form-control" id="project-edit-name" type="text">
                     </div>
-                    <!--<div class="form-group">
-                        <label for="project-edit-description" class="col-form-label">Description:</label>
-                        <input type="text" class="form-control" id="project-edit-description">
-                    </div>-->
                 </form>
             </div>
             <div class="modal-footer">
@@ -133,27 +129,7 @@
     </div>
 </div>
 
-<div aria-hidden="true" class="modal fade" id="namelessRestrictionModal" role="dialog" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Exception</h5>
-                <button aria-label="Close" class="close" data-dismiss="modal" onclick=returnNamelessRestriction()
-                        type="button">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                Exception: can't create a Project without a name !
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary" data-dismiss="modal" onclick=returnNamelessRestriction()
-                        type="button">Close
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
+<div th:insert="~{modals/error_modals.html :: errorModal}"></div>
 
 <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
 <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
@@ -161,6 +137,7 @@
 <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
 
 <script th:src="@{/js/project.js}"></script>
+<script th:src="@{/js/restrictions.js}"></script>
 
 <script src="/assets/jquery-treetable/jquery.treetable.js"></script>
 </body>

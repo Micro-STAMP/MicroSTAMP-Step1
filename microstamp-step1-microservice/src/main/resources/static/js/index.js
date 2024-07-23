@@ -1,12 +1,4 @@
-var actual_modal; // 0 -> addProject 1 -> editProject //control the restrictions return
-
-function returnNamelessRestriction(){
-    $("#namelessRestrictionModal").modal("hide");
-    if(actual_modal == 0)
-        $("#addSystemGoalModal").modal("show");
-    else
-        $("#editSystemGoalModal").modal("show");
-}
+var lastOpenedModal;
 
 $(window).ready(function () {
     var project_id = $("#project_id").val();
@@ -111,6 +103,18 @@ $(window).ready(function () {
                 });
             }
         });
+    });
+
+    $(".modal").on("show.bs.modal", function (e) {
+        if($(this).attr('id') !== "errorModal"){
+            lastOpenedModal = $(this).attr('id');
+        }
+    });
+
+    $("#errorModal").on("hidden.bs.modal", function () {
+        if (lastOpenedModal) {
+            $("#" + lastOpenedModal).modal("show");
+        }
     });
 
 });

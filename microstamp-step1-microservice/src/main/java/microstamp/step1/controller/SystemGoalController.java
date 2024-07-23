@@ -1,6 +1,7 @@
 package microstamp.step1.controller;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import microstamp.step1.data.SystemGoal;
 import microstamp.step1.dto.SystemGoalDto;
 import microstamp.step1.exception.Step1NotFoundException;
@@ -36,12 +37,12 @@ public class SystemGoalController {
     }
 
     @PostMapping
-    public ResponseEntity<SystemGoal> insert(@RequestBody SystemGoalDto systemGoalDto) throws Step1NotFoundException {
+    public ResponseEntity<SystemGoal> insert(@Valid @RequestBody SystemGoalDto systemGoalDto) throws Step1NotFoundException {
         return new ResponseEntity<>(systemGoalService.insert(systemGoalDto), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> update(@PathVariable(name = "id") Long id, @RequestBody SystemGoalDto systemGoalDto) throws Step1NotFoundException {
+    public ResponseEntity<Void> update(@PathVariable(name = "id") Long id, @Valid @RequestBody SystemGoalDto systemGoalDto) throws Step1NotFoundException {
         systemGoalService.update(id, systemGoalDto);
         return new ResponseEntity<>(HttpStatus.OK);
     }

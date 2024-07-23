@@ -171,29 +171,6 @@
     </div>
 </div>
 
-<div aria-hidden="true" class="modal fade" id="namelessRestrictionModal" role="dialog" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Exception</h5>
-                <button aria-label="Close" class="close" data-dismiss="modal" onclick=returnNamelessRestriction()
-                        type="button">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                Exception: can't create a entity without a name !
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary" data-dismiss="modal" onclick=returnNamelessRestriction()
-                        type="button">Close
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
-
-
 <div aria-hidden="true" class="modal fade" id="addSystemGoalModal" role="dialog" tabindex="-1">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -607,6 +584,7 @@
     </div>
 </div>
 
+<div th:insert="~{modals/error_modals.html :: errorModal}"></div>
 
 <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
 <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
@@ -621,6 +599,7 @@
 <script th:src="@{/js/losses.js}"></script>
 <script th:src="@{/js/hazards.js}"></script>
 <script th:src="@{/js/systemSafetyConstraints.js}"></script>
+<script th:src="@{/js/restrictions.js}"></script>
 
 </body>
 </html>
