@@ -5,6 +5,7 @@ import microstamp.step1.data.Loss;
 import microstamp.step1.data.Project;
 import microstamp.step1.dto.HazardDto;
 import microstamp.step1.exception.Step1NotFoundException;
+import microstamp.step1.exception.Step1SelfParentingHazardException;
 import microstamp.step1.repository.HazardRepository;
 import microstamp.step1.repository.LossRepository;
 import microstamp.step1.repository.ProjectRepository;
@@ -81,6 +82,10 @@ public class HazardService {
 
         hazard.setLossEntities(lossEntities);
         if (hazardDto.getFatherId() != null) {
+
+            if (hazardDto.getFatherId().equals(id))
+                throw new Step1SelfParentingHazardException();
+
             Hazard father = hazardRepository.findById(hazardDto.getFatherId())
                     .orElseThrow(() -> new Step1NotFoundException("Hazard not found with id: " + hazardDto.getFatherId()));
             hazard.setFather(father);
