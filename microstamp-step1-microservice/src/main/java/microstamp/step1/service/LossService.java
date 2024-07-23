@@ -58,6 +58,7 @@ public class LossService {
     public void delete(Long id) throws Step1NotFoundException {
         Loss loss = lossRepository.findById(id)
                 .orElseThrow(() -> new Step1NotFoundException("Loss not found with id: " + id));
+        lossRepository.deleteHazardsAssociation(id);
         lossRepository.deleteById(loss.getId());
     }
 }

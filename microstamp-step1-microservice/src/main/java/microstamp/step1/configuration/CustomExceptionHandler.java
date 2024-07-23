@@ -1,9 +1,6 @@
 package microstamp.step1.configuration;
 
-import microstamp.step1.exception.Step1Error;
-import microstamp.step1.exception.Step1ErrorResponse;
-import microstamp.step1.exception.Step1NotFoundException;
-import microstamp.step1.exception.Step1SelfParentingHazardException;
+import microstamp.step1.exception.*;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -42,6 +39,14 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
         errorResponse.addError(new Step1Error(ex.getClass().getSimpleName(),"NotFound",ex.getMessage()));
         return handleExceptionInternal(ex, errorResponse,
                 new HttpHeaders(), HttpStatus.NOT_FOUND, request);
+    }
+
+    @ExceptionHandler(value = { Step1OrphanException.class })
+    protected ResponseEntity<Object> handleStep1Orphan(Step1OrphanException ex, WebRequest request) {
+        Step1ErrorResponse errorResponse = new Step1ErrorResponse();
+        errorResponse.addError(new Step1Error(ex.getClass().getSimpleName(),"OrphanException",ex.getMessage()));
+        return handleExceptionInternal(ex, errorResponse,
+                new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
 
     @ExceptionHandler(value = { Step1SelfParentingHazardException.class })
