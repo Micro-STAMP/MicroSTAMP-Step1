@@ -1,7 +1,7 @@
 package microstamp.step1.configuration;
 
-import microstamp.step1.data.RoleEntity;
-import microstamp.step1.data.UserEntity;
+import microstamp.step1.data.Role;
+import microstamp.step1.data.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,20 +13,20 @@ import java.util.Set;
 
 public class MyUserDetails implements UserDetails {
 
-    private UserEntity user;
+    private final User user;
 
-    public MyUserDetails(UserEntity user){
+    public MyUserDetails(User user) {
         this.user = user;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-       Set<RoleEntity> roles = user.getRoles();
-       List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+        Set<Role> roles = user.getRoles();
+        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
 
-       for(RoleEntity role : roles){
-           authorities.add(new SimpleGrantedAuthority(role.getName()));
-       }
+        for (Role role : roles) {
+            authorities.add(new SimpleGrantedAuthority(role.getName()));
+        }
         return authorities;
     }
 
@@ -60,15 +60,7 @@ public class MyUserDetails implements UserDetails {
         return user.isEnabled();
     }
 
-    public long getUserId(){
+    public long getUserId() {
         return user.getId();
-    }
-
-    public UserEntity getUser() {
-        return user;
-    }
-
-    public void setUser(UserEntity user) {
-        this.user = user;
     }
 }

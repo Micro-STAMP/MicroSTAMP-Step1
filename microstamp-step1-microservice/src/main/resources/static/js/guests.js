@@ -1,7 +1,7 @@
 $(window).ready(function () {
     $.ajax({
         "type": 'get',
-        "url": '/guests-request/projects/',
+        "url": '/guests/projects',
         "dataType": "json",
         "success": function (data) {
             $.each(data, function (idx, obj) {

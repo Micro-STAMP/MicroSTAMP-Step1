@@ -11,41 +11,41 @@ import org.springframework.web.bind.annotation.PathVariable;
 public class PageController {
 
     @Autowired
-    private ProjectEntityRepository projectEntityRepository;
+    private ProjectRepository projectRepository;
 
     @Autowired
-    private SystemGoalEntityRepository systemGoalEntityRepository;
+    private SystemGoalRepository systemGoalRepository;
 
     @Autowired
-    private AssumptionEntityRepository assumptionEntityRepository;
+    private AssumptionRepository assumptionRepository;
 
     @Autowired
-    private LossEntityRepository lossEntityRepository;
+    private LossRepository lossRepository;
 
     @Autowired
-    private HazardEntityRepository hazardEntityRepository;
+    private HazardRepository hazardRepository;
 
     @Autowired
-    private SystemSafetyConstraintEntityRepository systemSafetyConstraintEntityRepository;
+    private SystemSafetyConstraintRepository systemSafetyConstraintRepository;
 
     @GetMapping("/home")
-    public String projects(Model model){
-        model.addAttribute("projects", projectEntityRepository.findAll());
+    public String projects(Model model) {
+        model.addAttribute("projects", projectRepository.findAll());
         return "projects";
     }
 
     @GetMapping("/")
-    public String redirectHome(Model model){
+    public String redirectHome(Model model) {
         return projects(model);
     }
 
-    @GetMapping("/{projectId}")
-    public String projectIndexPage(@PathVariable Long projectId, Model model){
-        model.addAttribute("systemGoals", systemGoalEntityRepository.findByProjectId(projectId).get());
-        model.addAttribute("assumptions", assumptionEntityRepository.findByProjectId(projectId).get());
-        model.addAttribute("losses", lossEntityRepository.findByProjectId(projectId).get());
-        model.addAttribute("hazards", hazardEntityRepository.findByProjectId(projectId).get());
-        model.addAttribute("systemSafetyConstraints", systemSafetyConstraintEntityRepository.findByProjectId(projectId).get());
+    @GetMapping("/{projectId:\\d+}")
+    public String projectIndexPage(@PathVariable Long projectId, Model model) {
+        model.addAttribute("systemGoals", systemGoalRepository.findByProjectId(projectId));
+        model.addAttribute("assumptions", assumptionRepository.findByProjectId(projectId));
+        model.addAttribute("losses", lossRepository.findByProjectId(projectId));
+        model.addAttribute("hazards", hazardRepository.findByProjectId(projectId));
+        model.addAttribute("systemSafetyConstraints", systemSafetyConstraintRepository.findByProjectId(projectId));
 
         model.addAttribute("project_id", projectId);
 
@@ -53,22 +53,21 @@ public class PageController {
     }
 
     @GetMapping("/guests")
-    public String guestsProjects(Model model){
-        model.addAttribute("projects", projectEntityRepository.findProjectsForGuests().get());
+    public String guestsProjects(Model model) {
+        model.addAttribute("projects", projectRepository.findProjectsForGuests());
         return "guestsProjects";
     }
 
     @GetMapping("/guests/{projectId}")
-    public String guestsProjectIndexPage(@PathVariable Long projectId, Model model){
-        model.addAttribute("systemGoals", systemGoalEntityRepository.findByProjectId(projectId).get());
-        model.addAttribute("assumptions", assumptionEntityRepository.findByProjectId(projectId).get());
-        model.addAttribute("losses", lossEntityRepository.findByProjectId(projectId).get());
-        model.addAttribute("hazards", hazardEntityRepository.findByProjectId(projectId).get());
-        model.addAttribute("systemSafetyConstraints", systemSafetyConstraintEntityRepository.findByProjectId(projectId).get());
+    public String guestsProjectIndexPage(@PathVariable Long projectId, Model model) {
+        model.addAttribute("systemGoals", systemGoalRepository.findByProjectId(projectId));
+        model.addAttribute("assumptions", assumptionRepository.findByProjectId(projectId));
+        model.addAttribute("losses", lossRepository.findByProjectId(projectId));
+        model.addAttribute("hazards", hazardRepository.findByProjectId(projectId));
+        model.addAttribute("systemSafetyConstraints", systemSafetyConstraintRepository.findByProjectId(projectId));
 
         model.addAttribute("project_id", projectId);
 
         return "guestsProjectIndex";
     }
-
 }

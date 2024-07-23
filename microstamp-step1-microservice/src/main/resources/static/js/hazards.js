@@ -9,24 +9,16 @@ function addHazard() {
         fatherId: $("#hazard-father").val(),
     }
 
-    $('#target').html('sending..');
-
-    if($("#hazard-name").val() == ""){
-        $("#addHazardModal").modal("hide");
-        actual_modal = 0;
-        $("#namelessRestrictionModal").modal("show");
-    }else{
-        $.ajax({
-            url: '/hazards',
-            type: 'post',
-            dataType: 'text',
-            contentType: 'application/json',
-            success: function (data) {
-                location.reload();
-            },
-            data: JSON.stringify(hazard)
-        });
-    }
+    $.ajax({
+        url: '/hazards',
+        type: 'post',
+        dataType: 'text',
+        contentType: 'application/json',
+        success: function (data) {
+            location.reload();
+        },
+        data: JSON.stringify(hazard)
+    });
 }
 
 function loadEditHazard(id){
@@ -53,24 +45,16 @@ function editHazard() {
         fatherId: $("#hazard-edit-father").val(),
     }
 
-    $('#target').html('sending..');
-
-    if($("#hazard-edit-name").val() == ""){
-        $("#editHazardModal").modal("hide");
-        actual_modal = 1;
-        $("#namelessRestrictionModal").modal("show");
-    }else{
-        $.ajax({
-            url: '/hazards/' + hazardSelected,
-            type: 'put',
-            dataType: 'text',
-            contentType: 'application/json',
-            success: function (data) {
-                location.reload();
-            },
-            data: JSON.stringify(hazard)
-        });
-    }
+    $.ajax({
+        url: '/hazards/' + hazardSelected,
+        type: 'put',
+        dataType: 'text',
+        contentType: 'application/json',
+        success: function (data) {
+            location.reload();
+        },
+        data: JSON.stringify(hazard)
+    });
 }
 
 function loadHazardToBeDeleted(id){

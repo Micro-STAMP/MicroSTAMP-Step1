@@ -2,7 +2,7 @@ $(window).ready(function () {
     var project_id = $("#project_id").val();
     $.ajax({
         "type": 'get',
-        "url": '/guests-request/systemgoals/' + project_id,
+        "url": '/guests/system-goals/project/' + project_id,
         "dataType": "json",
         "success": function (data) {
             $.each(data, function (idx, obj) {
@@ -19,7 +19,7 @@ $(window).ready(function () {
 
     $.ajax({
         "type": 'get',
-        "url": '/guests-request/assumptions/' + project_id,
+        "url": '/guests/assumptions/project/' + project_id,
         "dataType": "json",
         "success": function (data) {
             $.each(data, function (idx, obj) {
@@ -36,7 +36,7 @@ $(window).ready(function () {
 
     $.ajax({
         "type": 'get',
-        "url": '/guests-request/losses/' + project_id,
+        "url": '/guests/losses/project/' + project_id,
         "dataType": "json",
         "success": function (data) {
             $.each(data, function (idx, obj) {
@@ -53,7 +53,7 @@ $(window).ready(function () {
 
     $.ajax({
         "type": 'get',
-        "url": '/guests-request/hazards/' + project_id,
+        "url": '/guests/hazards/project/' + project_id,
         "dataType": "json",
         "success": function (data) {
             var backup = data;
@@ -82,7 +82,7 @@ $(window).ready(function () {
             var project_id = $("#project_id").val();
             $.ajax({
                 "type": 'get',
-                "url": '/guests-request/systemsafetyconstraints/' + project_id,
+                "url": '/guests/system-safety-constraints/project/' + project_id,
                 "dataType": "json",
                 "success": function (data) {
                     $.each(data, function (idx, obj) {

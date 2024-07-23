@@ -1,7 +1,6 @@
 var projectSelected;
 var projectToBeDeleted;
-
-var actual_modal; // 0 -> addProject 1 -> editProject //control the restrictions return
+var lastOpenedModal;
 
 $(window).ready(function () {
     var user_id = document.getElementById("user_id").innerText;
@@ -21,35 +20,39 @@ $(window).ready(function () {
             });
         }
     });
+
+    $(".modal").on("show.bs.modal", function (e) {
+        if($(this).attr('id') !== "errorModal"){
+            lastOpenedModal = $(this).attr('id');
+        }
+    });
+
+    $("#errorModal").on("hidden.bs.modal", function () {
+        if (lastOpenedModal) {
+            $("#" + lastOpenedModal).modal("show");
+        }
+    });
 });
 
 function addProject() {
     var project = {
         name: $("#project-name").val(),
-        description: "",//$("#project-description").val(),
+        description: "",
         url: null,
         type: null,
         userId: document.getElementById("user_id").innerText,
     }
 
-    $('#target').html('sending..');
-
-    if($("#project-name").val() == ""){
-        $("#addProjectModal").modal("hide");
-        actual_modal = 0;
-        $("#namelessRestrictionModal").modal("show");
-    }else{
-        $.ajax({
-            url: '/projects',
-            type: 'post',
-            dataType: 'text',
-            contentType: 'application/json',
-            success: function (data) {
-                location.reload();
-            },
-            data: JSON.stringify(project)
-        });
-    }
+    $.ajax({
+        url: '/projects',
+        type: 'post',
+        dataType: 'text',
+        contentType: 'application/json',
+        success: function (data) {
+            location.reload();
+        },
+        data: JSON.stringify(project)
+    });
 }
 
 function loadEditProject(id){
@@ -59,7 +62,6 @@ function loadEditProject(id){
         type: 'get',
         success: function (data) {
             $("#project-edit-name").val(data.name);
-            //$("#project-edit-description").val(data.description);
         },
     });
 }
@@ -67,27 +69,19 @@ function loadEditProject(id){
 function editProject() {
     var project = {
         name: $("#project-edit-name").val(),
-        description: "",//$("#project-edit-description").val(),
+        description: "",
     }
 
-    $('#target').html('sending..');
-
-    if($("#project-edit-name").val() == ""){
-        $("#editProjectModal").modal("hide");
-        actual_modal = 1;
-        $("#namelessRestrictionModal").modal("show");
-    }else{
-        $.ajax({
-            url: '/projects/' + projectSelected,
-            type: 'put',
-            dataType: 'text',
-            contentType: 'application/json',
-            success: function (data) {
-                location.reload();
-            },
-            data: JSON.stringify(project)
-        });
-    }
+    $.ajax({
+        url: '/projects/' + projectSelected,
+        type: 'put',
+        dataType: 'text',
+        contentType: 'application/json',
+        success: function (data) {
+            location.reload();
+        },
+        data: JSON.stringify(project)
+    });
 }
 
 function loadProjectToBeDeleted(id){
@@ -109,12 +103,4 @@ function deleteProject(){
             location.reload();
         },
     });
-}
-
-function returnNamelessRestriction(){
-    $("#namelessRestrictionModal").modal("hide");
-    if(actual_modal == 0)
-        $("#addProjectModal").modal("show");
-    else
-        $("#editProjectModal").modal("show");
 }

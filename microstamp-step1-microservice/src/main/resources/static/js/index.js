@@ -1,19 +1,11 @@
-var actual_modal; // 0 -> addProject 1 -> editProject //control the restrictions return
-
-function returnNamelessRestriction(){
-    $("#namelessRestrictionModal").modal("hide");
-    if(actual_modal == 0)
-        $("#addSystemGoalModal").modal("show");
-    else
-        $("#editSystemGoalModal").modal("show");
-}
+var lastOpenedModal;
 
 $(window).ready(function () {
     var project_id = $("#project_id").val();
 
     $.ajax({
         "type": 'get',
-        "url": '/systemgoals/findByProjectId/' + project_id,
+        "url": '/system-goals/project/' + project_id,
         "dataType": "json",
         "success": function (data) {
             $.each(data, function (idx, obj) {
@@ -30,7 +22,7 @@ $(window).ready(function () {
 
     $.ajax({
         "type": 'get',
-        "url": '/assumptions/findByProjectId/' + project_id,
+        "url": '/assumptions/project/' + project_id,
         "dataType": "json",
         "success": function (data) {
             $.each(data, function (idx, obj) {
@@ -47,7 +39,7 @@ $(window).ready(function () {
 
     $.ajax({
         "type": 'get',
-        "url": '/losses/findByProjectId/' + project_id,
+        "url": '/losses/project/' + project_id,
         "dataType": "json",
         "success": function (data) {
             $.each(data, function (idx, obj) {
@@ -64,7 +56,7 @@ $(window).ready(function () {
 
    $.ajax({
         "type": 'get',
-        "url": '/hazards/findByProjectId/' + project_id,
+        "url": '/hazards/project/' + project_id,
         "dataType": "json",
         "success": function (data) {
             var backup = data;
@@ -93,7 +85,7 @@ $(window).ready(function () {
         var project_id = $("#project_id").val();
         $.ajax({
             "type": 'get',
-            "url": '/systemsafetyconstraints/findByProjectId/' + project_id,
+            "url": '/system-safety-constraints/project/' + project_id,
             "dataType": "json",
             "success": function (data) {
                 $.each(data, function (idx, obj) {
@@ -113,13 +105,24 @@ $(window).ready(function () {
         });
     });
 
+    $(".modal").on("show.bs.modal", function (e) {
+        if($(this).attr('id') !== "errorModal"){
+            lastOpenedModal = $(this).attr('id');
+        }
+    });
+
+    $("#errorModal").on("hidden.bs.modal", function () {
+        if (lastOpenedModal) {
+            $("#" + lastOpenedModal).modal("show");
+        }
+    });
+
 });
 
 function addChildren(id, backup){
    $.each(backup, function (idx, obj) {
         if(obj.father != null){
             if(obj.father.id == id){
-            console.log(obj);
                 $("#hazardsTable").append("<tr data-tt-id=\"" + obj.id + "\" data-tt-parent-id=\"" + obj.father.id + "\"><td>" + obj.name + "</td><td>" + obj.id + "</td><td><button style='cursor: pointer; border-radius: 5px;' data-toggle='modal' data-target='#editHazardModal' onclick = loadEditHazard(this.id) type='button' id=\"" + obj.id + "\"><span class='fa fa-pencil' aria-hidden='true'></span></button><button style='cursor: pointer; border-radius: 5px;' data-toggle='modal' data-target='#confirmHazardDeleteModal' type='button' id=\"" + obj.id + "\" onclick = loadHazardToBeDeleted(this.id)><span class='fa fa-trash'></span></button></td></tr>");
                 if(obj.lossEntities.length > 0){
                     $("#hazardsTable").append("<tr data-tt-id=\"" + obj.id + "-l" + "\" data-tt-parent-id=\"" + obj.id + "\"><td>" + "Losses Associated" + "</td><td>" + "</td><td></td></tr>");

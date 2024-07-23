@@ -7,24 +7,16 @@ function addLoss() {
         projectId: $("#project_id").val(),
     }
 
-    $('#target').html('sending..');
-
-    if($("#loss-name").val() == ""){
-        $("#addLossModal").modal("hide");
-        actual_modal = 0;
-        $("#namelessRestrictionModal").modal("show");
-    }else{
-        $.ajax({
-            url: '/losses',
-            type: 'post',
-            dataType: 'text',
-            contentType: 'application/json',
-            success: function (data) {
-                location.reload();
-            },
-            data: JSON.stringify(loss)
-        });
-    }
+    $.ajax({
+        url: '/losses',
+        type: 'post',
+        dataType: 'text',
+        contentType: 'application/json',
+        success: function (data) {
+            location.reload();
+        },
+        data: JSON.stringify(loss)
+    });
 }
 
 function loadEditLoss(id){
@@ -43,24 +35,16 @@ function editLoss() {
         name: $("#loss-edit-name").val(),
     }
 
-    $('#target').html('sending..');
-
-    if($("#loss-edit-name").val() == ""){
-        $("#editLossModal").modal("hide");
-        actual_modal = 1;
-        $("#namelessRestrictionModal").modal("show");
-    }else{
-        $.ajax({
-            url: '/losses/' + lossSelected,
-            type: 'put',
-            dataType: 'text',
-            contentType: 'application/json',
-            success: function (data) {
-                location.reload();
-            },
-            data: JSON.stringify(loss)
-        });
-    }
+    $.ajax({
+        url: '/losses/' + lossSelected,
+        type: 'put',
+        dataType: 'text',
+        contentType: 'application/json',
+        success: function (data) {
+            location.reload();
+        },
+        data: JSON.stringify(loss)
+    });
 }
 
 function loadLossToBeDeleted(id){

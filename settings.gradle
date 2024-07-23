@@ -1,5 +1,0 @@
-include 'microstamp-step1-data'
-include 'microstamp-step1-dto'
-include 'microstamp-step1-microservice'
-
-rootProject.name = 'step1'
