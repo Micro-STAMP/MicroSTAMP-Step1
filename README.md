@@ -15,8 +15,11 @@ To build and run the application, you'll need:
 2. **Configure `application.properties`**: Set up your SQL configurations in the `application.properties` file located
    in the `microstamp-step1-microservice/src/main/resources` directory. By default, it assumes port 3306 and "step1" as
    the database name. Ensure to provide the correct URL, port, username, and password for your SQL database.
-3. **Create SQL Database**: Create the required SQL database as configured in the `application.properties` file.
-4. **Build the Project**:
+3. **Configure `myFlywayConfig.conf`**: Set up your SQL configurations in the `myFlywayConfig.conf` file located in
+   the `microstamp-step1-microservice` directory. The configuration should reflect the same SQL settings as in the
+   `application.properties` file
+4. **Create SQL Database**: Create the required SQL database as configured in the `application.properties` file.
+5. **Build the Project**:
     - Open a terminal.
     - Navigate to the root directory of the project.
     - Execute the following command:
@@ -31,7 +34,7 @@ To build and run the application, you'll need:
         ```
         chmod +x mvnw
         ```
-5. **Run the Project**:      
+6. **Run the Project**:      
     - **Method 1**: Run with `mvnw spring-boot:run`
       - Execute the following command in the root directory of the project:
         ```
