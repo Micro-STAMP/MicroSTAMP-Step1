@@ -53,4 +53,10 @@ public class HazardController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @GetMapping(path = {"{id}/children"})
+    public ResponseEntity<List<Hazard>> getComponentChildren(@PathVariable long id) throws Step1NotFoundException {
+        List<Hazard> list = hazardService.getHazardChildren(id);
+        return new ResponseEntity<>(list, HttpStatus.OK);
+    }
+
 }

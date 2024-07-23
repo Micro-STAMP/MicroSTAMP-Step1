@@ -5,6 +5,7 @@ import microstamp.step1.data.Loss;
 import microstamp.step1.data.Project;
 import microstamp.step1.dto.HazardDto;
 import microstamp.step1.exception.Step1NotFoundException;
+import microstamp.step1.exception.Step1OrphanException;
 import microstamp.step1.exception.Step1SelfParentingHazardException;
 import microstamp.step1.repository.HazardRepository;
 import microstamp.step1.repository.LossRepository;
@@ -88,6 +89,11 @@ public class HazardService {
 
             Hazard father = hazardRepository.findById(hazardDto.getFatherId())
                     .orElseThrow(() -> new Step1NotFoundException("Hazard not found with id: " + hazardDto.getFatherId()));
+
+            List<Hazard> children = getHazardChildren(id);
+            if(children.contains(father))
+                throw new Step1OrphanException();
+
             hazard.setFather(father);
         } else {
             hazard.setFather(null);
@@ -110,4 +116,21 @@ public class HazardService {
         hazardRepository.deleteById(id);
     }
 
+    public List<Hazard> getHazardChildren(long id) throws Step1NotFoundException {
+        Hazard hazard = hazardRepository.findById(id)
+                .orElseThrow(() -> new Step1NotFoundException("Hazard not found with id: " + id));
+
+        List<Hazard> children = new ArrayList<>();
+        getChildren(hazard, children);
+
+        return children;
+    }
+
+    private void getChildren(Hazard parent, List<Hazard> children) {
+        List<Hazard> directChildren = hazardRepository.findHazardChildren(parent.getId());
+        for (Hazard child : directChildren) {
+            children.add(child);
+            getChildren(child, children);
+        }
+    }
 }
