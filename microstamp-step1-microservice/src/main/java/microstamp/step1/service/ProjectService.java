@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.UUID;
 
 @Component
 public class ProjectService {
@@ -24,7 +25,7 @@ public class ProjectService {
         return projectRepository.findAll();
     }
 
-    public Project findById(Long id) throws Step1NotFoundException {
+    public Project findById(UUID id) throws Step1NotFoundException {
         return projectRepository.findById(id)
                 .orElseThrow(() -> new Step1NotFoundException("Project not found with id: " + id));
     }
@@ -33,8 +34,8 @@ public class ProjectService {
         return projectRepository.findByUrl(url);
     }
 
-    public List<Project> findByUserId(long id) {
-        return projectRepository.findProjectsByUserId(id);
+    public List<Project> findByUserId(UUID id) {
+        return projectRepository.findProjectsByUserId(id.toString());
     }
 
     public List<Project> findGuestsProjects() {
@@ -57,7 +58,7 @@ public class ProjectService {
         return project;
     }
 
-    public void update(Long id, ProjectDto projectDto) throws Step1NotFoundException {
+    public void update(UUID id, ProjectDto projectDto) throws Step1NotFoundException {
         Project project = projectRepository.findById(id)
                 .orElseThrow(() -> new Step1NotFoundException("Project not found with id: " + id));
 
@@ -69,7 +70,7 @@ public class ProjectService {
         projectRepository.save(project);
     }
 
-    public void delete(Long id) throws Step1NotFoundException {
+    public void delete(UUID id) throws Step1NotFoundException {
         Project project = projectRepository.findById(id)
                 .orElseThrow(() -> new Step1NotFoundException("Project not found with id: " + id));
         projectRepository.deleteById(project.getId());

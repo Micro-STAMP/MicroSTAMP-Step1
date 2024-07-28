@@ -3,6 +3,8 @@ package microstamp.step1.dto;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
+import java.util.UUID;
+
 @Data
 public class ProjectDto {
 
@@ -15,6 +17,6 @@ public class ProjectDto {
 
     private String type;
 
-    private Long userId;
+    private UUID userId;
 
 }

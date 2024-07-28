@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/hazards")
@@ -27,12 +28,12 @@ public class HazardController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Hazard> findById(@PathVariable(name = "id") Long id) throws Step1NotFoundException {
+    public ResponseEntity<Hazard> findById(@PathVariable(name = "id") UUID id) throws Step1NotFoundException {
         return new ResponseEntity<>(hazardService.findById(id), HttpStatus.OK);
     }
 
     @GetMapping("/project/{id}")
-    public ResponseEntity<List<Hazard>> findByProjectId(@PathVariable(name = "id") Long id) {
+    public ResponseEntity<List<Hazard>> findByProjectId(@PathVariable(name = "id") UUID id) {
         return new ResponseEntity<>(hazardService.findByProjectId(id), HttpStatus.OK);
     }
 
@@ -42,19 +43,19 @@ public class HazardController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> update(@PathVariable(name = "id") Long id, @Valid @RequestBody HazardDto hazardDto) throws Step1NotFoundException {
+    public ResponseEntity<Void> update(@PathVariable(name = "id") UUID id, @Valid @RequestBody HazardDto hazardDto) throws Step1NotFoundException {
         hazardService.update(id, hazardDto);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable(name = "id") Long id) throws Step1NotFoundException {
+    public ResponseEntity<Void> delete(@PathVariable(name = "id") UUID id) throws Step1NotFoundException {
         hazardService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping(path = {"{id}/children"})
-    public ResponseEntity<List<Hazard>> getComponentChildren(@PathVariable long id) throws Step1NotFoundException {
+    public ResponseEntity<List<Hazard>> getComponentChildren(@PathVariable UUID id) throws Step1NotFoundException {
         List<Hazard> list = hazardService.getHazardChildren(id);
         return new ResponseEntity<>(list, HttpStatus.OK);
     }

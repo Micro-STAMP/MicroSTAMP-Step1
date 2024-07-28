@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/system-goals")
@@ -27,12 +28,12 @@ public class SystemGoalController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<SystemGoal> findById(@PathVariable(name = "id") Long id) throws Step1NotFoundException {
+    public ResponseEntity<SystemGoal> findById(@PathVariable(name = "id") UUID id) throws Step1NotFoundException {
         return new ResponseEntity<>(systemGoalService.findById(id), HttpStatus.OK);
     }
 
     @GetMapping("/project/{id}")
-    public ResponseEntity<List<SystemGoal>> findByProjectId(@PathVariable(name = "id") Long id) {
+    public ResponseEntity<List<SystemGoal>> findByProjectId(@PathVariable(name = "id") UUID id) {
         return new ResponseEntity<>(systemGoalService.findByProjectId(id), HttpStatus.OK);
     }
 
@@ -42,13 +43,13 @@ public class SystemGoalController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> update(@PathVariable(name = "id") Long id, @Valid @RequestBody SystemGoalDto systemGoalDto) throws Step1NotFoundException {
+    public ResponseEntity<Void> update(@PathVariable(name = "id") UUID id, @Valid @RequestBody SystemGoalDto systemGoalDto) throws Step1NotFoundException {
         systemGoalService.update(id, systemGoalDto);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable(name = "id") Long id) throws Step1NotFoundException {
+    public ResponseEntity<Void> delete(@PathVariable(name = "id") UUID id) throws Step1NotFoundException {
         systemGoalService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }

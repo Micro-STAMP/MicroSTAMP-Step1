@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/losses")
@@ -27,12 +28,12 @@ public class LossController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Loss> findById(@PathVariable(name = "id") Long id) throws Step1NotFoundException {
+    public ResponseEntity<Loss> findById(@PathVariable(name = "id") UUID id) throws Step1NotFoundException {
         return new ResponseEntity<>(lossService.findById(id), HttpStatus.OK);
     }
 
     @GetMapping("/project/{id}")
-    public ResponseEntity<List<Loss>> findByProjectId(@PathVariable(name = "id") Long id) {
+    public ResponseEntity<List<Loss>> findByProjectId(@PathVariable(name = "id") UUID id) {
         return new ResponseEntity<>(lossService.findByProjectId(id), HttpStatus.OK);
     }
 
@@ -42,13 +43,13 @@ public class LossController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> update(@PathVariable(name = "id") Long id, @Valid @RequestBody LossDto lossDto) throws Step1NotFoundException {
+    public ResponseEntity<Void> update(@PathVariable(name = "id") UUID id, @Valid @RequestBody LossDto lossDto) throws Step1NotFoundException {
         lossService.update(id, lossDto);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable(name = "id") Long id) throws Step1NotFoundException {
+    public ResponseEntity<Void> delete(@PathVariable(name = "id") UUID id) throws Step1NotFoundException {
         lossService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }

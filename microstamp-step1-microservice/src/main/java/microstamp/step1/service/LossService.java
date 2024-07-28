@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.UUID;
 
 @Component
 public class LossService {
@@ -24,13 +25,13 @@ public class LossService {
         return lossRepository.findAll();
     }
 
-    public Loss findById(Long id) throws Step1NotFoundException {
+    public Loss findById(UUID id) throws Step1NotFoundException {
         return lossRepository.findById(id)
                 .orElseThrow(() -> new Step1NotFoundException("Loss not found with id: " + id));
     }
 
-    public List<Loss> findByProjectId(Long id) {
-        return lossRepository.findByProjectId(id);
+    public List<Loss> findByProjectId(UUID id) {
+        return lossRepository.findByProjectId(id.toString());
     }
 
     public Loss insert(LossDto lossDto) throws Step1NotFoundException {
@@ -46,7 +47,7 @@ public class LossService {
         return loss;
     }
 
-    public void update(Long id, LossDto lossDto) throws Step1NotFoundException {
+    public void update(UUID id, LossDto lossDto) throws Step1NotFoundException {
         Loss loss = lossRepository.findById(id)
                 .orElseThrow(() -> new Step1NotFoundException("Loss not found with id: " + id));
 
@@ -55,10 +56,10 @@ public class LossService {
         lossRepository.save(loss);
     }
 
-    public void delete(Long id) throws Step1NotFoundException {
+    public void delete(UUID id) throws Step1NotFoundException {
         Loss loss = lossRepository.findById(id)
                 .orElseThrow(() -> new Step1NotFoundException("Loss not found with id: " + id));
-        lossRepository.deleteHazardsAssociation(id);
+        lossRepository.deleteHazardsAssociation(id.toString());
         lossRepository.deleteById(loss.getId());
     }
 }

@@ -7,23 +7,25 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.rmi.server.UID;
 import java.util.List;
+import java.util.UUID;
 
 @Transactional
 @Repository
-public interface HazardRepository extends JpaRepository<Hazard, Long> {
+public interface HazardRepository extends JpaRepository<Hazard, UUID> {
 
     @Query(value = "SELECT * FROM hazards WHERE project_id = ?1", nativeQuery = true)
-    List<Hazard> findByProjectId(Long id);
+    List<Hazard> findByProjectId(String id);
 
     @Query(value = "SELECT * FROM hazards WHERE father_id = ?1", nativeQuery = true)
-    List<Hazard> findHazardChildren(Long id);
+    List<Hazard> findHazardChildren(String id);
 
     @Modifying
     @Query(value = "DELETE FROM hazard_loss WHERE hazard_id = ?1", nativeQuery = true)
-    void deleteLossesAssociation(Long id);
+    void deleteLossesAssociation(String id);
 
     @Modifying
     @Query(value = "DELETE FROM system_safety_constraint_hazard WHERE hazard_id = ?1", nativeQuery = true)
-    void deleteSystemSafetyConstraintsAssociation(Long id);
+    void deleteSystemSafetyConstraintsAssociation(String id);
 }

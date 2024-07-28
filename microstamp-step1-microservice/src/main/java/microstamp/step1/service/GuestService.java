@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.UUID;
 
 @Component
 public class GuestService {
@@ -33,35 +34,35 @@ public class GuestService {
         return projectRepository.findProjectsForGuests();
     }
 
-    public List<SystemGoal> findSystemGoalsByProjectId(long id){
+    public List<SystemGoal> findSystemGoalsByProjectId(UUID id){
         validateGuestProject(id);
-        return systemGoalRepository.findByProjectId(id);
+        return systemGoalRepository.findByProjectId(id.toString());
     }
 
-    public List<Assumption> findAssumptionsByProjectId(long id){
+    public List<Assumption> findAssumptionsByProjectId(UUID id){
         validateGuestProject(id);
-        return assumptionRepository.findByProjectId(id);
+        return assumptionRepository.findByProjectId(id.toString());
     }
 
-    public List<Loss> findLossesByProjectId(long id){
+    public List<Loss> findLossesByProjectId(UUID id){
         validateGuestProject(id);
-        return lossRepository.findByProjectId(id);
+        return lossRepository.findByProjectId(id.toString());
     }
 
-    public List<Hazard> findHazardsByProjectId(long id){
+    public List<Hazard> findHazardsByProjectId(UUID id){
         validateGuestProject(id);
-        return hazardRepository.findByProjectId(id);
+        return hazardRepository.findByProjectId(id.toString());
     }
 
-    public List<SystemSafetyConstraint> findSystemSafetyConstraintsByProjectId(long id){
+    public List<SystemSafetyConstraint> findSystemSafetyConstraintsByProjectId(UUID id){
         validateGuestProject(id);
-        return systemSafetyConstraintRepository.findByProjectId(id);
+        return systemSafetyConstraintRepository.findByProjectId(id.toString());
     }
 
-    private void validateGuestProject(long id){
+    private void validateGuestProject(UUID id){
         List<Project> guestsProjects = projectRepository.findProjectsForGuests();
 
-        if (guestsProjects.stream().noneMatch(project -> project.getId() == id))
+        if (guestsProjects.stream().noneMatch(project -> project.getId().equals(id)))
             throw new Step1NotFoundException("Guest Project not found with id: " + id);
     }
 }

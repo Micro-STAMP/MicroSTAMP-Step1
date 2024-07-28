@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/guests")
@@ -27,27 +28,27 @@ public class GuestController {
     }
 
     @GetMapping("/system-goals/project/{id}")
-    public ResponseEntity<List<SystemGoal>> findGuestsSystemGoals(@PathVariable(name = "id") Long id) {
+    public ResponseEntity<List<SystemGoal>> findGuestsSystemGoals(@PathVariable(name = "id") UUID id) {
         return new ResponseEntity<>(guestService.findSystemGoalsByProjectId(id), HttpStatus.OK);
     }
 
     @GetMapping("/assumptions/project/{id}")
-    public ResponseEntity<List<Assumption>> findGuestsAssumptions(@PathVariable(name = "id") Long id) {
+    public ResponseEntity<List<Assumption>> findGuestsAssumptions(@PathVariable(name = "id") UUID id) {
         return new ResponseEntity<>(guestService.findAssumptionsByProjectId(id), HttpStatus.OK);
     }
 
     @GetMapping("/losses/project/{id}")
-    public ResponseEntity<List<Loss>> findGuestsLosses(@PathVariable(name = "id") Long id) {
+    public ResponseEntity<List<Loss>> findGuestsLosses(@PathVariable(name = "id") UUID id) {
         return new ResponseEntity<>(guestService.findLossesByProjectId(id), HttpStatus.OK);
     }
 
     @GetMapping("/hazards/project/{id}")
-    public ResponseEntity<List<Hazard>> findGuestsHazards(@PathVariable(name = "id") Long id) {
+    public ResponseEntity<List<Hazard>> findGuestsHazards(@PathVariable(name = "id") UUID id) {
         return new ResponseEntity<>(guestService.findHazardsByProjectId(id), HttpStatus.OK);
     }
 
     @GetMapping("/system-safety-constraints/project/{id}")
-    public ResponseEntity<List<SystemSafetyConstraint>> findGuestsSystemSafetyConstraints(@PathVariable(name = "id") Long id) {
+    public ResponseEntity<List<SystemSafetyConstraint>> findGuestsSystemSafetyConstraints(@PathVariable(name = "id") UUID id) {
         return new ResponseEntity<>(guestService.findSystemSafetyConstraintsByProjectId(id), HttpStatus.OK);
     }
 

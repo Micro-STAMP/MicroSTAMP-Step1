@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/assumptions")
@@ -27,12 +28,12 @@ public class AssumptionController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Assumption> findById(@PathVariable(name = "id") Long id) throws Step1NotFoundException {
+    public ResponseEntity<Assumption> findById(@PathVariable(name = "id") UUID id) throws Step1NotFoundException {
         return new ResponseEntity<>(assumptionService.findById(id), HttpStatus.OK);
     }
 
     @GetMapping("/project/{id}")
-    public ResponseEntity<List<Assumption>> findByProjectId(@PathVariable(name = "id") Long id) {
+    public ResponseEntity<List<Assumption>> findByProjectId(@PathVariable(name = "id") UUID id) {
         return new ResponseEntity<>(assumptionService.findByProjectId(id), HttpStatus.OK);
     }
 
@@ -42,13 +43,13 @@ public class AssumptionController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> update(@PathVariable(name = "id") Long id, @Valid @RequestBody AssumptionDto assumptionDto) throws Step1NotFoundException {
+    public ResponseEntity<Void> update(@PathVariable(name = "id") UUID id, @Valid @RequestBody AssumptionDto assumptionDto) throws Step1NotFoundException {
         assumptionService.update(id, assumptionDto);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable(name = "id") Long id) throws Step1NotFoundException {
+    public ResponseEntity<Void> delete(@PathVariable(name = "id") UUID id) throws Step1NotFoundException {
         assumptionService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }

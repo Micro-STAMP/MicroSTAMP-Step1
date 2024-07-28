@@ -4,6 +4,7 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 import java.util.List;
+import java.util.UUID;
 
 @Data
 public class SystemSafetyConstraintDto {
@@ -11,8 +12,8 @@ public class SystemSafetyConstraintDto {
     @NotBlank
     private String name;
 
-    private Long projectId;
+    private UUID projectId;
 
-    private List<Long> hazardsId;
+    private List<UUID> hazardsId;
 
 }

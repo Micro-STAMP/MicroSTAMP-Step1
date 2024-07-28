@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.UUID;
 
 @Component
 public class SystemGoalService {
@@ -24,13 +25,13 @@ public class SystemGoalService {
         return systemGoalRepository.findAll();
     }
 
-    public SystemGoal findById(Long id) throws Step1NotFoundException {
+    public SystemGoal findById(UUID id) throws Step1NotFoundException {
         return systemGoalRepository.findById(id)
                 .orElseThrow(() -> new Step1NotFoundException("SystemGoal not found with id: " + id));
     }
 
-    public List<SystemGoal> findByProjectId(Long id) {
-        return systemGoalRepository.findByProjectId(id);
+    public List<SystemGoal> findByProjectId(UUID id) {
+        return systemGoalRepository.findByProjectId(id.toString());
     }
 
     public SystemGoal insert(SystemGoalDto systemGoalDto) throws Step1NotFoundException {
@@ -46,7 +47,7 @@ public class SystemGoalService {
         return systemGoal;
     }
 
-    public void update(Long id, SystemGoalDto systemGoalDto) throws Step1NotFoundException {
+    public void update(UUID id, SystemGoalDto systemGoalDto) throws Step1NotFoundException {
         SystemGoal systemGoal = systemGoalRepository.findById(id)
                 .orElseThrow(() -> new Step1NotFoundException("SystemGoal not found with id: " + id));
 
@@ -55,7 +56,7 @@ public class SystemGoalService {
         systemGoalRepository.save(systemGoal);
     }
 
-    public void delete(Long id) throws Step1NotFoundException {
+    public void delete(UUID id) throws Step1NotFoundException {
         SystemGoal systemGoal = systemGoalRepository.findById(id)
                 .orElseThrow(() -> new Step1NotFoundException("SystemGoal not found with id: " + id));
         systemGoalRepository.deleteById(systemGoal.getId());

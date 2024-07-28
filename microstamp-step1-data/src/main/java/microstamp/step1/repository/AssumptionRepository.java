@@ -6,11 +6,12 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.UUID;
 
 @Repository
-public interface AssumptionRepository extends JpaRepository<Assumption, Long> {
+public interface AssumptionRepository extends JpaRepository<Assumption, UUID> {
 
     @Query(value = "SELECT * FROM assumptions WHERE project_id = ?1", nativeQuery = true)
-    List<Assumption> findByProjectId(Long id);
+    List<Assumption> findByProjectId(String id);
 
 }

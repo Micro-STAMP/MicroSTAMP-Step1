@@ -7,6 +7,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import java.util.UUID;
+
 @Controller
 public class PageController {
 
@@ -39,13 +41,13 @@ public class PageController {
         return projects(model);
     }
 
-    @GetMapping("/{projectId:\\d+}")
-    public String projectIndexPage(@PathVariable Long projectId, Model model) {
-        model.addAttribute("systemGoals", systemGoalRepository.findByProjectId(projectId));
-        model.addAttribute("assumptions", assumptionRepository.findByProjectId(projectId));
-        model.addAttribute("losses", lossRepository.findByProjectId(projectId));
-        model.addAttribute("hazards", hazardRepository.findByProjectId(projectId));
-        model.addAttribute("systemSafetyConstraints", systemSafetyConstraintRepository.findByProjectId(projectId));
+    @GetMapping("/{projectId}")
+    public String projectIndexPage(@PathVariable UUID projectId, Model model) {
+        model.addAttribute("systemGoals", systemGoalRepository.findByProjectId(projectId.toString()));
+        model.addAttribute("assumptions", assumptionRepository.findByProjectId(projectId.toString()));
+        model.addAttribute("losses", lossRepository.findByProjectId(projectId.toString()));
+        model.addAttribute("hazards", hazardRepository.findByProjectId(projectId.toString()));
+        model.addAttribute("systemSafetyConstraints", systemSafetyConstraintRepository.findByProjectId(projectId.toString()));
 
         model.addAttribute("project_id", projectId);
 
@@ -59,12 +61,12 @@ public class PageController {
     }
 
     @GetMapping("/guests/{projectId}")
-    public String guestsProjectIndexPage(@PathVariable Long projectId, Model model) {
-        model.addAttribute("systemGoals", systemGoalRepository.findByProjectId(projectId));
-        model.addAttribute("assumptions", assumptionRepository.findByProjectId(projectId));
-        model.addAttribute("losses", lossRepository.findByProjectId(projectId));
-        model.addAttribute("hazards", hazardRepository.findByProjectId(projectId));
-        model.addAttribute("systemSafetyConstraints", systemSafetyConstraintRepository.findByProjectId(projectId));
+    public String guestsProjectIndexPage(@PathVariable UUID projectId, Model model) {
+        model.addAttribute("systemGoals", systemGoalRepository.findByProjectId(projectId.toString()));
+        model.addAttribute("assumptions", assumptionRepository.findByProjectId(projectId.toString()));
+        model.addAttribute("losses", lossRepository.findByProjectId(projectId.toString()));
+        model.addAttribute("hazards", hazardRepository.findByProjectId(projectId.toString()));
+        model.addAttribute("systemSafetyConstraints", systemSafetyConstraintRepository.findByProjectId(projectId.toString()));
 
         model.addAttribute("project_id", projectId);
 

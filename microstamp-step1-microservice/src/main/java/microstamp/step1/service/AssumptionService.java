@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.UUID;
 
 @Component
 public class AssumptionService {
@@ -24,13 +25,13 @@ public class AssumptionService {
         return assumptionRepository.findAll();
     }
 
-    public Assumption findById(Long id) throws Step1NotFoundException {
+    public Assumption findById(UUID id) throws Step1NotFoundException {
         return assumptionRepository.findById(id)
                 .orElseThrow(() -> new Step1NotFoundException("Assumption not found with id: " + id));
     }
 
-    public List<Assumption> findByProjectId(Long id) {
-        return assumptionRepository.findByProjectId(id);
+    public List<Assumption> findByProjectId(UUID id) {
+        return assumptionRepository.findByProjectId(id.toString());
     }
 
     public Assumption insert(AssumptionDto assumptionDto) throws Step1NotFoundException {
@@ -46,7 +47,7 @@ public class AssumptionService {
         return assumption;
     }
 
-    public void update(Long id, AssumptionDto assumptionDto) throws Step1NotFoundException {
+    public void update(UUID id, AssumptionDto assumptionDto) throws Step1NotFoundException {
         Assumption assumption = assumptionRepository.findById(id)
                 .orElseThrow(() -> new Step1NotFoundException("Assumption not found with id: " + id));
 
@@ -55,7 +56,7 @@ public class AssumptionService {
         assumptionRepository.save(assumption);
     }
 
-    public void delete(Long id) throws Step1NotFoundException {
+    public void delete(UUID id) throws Step1NotFoundException {
         Assumption assumption = assumptionRepository.findById(id)
                 .orElseThrow(() -> new Step1NotFoundException("Assumption not found with id: " + id));
         assumptionRepository.deleteById(assumption.getId());
