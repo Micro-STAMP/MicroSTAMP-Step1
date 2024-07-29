@@ -60,9 +60,9 @@ $(window).ready(function () {
             $.each(data, function (idx, obj) {
                 if(obj.father == null){
                     $("#guestsHazardsTable").append("<tr data-tt-id=\"" + obj.id + "\" data-tt-parent-id=\"" + obj.father + "\"><td>" + obj.name + "</td><td>" + obj.id + "</td><td></td></tr>");
-                    if(obj.lossEntities.length > 0){
+                    if(obj.losses.length > 0){
                         $("#guestsHazardsTable").append("<tr data-tt-id=\"" + obj.id + "-l" + "\" data-tt-parent-id=\"" + obj.id + "\"><td>" + "Losses Associated" + "</td><td>" + "</td><td></td></tr>");
-                        $.each(obj.lossEntities, function (idx, loss) {
+                        $.each(obj.losses, function (idx, loss) {
                             $("#guestsHazardsTable").append("<tr data-tt-id=\"" + obj.id + "-l-" + loss.id + "\" data-tt-parent-id=\"" + obj.id + "-l" + "\"><td>" + loss.name + "</td><td>" + loss.id + "</td><td></td></tr>");
                         });
                     }
@@ -86,9 +86,8 @@ $(window).ready(function () {
                 "dataType": "json",
                 "success": function (data) {
                     $.each(data, function (idx, obj) {
-                        console.log(obj);
                         $("#guestsSystemSafetyConstraintsTable").append("<tr data-tt-id=\"" + obj.id + "\" data-tt-parent-id=\"" + obj.father + "\"><td>" + obj.name + "</td><td>" + obj.id + "</td><td></td></tr>");
-                        $.each(obj.hazardEntities, function (idx, hazard) {
+                        $.each(obj.hazards, function (idx, hazard) {
                             $("#guestsSystemSafetyConstraintsTable").append("<tr data-tt-id=\"" + obj.id + "-h-" + hazard.id + "\" data-tt-parent-id=\"" + obj.id + "\"><td>" + hazard.name + "</td><td>" + hazard.id + "</td><td></td></tr>");
                         });
                     });
@@ -110,9 +109,9 @@ function addChildren(id, backup){
             if(obj.father.id == id){
             console.log(obj);
                 $("#guestsHazardsTable").append("<tr data-tt-id=\"" + obj.id + "\" data-tt-parent-id=\"" + obj.father.id + "\"><td>" + obj.name + "</td><td>" + obj.id + "</td><td></td></tr>");
-                if(obj.lossEntities.length > 0){
+                if(obj.losses.length > 0){
                     $("#guestsHazardsTable").append("<tr data-tt-id=\"" + obj.id + "-l" + "\" data-tt-parent-id=\"" + obj.id + "\"><td>" + "Losses Associated" + "</td><td>" + "</td><td></td></tr>");
-                    $.each(obj.lossEntities, function (idx, loss) {
+                    $.each(obj.losses, function (idx, loss) {
                         $("#guestsHazardsTable").append("<tr data-tt-id=\"" + obj.id + "-l-" + loss.id + "\" data-tt-parent-id=\"" + obj.id + "-l" + "\"><td>" + loss.name + "</td><td>" + loss.id + "</td><td></td></tr>");
                     });
                 }

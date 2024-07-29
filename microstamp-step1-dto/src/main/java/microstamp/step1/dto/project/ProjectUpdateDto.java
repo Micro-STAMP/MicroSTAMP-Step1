@@ -1,4 +1,4 @@
-package microstamp.step1.dto;
+package microstamp.step1.dto.project;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
@@ -6,7 +6,7 @@ import lombok.Data;
 import java.util.UUID;
 
 @Data
-public class ProjectDto {
+public class ProjectUpdateDto {
 
     @NotBlank
     private String name;
@@ -16,7 +16,5 @@ public class ProjectDto {
     private String url;
 
     private String type;
-
-    private UUID userId;
 
 }

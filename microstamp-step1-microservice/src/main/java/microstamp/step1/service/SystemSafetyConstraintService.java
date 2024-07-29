@@ -1,86 +1,24 @@
 package microstamp.step1.service;
 
-import microstamp.step1.data.Hazard;
-import microstamp.step1.data.Project;
 import microstamp.step1.data.SystemSafetyConstraint;
-import microstamp.step1.dto.SystemSafetyConstraintDto;
-import microstamp.step1.exception.Step1NotFoundException;
-import microstamp.step1.repository.HazardRepository;
-import microstamp.step1.repository.ProjectRepository;
-import microstamp.step1.repository.SystemSafetyConstraintRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import microstamp.step1.dto.systemsafetyconstraint.SystemSafetyConstraintInsertDto;
+import microstamp.step1.dto.systemsafetyconstraint.SystemSafetyConstraintReadDto;
+import microstamp.step1.dto.systemsafetyconstraint.SystemSafetyConstraintUpdateDto;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-@Component
-public class SystemSafetyConstraintService {
+public interface SystemSafetyConstraintService {
 
-    @Autowired
-    private SystemSafetyConstraintRepository systemSafetyConstraintRepository;
+    List<SystemSafetyConstraintReadDto> findAll();
 
-    @Autowired
-    private HazardRepository hazardRepository;
+    SystemSafetyConstraintReadDto findById(UUID id);
 
-    @Autowired
-    private ProjectRepository projectRepository;
+    List<SystemSafetyConstraintReadDto> findByProjectId(UUID id);
 
-    public List<SystemSafetyConstraint> findAll() {
-        return systemSafetyConstraintRepository.findAll();
-    }
+    SystemSafetyConstraintReadDto insert(SystemSafetyConstraintInsertDto systemSafetyConstraintInsertDto);
 
-    public SystemSafetyConstraint findById(UUID id) throws Step1NotFoundException {
-        return systemSafetyConstraintRepository.findById(id)
-                .orElseThrow(() -> new Step1NotFoundException("SystemSafetyConstraint not found with id: " + id));
-    }
+    void update(UUID id, SystemSafetyConstraintUpdateDto systemSafetyConstraintUpdateDto);
 
-    public List<SystemSafetyConstraint> findByProjectId(UUID id) {
-        return systemSafetyConstraintRepository.findByProjectId(id.toString());
-    }
-
-    public SystemSafetyConstraint insert(SystemSafetyConstraintDto systemSafetyConstraintDto) throws Step1NotFoundException {
-        Project project = projectRepository.findById(systemSafetyConstraintDto.getProjectId())
-                .orElseThrow(() -> new Step1NotFoundException("Project not found with id: " + systemSafetyConstraintDto.getProjectId()));
-
-        SystemSafetyConstraint systemSafetyConstraint = new SystemSafetyConstraint();
-        systemSafetyConstraint.setName(systemSafetyConstraintDto.getName());
-
-        List<Hazard> hazardEntities = new ArrayList<>();
-        if (systemSafetyConstraintDto.getHazardsId() != null) {
-            for (UUID id : systemSafetyConstraintDto.getHazardsId())
-                hazardEntities.add(hazardRepository.findById(id).orElseThrow(() -> new Step1NotFoundException("Hazard not found with id: " + id)));
-        }
-        systemSafetyConstraint.setHazardEntities(hazardEntities);
-
-        project.getSystemSafetyConstraintEntities().add(systemSafetyConstraint);
-        projectRepository.save(project);
-
-        return systemSafetyConstraint;
-    }
-
-    public void update(UUID id, SystemSafetyConstraintDto systemSafetyConstraintDto) throws Step1NotFoundException {
-        SystemSafetyConstraint systemSafetyConstraint = systemSafetyConstraintRepository.findById(id)
-                .orElseThrow(() -> new Step1NotFoundException("SystemSafetyConstraint not found with id: " + id));
-
-        systemSafetyConstraint.setName(systemSafetyConstraintDto.getName());
-
-        List<Hazard> hazardEntities = new ArrayList<>();
-        if (systemSafetyConstraintDto.getHazardsId() != null) {
-            for (UUID hazardId : systemSafetyConstraintDto.getHazardsId())
-                hazardEntities.add(hazardRepository.findById(hazardId)
-                        .orElseThrow(() -> new Step1NotFoundException("Hazard not found with id: " + hazardId)));
-        }
-        systemSafetyConstraint.setHazardEntities(hazardEntities);
-
-        systemSafetyConstraintRepository.save(systemSafetyConstraint);
-    }
-
-    public void delete(UUID id) throws Step1NotFoundException {
-        SystemSafetyConstraint systemSafetyConstraint = systemSafetyConstraintRepository.findById(id)
-                .orElseThrow(() -> new Step1NotFoundException("SystemSafetyConstraint not found with id: " + id));
-        systemSafetyConstraintRepository.deleteHazardsAssociation(systemSafetyConstraint.getId().toString());
-        systemSafetyConstraintRepository.deleteById(systemSafetyConstraint.getId());
-    }
+    void delete(UUID id);
 }

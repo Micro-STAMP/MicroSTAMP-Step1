@@ -3,9 +3,12 @@ package microstamp.step1.controller;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import microstamp.step1.data.SystemGoal;
-import microstamp.step1.dto.SystemGoalDto;
+import microstamp.step1.dto.systemgoal.SystemGoalInsertDto;
+import microstamp.step1.dto.systemgoal.SystemGoalReadDto;
+import microstamp.step1.dto.systemgoal.SystemGoalUpdateDto;
 import microstamp.step1.exception.Step1NotFoundException;
 import microstamp.step1.service.SystemGoalService;
+import microstamp.step1.service.impl.SystemGoalServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,28 +26,28 @@ public class SystemGoalController {
     private SystemGoalService systemGoalService;
 
     @GetMapping
-    public ResponseEntity<List<SystemGoal>> findAll() {
+    public ResponseEntity<List<SystemGoalReadDto>> findAll() {
         return new ResponseEntity<>(systemGoalService.findAll(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<SystemGoal> findById(@PathVariable(name = "id") UUID id) throws Step1NotFoundException {
+    public ResponseEntity<SystemGoalReadDto> findById(@PathVariable(name = "id") UUID id) throws Step1NotFoundException {
         return new ResponseEntity<>(systemGoalService.findById(id), HttpStatus.OK);
     }
 
     @GetMapping("/project/{id}")
-    public ResponseEntity<List<SystemGoal>> findByProjectId(@PathVariable(name = "id") UUID id) {
+    public ResponseEntity<List<SystemGoalReadDto>> findByProjectId(@PathVariable(name = "id") UUID id) {
         return new ResponseEntity<>(systemGoalService.findByProjectId(id), HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<SystemGoal> insert(@Valid @RequestBody SystemGoalDto systemGoalDto) throws Step1NotFoundException {
-        return new ResponseEntity<>(systemGoalService.insert(systemGoalDto), HttpStatus.CREATED);
+    public ResponseEntity<SystemGoalReadDto> insert(@Valid @RequestBody SystemGoalInsertDto systemGoalInsertDto) throws Step1NotFoundException {
+        return new ResponseEntity<>(systemGoalService.insert(systemGoalInsertDto), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> update(@PathVariable(name = "id") UUID id, @Valid @RequestBody SystemGoalDto systemGoalDto) throws Step1NotFoundException {
-        systemGoalService.update(id, systemGoalDto);
+    public ResponseEntity<Void> update(@PathVariable(name = "id") UUID id, @Valid @RequestBody SystemGoalUpdateDto systemGoalUpdateDto) throws Step1NotFoundException {
+        systemGoalService.update(id, systemGoalUpdateDto);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

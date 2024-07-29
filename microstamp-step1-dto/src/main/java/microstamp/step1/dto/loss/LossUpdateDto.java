@@ -1,4 +1,4 @@
-package microstamp.step1.dto;
+package microstamp.step1.dto.loss;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
@@ -6,11 +6,9 @@ import lombok.Data;
 import java.util.UUID;
 
 @Data
-public class AssumptionDto {
+public class LossUpdateDto {
 
     @NotBlank
     private String name;
-
-    private UUID projectId;
 
 }

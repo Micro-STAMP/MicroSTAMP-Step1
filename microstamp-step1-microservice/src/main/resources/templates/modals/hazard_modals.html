@@ -26,7 +26,7 @@
                     <div class="form-group">
                         <label class="col-form-label" for="hazard-father">Father:</label>
                         <select class="form-control" id="hazard-father">
-                            <option value="null">NO FATHER</option>
+                            <option value="">NO FATHER</option>
                             <option th:each="h : ${hazards}" th:text="${h.name}" th:value="${h.id}"/>
                         </select>
                     </div>
