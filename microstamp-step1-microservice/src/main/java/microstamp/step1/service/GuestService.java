@@ -1,67 +1,27 @@
 package microstamp.step1.service;
 
-import microstamp.step1.data.*;
-import microstamp.step1.exception.Step1NotFoundException;
-import microstamp.step1.repository.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import microstamp.step1.dto.assumption.AssumptionReadDto;
+import microstamp.step1.dto.hazard.HazardReadDto;
+import microstamp.step1.dto.loss.LossReadDto;
+import microstamp.step1.dto.project.ProjectReadDto;
+import microstamp.step1.dto.systemgoal.SystemGoalReadDto;
+import microstamp.step1.dto.systemsafetyconstraint.SystemSafetyConstraintReadDto;
 
 import java.util.List;
+import java.util.UUID;
 
-@Component
-public class GuestService {
+public interface GuestService {
 
-    @Autowired
-    private ProjectRepository projectRepository;
+    List<ProjectReadDto> findProjects();
 
-    @Autowired
-    private SystemGoalRepository systemGoalRepository;
+    List<SystemGoalReadDto> findSystemGoalsByProjectId(UUID id);
 
-    @Autowired
-    private AssumptionRepository assumptionRepository;
+    List<AssumptionReadDto> findAssumptionsByProjectId(UUID id);
 
-    @Autowired
-    private LossRepository lossRepository;
+    List<LossReadDto> findLossesByProjectId(UUID id);
 
-    @Autowired
-    private HazardRepository hazardRepository;
+    List<HazardReadDto> findHazardsByProjectId(UUID id);
 
-    @Autowired
-    private SystemSafetyConstraintRepository systemSafetyConstraintRepository;
+    List<SystemSafetyConstraintReadDto> findSystemSafetyConstraintsByProjectId(UUID id);
 
-    public List<Project> findProjects() {
-        return projectRepository.findProjectsForGuests();
-    }
-
-    public List<SystemGoal> findSystemGoalsByProjectId(long id){
-        validateGuestProject(id);
-        return systemGoalRepository.findByProjectId(id);
-    }
-
-    public List<Assumption> findAssumptionsByProjectId(long id){
-        validateGuestProject(id);
-        return assumptionRepository.findByProjectId(id);
-    }
-
-    public List<Loss> findLossesByProjectId(long id){
-        validateGuestProject(id);
-        return lossRepository.findByProjectId(id);
-    }
-
-    public List<Hazard> findHazardsByProjectId(long id){
-        validateGuestProject(id);
-        return hazardRepository.findByProjectId(id);
-    }
-
-    public List<SystemSafetyConstraint> findSystemSafetyConstraintsByProjectId(long id){
-        validateGuestProject(id);
-        return systemSafetyConstraintRepository.findByProjectId(id);
-    }
-
-    private void validateGuestProject(long id){
-        List<Project> guestsProjects = projectRepository.findProjectsForGuests();
-
-        if (guestsProjects.stream().noneMatch(project -> project.getId() == id))
-            throw new Step1NotFoundException("Guest Project not found with id: " + id);
-    }
 }

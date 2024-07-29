@@ -1,77 +1,27 @@
 package microstamp.step1.service;
 
-import microstamp.step1.data.Project;
-import microstamp.step1.data.User;
-import microstamp.step1.dto.ProjectDto;
-import microstamp.step1.exception.Step1NotFoundException;
-import microstamp.step1.repository.ProjectRepository;
-import microstamp.step1.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import microstamp.step1.dto.project.ProjectInsertDto;
+import microstamp.step1.dto.project.ProjectReadDto;
+import microstamp.step1.dto.project.ProjectUpdateDto;
 
 import java.util.List;
+import java.util.UUID;
 
-@Component
-public class ProjectService {
+public interface ProjectService {
 
-    @Autowired
-    private ProjectRepository projectRepository;
+    List<ProjectReadDto> findAll();
 
-    @Autowired
-    private UserRepository userRepository;
+    ProjectReadDto findById(UUID id);
 
-    public List<Project> findAll() {
-        return projectRepository.findAll();
-    }
+    ProjectReadDto findByUrl(String url);
 
-    public Project findById(Long id) throws Step1NotFoundException {
-        return projectRepository.findById(id)
-                .orElseThrow(() -> new Step1NotFoundException("Project not found with id: " + id));
-    }
+    List<ProjectReadDto> findByUserId(UUID id);
 
-    public Project findByUrl(String url) {
-        return projectRepository.findByUrl(url);
-    }
+    List<ProjectReadDto> findGuestsProjects();
 
-    public List<Project> findByUserId(long id) {
-        return projectRepository.findProjectsByUserId(id);
-    }
+    ProjectReadDto insert(ProjectInsertDto projectInsertDto);
 
-    public List<Project> findGuestsProjects() {
-        return projectRepository.findProjectsForGuests();
-    }
+    void update(UUID id, ProjectUpdateDto projectUpdateDto);
 
-    public Project insert(ProjectDto projectDto) throws Step1NotFoundException {
-        User user = userRepository.findById(projectDto.getUserId())
-                .orElseThrow(() -> new Step1NotFoundException("User not found with id: " + projectDto.getUserId()));
-
-        Project project = new Project();
-        project.setName(projectDto.getName());
-        project.setDescription(projectDto.getDescription());
-        project.setUrl(projectDto.getUrl());
-        project.setType(projectDto.getType());
-
-        user.getProjects().add(project);
-        projectRepository.save(project);
-
-        return project;
-    }
-
-    public void update(Long id, ProjectDto projectDto) throws Step1NotFoundException {
-        Project project = projectRepository.findById(id)
-                .orElseThrow(() -> new Step1NotFoundException("Project not found with id: " + id));
-
-        project.setName(projectDto.getName());
-        project.setDescription(projectDto.getDescription());
-        project.setUrl(projectDto.getUrl());
-        project.setType(projectDto.getType());
-
-        projectRepository.save(project);
-    }
-
-    public void delete(Long id) throws Step1NotFoundException {
-        Project project = projectRepository.findById(id)
-                .orElseThrow(() -> new Step1NotFoundException("Project not found with id: " + id));
-        projectRepository.deleteById(project.getId());
-    }
+    void delete(UUID id);
 }

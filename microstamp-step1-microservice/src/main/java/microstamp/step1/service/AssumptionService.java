@@ -1,63 +1,24 @@
 package microstamp.step1.service;
 
-import microstamp.step1.data.Assumption;
-import microstamp.step1.data.Project;
-import microstamp.step1.dto.AssumptionDto;
-import microstamp.step1.exception.Step1NotFoundException;
-import microstamp.step1.repository.AssumptionRepository;
-import microstamp.step1.repository.ProjectRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import microstamp.step1.dto.assumption.AssumptionInsertDto;
+import microstamp.step1.dto.assumption.AssumptionReadDto;
+import microstamp.step1.dto.assumption.AssumptionUpdateDto;
 
 import java.util.List;
+import java.util.UUID;
 
-@Component
-public class AssumptionService {
+public interface AssumptionService {
 
-    @Autowired
-    private AssumptionRepository assumptionRepository;
+    List<AssumptionReadDto> findAll();
 
-    @Autowired
-    private ProjectRepository projectRepository;
+    AssumptionReadDto findById(UUID id);
 
-    public List<Assumption> findAll() {
-        return assumptionRepository.findAll();
-    }
+    List<AssumptionReadDto> findByProjectId(UUID id);
 
-    public Assumption findById(Long id) throws Step1NotFoundException {
-        return assumptionRepository.findById(id)
-                .orElseThrow(() -> new Step1NotFoundException("Assumption not found with id: " + id));
-    }
+    AssumptionReadDto insert(AssumptionInsertDto assumptionInsertDto);
 
-    public List<Assumption> findByProjectId(Long id) {
-        return assumptionRepository.findByProjectId(id);
-    }
+    void update(UUID id, AssumptionUpdateDto assumptionUpdateDto);
 
-    public Assumption insert(AssumptionDto assumptionDto) throws Step1NotFoundException {
-        Project project = projectRepository.findById(assumptionDto.getProjectId())
-                .orElseThrow(() -> new Step1NotFoundException(("Project not found with id: " + assumptionDto.getProjectId())));
+    void delete(UUID id);
 
-        Assumption assumption = new Assumption();
-        assumption.setName(assumptionDto.getName());
-
-        project.getAssumptionEntities().add(assumption);
-        projectRepository.save(project);
-
-        return assumption;
-    }
-
-    public void update(Long id, AssumptionDto assumptionDto) throws Step1NotFoundException {
-        Assumption assumption = assumptionRepository.findById(id)
-                .orElseThrow(() -> new Step1NotFoundException("Assumption not found with id: " + id));
-
-        assumption.setName(assumptionDto.getName());
-
-        assumptionRepository.save(assumption);
-    }
-
-    public void delete(Long id) throws Step1NotFoundException {
-        Assumption assumption = assumptionRepository.findById(id)
-                .orElseThrow(() -> new Step1NotFoundException("Assumption not found with id: " + id));
-        assumptionRepository.deleteById(assumption.getId());
-    }
 }

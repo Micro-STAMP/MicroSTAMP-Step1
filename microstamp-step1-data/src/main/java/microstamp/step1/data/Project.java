@@ -2,8 +2,11 @@ package microstamp.step1.data;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.JdbcTypeCode;
 
+import java.sql.Types;
 import java.util.List;
+import java.util.UUID;
 
 @Entity(name = "Project")
 @Table(name = "projects")
@@ -11,8 +14,9 @@ import java.util.List;
 public class Project {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    @JdbcTypeCode(Types.VARCHAR)
+    private UUID id;
 
     private String name;
 

@@ -1,14 +1,14 @@
-package microstamp.step1.dto;
+package microstamp.step1.dto.assumption;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
+import java.util.UUID;
+
 @Data
-public class SystemGoalDto {
+public class AssumptionUpdateDto {
 
     @NotBlank
     private String name;
-
-    private Long projectId;
 
 }
