@@ -1,6 +1,7 @@
 package microstamp.step1.mapper;
 
 import microstamp.step1.data.Hazard;
+import microstamp.step1.dto.hazard.HazardInsertDto;
 import microstamp.step1.dto.hazard.HazardReadDto;
 import microstamp.step1.dto.loss.LossReadDto;
 
@@ -20,5 +21,10 @@ public class HazardMapper {
                 hazard.getFather() != null
                         ? HazardMapper.toDto(hazard.getFather())
                         : null);
+    }
+
+    public static Hazard toEntity(HazardInsertDto hazardInsertDto){
+        return new Hazard(hazardInsertDto.getName(),
+                hazardInsertDto.getAnalysisId());
     }
 }

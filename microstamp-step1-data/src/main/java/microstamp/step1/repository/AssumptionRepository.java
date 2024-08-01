@@ -11,7 +11,6 @@ import java.util.UUID;
 @Repository
 public interface AssumptionRepository extends JpaRepository<Assumption, UUID> {
 
-    @Query(value = "SELECT * FROM assumptions WHERE project_id = ?1", nativeQuery = true)
-    List<Assumption> findByProjectId(String id);
+    List<Assumption> findByAnalysisId(UUID id);
 
 }

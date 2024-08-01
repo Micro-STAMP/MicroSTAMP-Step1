@@ -2,13 +2,11 @@ package microstamp.step1.controller;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import microstamp.step1.data.Loss;
 import microstamp.step1.dto.loss.LossInsertDto;
 import microstamp.step1.dto.loss.LossReadDto;
 import microstamp.step1.dto.loss.LossUpdateDto;
 import microstamp.step1.exception.Step1NotFoundException;
 import microstamp.step1.service.LossService;
-import microstamp.step1.service.impl.LossServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,8 +34,8 @@ public class LossController {
     }
 
     @GetMapping("/project/{id}")
-    public ResponseEntity<List<LossReadDto>> findByProjectId(@PathVariable(name = "id") UUID id) {
-        return new ResponseEntity<>(lossService.findByProjectId(id), HttpStatus.OK);
+    public ResponseEntity<List<LossReadDto>> findByAnalysisId(@PathVariable(name = "id") UUID id) {
+        return new ResponseEntity<>(lossService.findByAnalysisId(id), HttpStatus.OK);
     }
 
     @PostMapping

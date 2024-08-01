@@ -15,8 +15,7 @@ import java.util.UUID;
 @Repository
 public interface HazardRepository extends JpaRepository<Hazard, UUID> {
 
-    @Query(value = "SELECT * FROM hazards WHERE project_id = ?1", nativeQuery = true)
-    List<Hazard> findByProjectId(String id);
+    List<Hazard> findByAnalysisId(UUID id);
 
     @Query(value = "SELECT * FROM hazards WHERE father_id = ?1", nativeQuery = true)
     List<Hazard> findHazardChildren(String id);

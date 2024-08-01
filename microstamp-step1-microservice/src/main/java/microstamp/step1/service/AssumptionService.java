@@ -13,7 +13,7 @@ public interface AssumptionService {
 
     AssumptionReadDto findById(UUID id);
 
-    List<AssumptionReadDto> findByProjectId(UUID id);
+    List<AssumptionReadDto> findByAnalysisId(UUID id);
 
     AssumptionReadDto insert(AssumptionInsertDto assumptionInsertDto);
 

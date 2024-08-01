@@ -13,7 +13,7 @@ public interface SystemGoalService {
 
     SystemGoalReadDto findById(UUID id);
 
-    List<SystemGoalReadDto> findByProjectId(UUID id);
+    List<SystemGoalReadDto> findByAnalysisId(UUID id);
 
     SystemGoalReadDto insert(SystemGoalInsertDto systemGoalInsertDto);
 

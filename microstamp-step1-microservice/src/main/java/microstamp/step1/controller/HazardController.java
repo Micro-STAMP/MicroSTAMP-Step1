@@ -36,8 +36,8 @@ public class HazardController {
     }
 
     @GetMapping("/project/{id}")
-    public ResponseEntity<List<HazardReadDto>> findByProjectId(@PathVariable(name = "id") UUID id) {
-        return new ResponseEntity<>(hazardService.findByProjectId(id), HttpStatus.OK);
+    public ResponseEntity<List<HazardReadDto>> findByAnalysisId(@PathVariable(name = "id") UUID id) {
+        return new ResponseEntity<>(hazardService.findByAnalysisId(id), HttpStatus.OK);
     }
 
     @PostMapping

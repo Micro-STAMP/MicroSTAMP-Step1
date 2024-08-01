@@ -11,7 +11,6 @@ import java.util.UUID;
 @Repository
 public interface SystemGoalRepository extends JpaRepository<SystemGoal, UUID> {
 
-    @Query(value = "SELECT * FROM system_goals WHERE project_id = ?1", nativeQuery = true)
-    List<SystemGoal> findByProjectId(String id);
+    List<SystemGoal> findByAnalysisId(UUID id);
 
 }

@@ -1,7 +1,6 @@
 package microstamp.step1.service.impl;
 
 import microstamp.step1.data.Hazard;
-import microstamp.step1.data.Project;
 import microstamp.step1.data.SystemSafetyConstraint;
 import microstamp.step1.dto.systemsafetyconstraint.SystemSafetyConstraintInsertDto;
 import microstamp.step1.dto.systemsafetyconstraint.SystemSafetyConstraintReadDto;
@@ -9,7 +8,6 @@ import microstamp.step1.dto.systemsafetyconstraint.SystemSafetyConstraintUpdateD
 import microstamp.step1.exception.Step1NotFoundException;
 import microstamp.step1.mapper.SystemSafetyConstraintMapper;
 import microstamp.step1.repository.HazardRepository;
-import microstamp.step1.repository.ProjectRepository;
 import microstamp.step1.repository.SystemSafetyConstraintRepository;
 import microstamp.step1.service.SystemSafetyConstraintService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,9 +27,6 @@ public class SystemSafetyConstraintServiceImpl implements SystemSafetyConstraint
     @Autowired
     private HazardRepository hazardRepository;
 
-    @Autowired
-    private ProjectRepository projectRepository;
-
     public List<SystemSafetyConstraintReadDto> findAll() {
         return systemSafetyConstraintRepository.findAll().stream()
                 .map(SystemSafetyConstraintMapper::toDto)
@@ -44,19 +39,18 @@ public class SystemSafetyConstraintServiceImpl implements SystemSafetyConstraint
                 .orElseThrow(() -> new Step1NotFoundException("SystemSafetyConstraint not found with id: " + id)));
     }
 
-    public List<SystemSafetyConstraintReadDto> findByProjectId(UUID id) {
-        return systemSafetyConstraintRepository.findByProjectId(id.toString()).stream()
+    public List<SystemSafetyConstraintReadDto> findByAnalysisId(UUID id) {
+        return systemSafetyConstraintRepository.findByAnalysisId(id).stream()
                 .map(SystemSafetyConstraintMapper::toDto)
                 .sorted(Comparator.comparing(SystemSafetyConstraintReadDto::getName))
                 .toList();
     }
 
     public SystemSafetyConstraintReadDto insert(SystemSafetyConstraintInsertDto systemSafetyConstraintInsertDto) throws Step1NotFoundException {
-        Project project = projectRepository.findById(systemSafetyConstraintInsertDto.getProjectId())
-                .orElseThrow(() -> new Step1NotFoundException("Project not found with id: " + systemSafetyConstraintInsertDto.getProjectId()));
+        //Project project = projectRepository.findById(systemSafetyConstraintInsertDto.getProjectId())
+        //        .orElseThrow(() -> new Step1NotFoundException("Project not found with id: " + systemSafetyConstraintInsertDto.getProjectId()));
 
-        SystemSafetyConstraint systemSafetyConstraint = new SystemSafetyConstraint();
-        systemSafetyConstraint.setName(systemSafetyConstraintInsertDto.getName());
+        SystemSafetyConstraint systemSafetyConstraint = SystemSafetyConstraintMapper.toEntity(systemSafetyConstraintInsertDto);
 
         List<Hazard> hazardEntities = new ArrayList<>();
         if (systemSafetyConstraintInsertDto.getHazardsId() != null) {
@@ -65,8 +59,7 @@ public class SystemSafetyConstraintServiceImpl implements SystemSafetyConstraint
         }
         systemSafetyConstraint.setHazardEntities(hazardEntities);
 
-        project.getSystemSafetyConstraintEntities().add(systemSafetyConstraint);
-        projectRepository.save(project);
+        systemSafetyConstraintRepository.save(systemSafetyConstraint);
 
         return SystemSafetyConstraintMapper.toDto(systemSafetyConstraint);
     }

@@ -2,11 +2,13 @@ package microstamp.step1.dto.assumption;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.util.UUID;
 
 @Data
+@AllArgsConstructor
 public class AssumptionReadDto {
 
     @NotNull
@@ -14,10 +16,5 @@ public class AssumptionReadDto {
 
     @NotBlank
     private String name;
-
-    public AssumptionReadDto(UUID id, String name){
-        this.id = id;
-        this.name = name;
-    }
 
 }

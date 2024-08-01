@@ -2,7 +2,6 @@ package microstamp.step1.service.impl;
 
 import microstamp.step1.data.Hazard;
 import microstamp.step1.data.Loss;
-import microstamp.step1.data.Project;
 import microstamp.step1.dto.hazard.HazardInsertDto;
 import microstamp.step1.dto.hazard.HazardReadDto;
 import microstamp.step1.dto.hazard.HazardUpdateDto;
@@ -12,7 +11,6 @@ import microstamp.step1.exception.Step1SelfParentingHazardException;
 import microstamp.step1.mapper.HazardMapper;
 import microstamp.step1.repository.HazardRepository;
 import microstamp.step1.repository.LossRepository;
-import microstamp.step1.repository.ProjectRepository;
 import microstamp.step1.service.HazardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -31,9 +29,6 @@ public class HazardServiceImpl implements HazardService {
     @Autowired
     private LossRepository lossRepository;
 
-    @Autowired
-    private ProjectRepository projectRepository;
-
     public List<HazardReadDto> findAll() {
         return hazardRepository.findAll().stream()
                 .map(HazardMapper::toDto)
@@ -46,19 +41,18 @@ public class HazardServiceImpl implements HazardService {
                 .orElseThrow(() -> new Step1NotFoundException("Hazard not found with id: " + id)));
     }
 
-    public List<HazardReadDto> findByProjectId(UUID id) {
-        return hazardRepository.findByProjectId(id.toString()).stream()
+    public List<HazardReadDto> findByAnalysisId(UUID id) {
+        return hazardRepository.findByAnalysisId(id).stream()
                 .map(HazardMapper::toDto)
                 .sorted(Comparator.comparing(HazardReadDto::getName))
                 .toList();
     }
 
     public HazardReadDto insert(HazardInsertDto hazardInsertDto) throws Step1NotFoundException {
-        Project project = projectRepository.findById(hazardInsertDto.getProjectId())
-                .orElseThrow(() -> new Step1NotFoundException("Project not found with id: " + hazardInsertDto.getProjectId()));
+       // Project project = projectRepository.findById(hazardInsertDto.getProjectId())
+       //         .orElseThrow(() -> new Step1NotFoundException("Project not found with id: " + hazardInsertDto.getProjectId()));
 
-        Hazard hazard = new Hazard();
-        hazard.setName(hazardInsertDto.getName());
+        Hazard hazard = HazardMapper.toEntity(hazardInsertDto);
 
         List<Loss> lossEntities = new ArrayList<>();
         if (hazardInsertDto.getLossIds() != null) {
@@ -76,8 +70,8 @@ public class HazardServiceImpl implements HazardService {
             hazard.setFather(null);
         }
 
-        project.getHazardEntities().add(hazard);
-        projectRepository.save(project);
+        hazardRepository.save(hazard);
+
         return HazardMapper.toDto(hazard);
     }
 

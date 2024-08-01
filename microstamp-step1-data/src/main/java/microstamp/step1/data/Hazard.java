@@ -2,6 +2,7 @@ package microstamp.step1.data;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.JdbcTypeCode;
 
 import java.sql.Types;
@@ -11,6 +12,7 @@ import java.util.UUID;
 @Entity(name = "Hazard")
 @Table(name = "hazards")
 @Data
+@NoArgsConstructor
 public class Hazard {
 
     @Id
@@ -32,4 +34,11 @@ public class Hazard {
     @JoinColumn(name = "father_id")
     private Hazard father;
 
+    @JdbcTypeCode(Types.VARCHAR)
+    private UUID analysisId;
+
+    public Hazard(String name, UUID analysisId) {
+        this.name = name;
+        this.analysisId = analysisId;
+    }
 }

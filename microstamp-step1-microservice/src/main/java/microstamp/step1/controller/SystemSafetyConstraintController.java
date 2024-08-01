@@ -36,8 +36,8 @@ public class SystemSafetyConstraintController {
     }
 
     @GetMapping("/project/{id}")
-    public ResponseEntity<List<SystemSafetyConstraintReadDto>> findByProjectId(@PathVariable(name = "id") UUID id) {
-        return new ResponseEntity<>(systemSafetyConstraintService.findByProjectId(id), HttpStatus.OK);
+    public ResponseEntity<List<SystemSafetyConstraintReadDto>> findByAnalysisId(@PathVariable(name = "id") UUID id) {
+        return new ResponseEntity<>(systemSafetyConstraintService.findByAnalysisId(id), HttpStatus.OK);
     }
 
     @PostMapping

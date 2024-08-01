@@ -1,6 +1,5 @@
 package microstamp.step1.service;
 
-import microstamp.step1.data.Hazard;
 import microstamp.step1.dto.hazard.HazardInsertDto;
 import microstamp.step1.dto.hazard.HazardReadDto;
 import microstamp.step1.dto.hazard.HazardUpdateDto;
@@ -14,7 +13,7 @@ public interface HazardService {
 
     HazardReadDto findById(UUID id);
 
-    List<HazardReadDto> findByProjectId(UUID id);
+    List<HazardReadDto> findByAnalysisId(UUID id);
 
     HazardReadDto insert(HazardInsertDto hazardInsertDto);
 

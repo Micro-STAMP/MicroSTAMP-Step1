@@ -36,8 +36,8 @@ public class SystemGoalController {
     }
 
     @GetMapping("/project/{id}")
-    public ResponseEntity<List<SystemGoalReadDto>> findByProjectId(@PathVariable(name = "id") UUID id) {
-        return new ResponseEntity<>(systemGoalService.findByProjectId(id), HttpStatus.OK);
+    public ResponseEntity<List<SystemGoalReadDto>> findByAnalysisId(@PathVariable(name = "id") UUID id) {
+        return new ResponseEntity<>(systemGoalService.findByAnalysisId(id), HttpStatus.OK);
     }
 
     @PostMapping

@@ -1,14 +1,12 @@
 package microstamp.step1.service.impl;
 
 import microstamp.step1.data.Loss;
-import microstamp.step1.data.Project;
 import microstamp.step1.dto.loss.LossInsertDto;
 import microstamp.step1.dto.loss.LossReadDto;
 import microstamp.step1.dto.loss.LossUpdateDto;
 import microstamp.step1.exception.Step1NotFoundException;
 import microstamp.step1.mapper.LossMapper;
 import microstamp.step1.repository.LossRepository;
-import microstamp.step1.repository.ProjectRepository;
 import microstamp.step1.service.LossService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -23,9 +21,6 @@ public class LossServiceImpl implements LossService {
     @Autowired
     private LossRepository lossRepository;
 
-    @Autowired
-    private ProjectRepository projectRepository;
-
     public List<LossReadDto> findAll() {
         return lossRepository.findAll().stream()
                 .map(LossMapper::toDto)
@@ -38,22 +33,19 @@ public class LossServiceImpl implements LossService {
                 .orElseThrow(() -> new Step1NotFoundException("Loss not found with id: " + id)));
     }
 
-    public List<LossReadDto> findByProjectId(UUID id) {
-        return lossRepository.findByProjectId(id.toString()).stream()
+    public List<LossReadDto> findByAnalysisId(UUID id) {
+        return lossRepository.findByAnalysisId(id).stream()
                 .map(LossMapper::toDto)
                 .sorted(Comparator.comparing(LossReadDto::getName))
                 .toList();
     }
 
     public LossReadDto insert(LossInsertDto lossInsertDto) throws Step1NotFoundException {
-        Project project = projectRepository.findById(lossInsertDto.getProjectId())
-                .orElseThrow(() -> new Step1NotFoundException("Project not found with id: " + lossInsertDto.getProjectId()));
+       //Project project = projectRepository.findById(lossInsertDto.getProjectId())
+       //         .orElseThrow(() -> new Step1NotFoundException("Project not found with id: " + lossInsertDto.getProjectId()));
 
-        Loss loss = new Loss();
-        loss.setName(lossInsertDto.getName());
-
-        project.getLossEntities().add(loss);
-        projectRepository.save(project);
+        Loss loss = LossMapper.toEntity(lossInsertDto);
+        lossRepository.save(loss);
 
         return LossMapper.toDto(loss);
     }
