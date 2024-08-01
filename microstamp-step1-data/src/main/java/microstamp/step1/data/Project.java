@@ -18,6 +18,9 @@ public class Project {
     @JdbcTypeCode(Types.VARCHAR)
     private UUID id;
 
+    @JdbcTypeCode(Types.VARCHAR)
+    private UUID userId;
+
     private String name;
 
     private String description;
