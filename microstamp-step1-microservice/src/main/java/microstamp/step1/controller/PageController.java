@@ -13,9 +13,6 @@ import java.util.UUID;
 public class PageController {
 
     @Autowired
-    private ProjectRepository projectRepository;
-
-    @Autowired
     private SystemGoalRepository systemGoalRepository;
 
     @Autowired
@@ -30,6 +27,7 @@ public class PageController {
     @Autowired
     private SystemSafetyConstraintRepository systemSafetyConstraintRepository;
 
+    /*
     @GetMapping("/home")
     public String projects(Model model) {
         model.addAttribute("projects", projectRepository.findAll());
@@ -40,33 +38,36 @@ public class PageController {
     public String redirectHome(Model model) {
         return projects(model);
     }
+    */
 
     @GetMapping("/{projectId}")
     public String projectIndexPage(@PathVariable UUID projectId, Model model) {
-        model.addAttribute("systemGoals", systemGoalRepository.findByProjectId(projectId.toString()));
-        model.addAttribute("assumptions", assumptionRepository.findByProjectId(projectId.toString()));
-        model.addAttribute("losses", lossRepository.findByProjectId(projectId.toString()));
-        model.addAttribute("hazards", hazardRepository.findByProjectId(projectId.toString()));
-        model.addAttribute("systemSafetyConstraints", systemSafetyConstraintRepository.findByProjectId(projectId.toString()));
+        model.addAttribute("systemGoals", systemGoalRepository.findByAnalysisId(projectId));
+        model.addAttribute("assumptions", assumptionRepository.findByAnalysisId(projectId));
+        model.addAttribute("losses", lossRepository.findByAnalysisId(projectId));
+        model.addAttribute("hazards", hazardRepository.findByAnalysisId(projectId));
+        model.addAttribute("systemSafetyConstraints", systemSafetyConstraintRepository.findByAnalysisId(projectId));
 
         model.addAttribute("project_id", projectId);
 
         return "projectIndex";
     }
 
+    /*
     @GetMapping("/guests")
     public String guestsProjects(Model model) {
         model.addAttribute("projects", projectRepository.findProjectsForGuests());
         return "guestsProjects";
     }
+    */
 
     @GetMapping("/guests/{projectId}")
     public String guestsProjectIndexPage(@PathVariable UUID projectId, Model model) {
-        model.addAttribute("systemGoals", systemGoalRepository.findByProjectId(projectId.toString()));
-        model.addAttribute("assumptions", assumptionRepository.findByProjectId(projectId.toString()));
-        model.addAttribute("losses", lossRepository.findByProjectId(projectId.toString()));
-        model.addAttribute("hazards", hazardRepository.findByProjectId(projectId.toString()));
-        model.addAttribute("systemSafetyConstraints", systemSafetyConstraintRepository.findByProjectId(projectId.toString()));
+        model.addAttribute("systemGoals", systemGoalRepository.findByAnalysisId(projectId));
+        model.addAttribute("assumptions", assumptionRepository.findByAnalysisId(projectId));
+        model.addAttribute("losses", lossRepository.findByAnalysisId(projectId));
+        model.addAttribute("hazards", hazardRepository.findByAnalysisId(projectId));
+        model.addAttribute("systemSafetyConstraints", systemSafetyConstraintRepository.findByAnalysisId(projectId));
 
         model.addAttribute("project_id", projectId);
 

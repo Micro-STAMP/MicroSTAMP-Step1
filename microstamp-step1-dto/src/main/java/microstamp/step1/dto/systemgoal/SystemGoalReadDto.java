@@ -2,11 +2,13 @@ package microstamp.step1.dto.systemgoal;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.util.UUID;
 
 @Data
+@AllArgsConstructor
 public class SystemGoalReadDto {
 
     @NotNull
@@ -15,8 +17,7 @@ public class SystemGoalReadDto {
     @NotBlank
     private String name;
 
-    public SystemGoalReadDto(UUID id, String name){
-        this.id = id;
-        this.name = name;
-    }
+    @NotBlank
+    private String code;
+
 }

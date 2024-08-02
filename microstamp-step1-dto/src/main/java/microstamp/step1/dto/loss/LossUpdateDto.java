@@ -11,4 +11,7 @@ public class LossUpdateDto {
     @NotBlank
     private String name;
 
+    @NotBlank
+    private String code;
+
 }

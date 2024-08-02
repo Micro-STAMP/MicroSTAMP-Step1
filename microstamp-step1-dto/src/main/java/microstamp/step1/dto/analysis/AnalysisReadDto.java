@@ -1,22 +1,26 @@
-package microstamp.step1.dto.project;
+package microstamp.step1.dto.analysis;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
+import java.time.Instant;
 import java.util.UUID;
 
 @Data
-public class ProjectInsertDto {
+@AllArgsConstructor
+public class AnalysisReadDto {
+
+    @NotNull
+    private UUID id;
 
     @NotBlank
     private String name;
 
     private String description;
 
-    private String url;
-
-    private String type;
+    private Instant creationDate;
 
     @NotNull
     private UUID userId;

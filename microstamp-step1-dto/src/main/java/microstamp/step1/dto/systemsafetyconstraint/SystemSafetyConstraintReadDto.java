@@ -2,6 +2,7 @@ package microstamp.step1.dto.systemsafetyconstraint;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import microstamp.step1.dto.hazard.HazardReadDto;
 
@@ -9,6 +10,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Data
+@AllArgsConstructor
 public class SystemSafetyConstraintReadDto {
 
     @NotNull
@@ -17,11 +19,9 @@ public class SystemSafetyConstraintReadDto {
     @NotBlank
     private String name;
 
+    @NotBlank
+    private String code;
+
     private List<HazardReadDto> hazards;
 
-    public SystemSafetyConstraintReadDto(UUID id, String name, List<HazardReadDto> hazards) {
-        this.id = id;
-        this.name = name;
-        this.hazards = hazards;
-    }
 }

@@ -1,13 +1,12 @@
 package microstamp.step1.repository;
 
-import microstamp.step1.data.Hazard;
+import microstamp.step1.entity.Hazard;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.rmi.server.UID;
 import java.util.List;
 import java.util.UUID;
 
@@ -15,8 +14,7 @@ import java.util.UUID;
 @Repository
 public interface HazardRepository extends JpaRepository<Hazard, UUID> {
 
-    @Query(value = "SELECT * FROM hazards WHERE project_id = ?1", nativeQuery = true)
-    List<Hazard> findByProjectId(String id);
+    List<Hazard> findByAnalysisId(UUID id);
 
     @Query(value = "SELECT * FROM hazards WHERE father_id = ?1", nativeQuery = true)
     List<Hazard> findHazardChildren(String id);

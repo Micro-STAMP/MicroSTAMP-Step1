@@ -1,6 +1,5 @@
 package microstamp.step1.service;
 
-import microstamp.step1.data.SystemSafetyConstraint;
 import microstamp.step1.dto.systemsafetyconstraint.SystemSafetyConstraintInsertDto;
 import microstamp.step1.dto.systemsafetyconstraint.SystemSafetyConstraintReadDto;
 import microstamp.step1.dto.systemsafetyconstraint.SystemSafetyConstraintUpdateDto;
@@ -14,7 +13,7 @@ public interface SystemSafetyConstraintService {
 
     SystemSafetyConstraintReadDto findById(UUID id);
 
-    List<SystemSafetyConstraintReadDto> findByProjectId(UUID id);
+    List<SystemSafetyConstraintReadDto> findByAnalysisId(UUID id);
 
     SystemSafetyConstraintReadDto insert(SystemSafetyConstraintInsertDto systemSafetyConstraintInsertDto);
 

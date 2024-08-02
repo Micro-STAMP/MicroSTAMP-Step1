@@ -13,7 +13,7 @@ public interface LossService {
 
     LossReadDto findById(UUID id);
 
-    List<LossReadDto> findByProjectId(UUID id);
+    List<LossReadDto> findByAnalysisId(UUID id);
 
     LossReadDto insert(LossInsertDto lossInsertDto);
 

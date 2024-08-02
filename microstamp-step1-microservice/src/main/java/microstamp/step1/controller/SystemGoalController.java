@@ -2,13 +2,11 @@ package microstamp.step1.controller;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import microstamp.step1.data.SystemGoal;
 import microstamp.step1.dto.systemgoal.SystemGoalInsertDto;
 import microstamp.step1.dto.systemgoal.SystemGoalReadDto;
 import microstamp.step1.dto.systemgoal.SystemGoalUpdateDto;
 import microstamp.step1.exception.Step1NotFoundException;
 import microstamp.step1.service.SystemGoalService;
-import microstamp.step1.service.impl.SystemGoalServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,8 +34,8 @@ public class SystemGoalController {
     }
 
     @GetMapping("/project/{id}")
-    public ResponseEntity<List<SystemGoalReadDto>> findByProjectId(@PathVariable(name = "id") UUID id) {
-        return new ResponseEntity<>(systemGoalService.findByProjectId(id), HttpStatus.OK);
+    public ResponseEntity<List<SystemGoalReadDto>> findByAnalysisId(@PathVariable(name = "id") UUID id) {
+        return new ResponseEntity<>(systemGoalService.findByAnalysisId(id), HttpStatus.OK);
     }
 
     @PostMapping

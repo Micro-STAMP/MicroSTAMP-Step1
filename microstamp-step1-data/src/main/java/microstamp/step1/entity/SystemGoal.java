@@ -1,7 +1,8 @@
-package microstamp.step1.data;
+package microstamp.step1.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.JdbcTypeCode;
 
 import java.sql.Types;
@@ -10,6 +11,7 @@ import java.util.UUID;
 @Entity(name = "SystemGoal")
 @Table(name = "system_goals")
 @Data
+@NoArgsConstructor
 public class SystemGoal {
 
     @Id
@@ -19,4 +21,14 @@ public class SystemGoal {
 
     private String name;
 
+    private String code;
+
+    @JdbcTypeCode(Types.VARCHAR)
+    private UUID analysisId;
+
+    public SystemGoal(String name, String code, UUID analysisId) {
+        this.name = name;
+        this.code = code;
+        this.analysisId = analysisId;
+    }
 }

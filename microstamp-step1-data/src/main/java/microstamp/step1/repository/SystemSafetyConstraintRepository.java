@@ -1,6 +1,6 @@
 package microstamp.step1.repository;
 
-import microstamp.step1.data.SystemSafetyConstraint;
+import microstamp.step1.entity.SystemSafetyConstraint;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -14,8 +14,7 @@ import java.util.UUID;
 @Repository
 public interface SystemSafetyConstraintRepository extends JpaRepository<SystemSafetyConstraint, UUID> {
 
-    @Query(value = "SELECT * FROM system_safety_constraints WHERE project_id = ?1", nativeQuery = true)
-    List<SystemSafetyConstraint> findByProjectId(String id);
+    List<SystemSafetyConstraint> findByAnalysisId(UUID id);
 
     @Modifying
     @Query(value = "DELETE FROM system_safety_constraint_hazard WHERE system_safety_constraint_id = ?1", nativeQuery = true)

@@ -2,16 +2,16 @@ package microstamp.step1.controller;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import microstamp.step1.data.Assumption;
 import microstamp.step1.dto.assumption.AssumptionInsertDto;
 import microstamp.step1.dto.assumption.AssumptionReadDto;
 import microstamp.step1.dto.assumption.AssumptionUpdateDto;
 import microstamp.step1.exception.Step1NotFoundException;
 import microstamp.step1.service.AssumptionService;
-import microstamp.step1.service.impl.AssumptionServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -36,13 +36,13 @@ public class AssumptionController {
     }
 
     @GetMapping("/project/{id}")
-    public ResponseEntity<List<AssumptionReadDto>> findByProjectId(@PathVariable(name = "id") UUID id) {
-        return new ResponseEntity<>(assumptionService.findByProjectId(id), HttpStatus.OK);
+    public ResponseEntity<List<AssumptionReadDto>> findByAnalysisId(@PathVariable(name = "id") UUID id) {
+        return new ResponseEntity<>(assumptionService.findByAnalysisId(id), HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<AssumptionReadDto> insert(@Valid @RequestBody AssumptionInsertDto assumptionInsertDto) throws Step1NotFoundException {
-        return new ResponseEntity<>(assumptionService.insert(assumptionInsertDto), HttpStatus.CREATED);
+    public ResponseEntity<AssumptionReadDto> insert(@AuthenticationPrincipal Jwt jwt, @Valid @RequestBody AssumptionInsertDto assumptionInsertDto) throws Step1NotFoundException {
+        return new ResponseEntity<>(assumptionService.insert(jwt.getTokenValue(), assumptionInsertDto), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")

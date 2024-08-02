@@ -11,4 +11,6 @@ public class AssumptionUpdateDto {
     @NotBlank
     private String name;
 
+    @NotBlank
+    private String code;
 }
