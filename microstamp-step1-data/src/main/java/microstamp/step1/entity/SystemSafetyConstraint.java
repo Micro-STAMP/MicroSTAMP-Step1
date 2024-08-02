@@ -1,4 +1,4 @@
-package microstamp.step1.data;
+package microstamp.step1.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
@@ -9,11 +9,11 @@ import java.sql.Types;
 import java.util.List;
 import java.util.UUID;
 
-@Entity(name = "Hazard")
-@Table(name = "hazards")
+@Entity(name = "SystemSafetyConstraint")
+@Table(name = "system_safety_constraints")
 @Data
 @NoArgsConstructor
-public class Hazard {
+public class SystemSafetyConstraint {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -22,23 +22,22 @@ public class Hazard {
 
     private String name;
 
+    private String code;
+
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
-            name = "hazard_loss",
-            joinColumns = @JoinColumn(name = "hazard_id"),
-            inverseJoinColumns = @JoinColumn(name = "loss_id")
+            name = "system_safety_constraint_hazard",
+            joinColumns = @JoinColumn(name = "system_safety_constraint_id"),
+            inverseJoinColumns = @JoinColumn(name = "hazard_id")
     )
-    private List<Loss> lossEntities;
-
-    @ManyToOne
-    @JoinColumn(name = "father_id")
-    private Hazard father;
+    private List<Hazard> hazardEntities;
 
     @JdbcTypeCode(Types.VARCHAR)
     private UUID analysisId;
 
-    public Hazard(String name, UUID analysisId) {
+    public SystemSafetyConstraint(String name, String code, UUID analysisId) {
         this.name = name;
+        this.code = code;
         this.analysisId = analysisId;
     }
 }

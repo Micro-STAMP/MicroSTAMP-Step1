@@ -1,6 +1,6 @@
 package microstamp.step1.repository;
 
-import microstamp.step1.data.SystemSafetyConstraint;
+import microstamp.step1.entity.SystemSafetyConstraint;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

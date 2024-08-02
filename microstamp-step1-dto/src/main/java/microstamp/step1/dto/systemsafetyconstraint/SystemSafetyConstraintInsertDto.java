@@ -15,6 +15,9 @@ public class SystemSafetyConstraintInsertDto {
     @NotBlank
     private String name;
 
+    @NotBlank
+    private String code;
+
     @NotNull
     private UUID analysisId;
 

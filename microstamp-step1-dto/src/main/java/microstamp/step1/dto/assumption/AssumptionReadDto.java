@@ -15,6 +15,9 @@ public class AssumptionReadDto {
     private UUID id;
 
     @NotBlank
+    private String code;
+
+    @NotBlank
     private String name;
 
 }

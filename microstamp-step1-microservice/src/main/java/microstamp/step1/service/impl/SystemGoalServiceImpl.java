@@ -1,7 +1,7 @@
 package microstamp.step1.service.impl;
 
 import microstamp.step1.client.MicroStampClient;
-import microstamp.step1.data.SystemGoal;
+import microstamp.step1.entity.SystemGoal;
 import microstamp.step1.dto.systemgoal.SystemGoalInsertDto;
 import microstamp.step1.dto.systemgoal.SystemGoalReadDto;
 import microstamp.step1.dto.systemgoal.SystemGoalUpdateDto;

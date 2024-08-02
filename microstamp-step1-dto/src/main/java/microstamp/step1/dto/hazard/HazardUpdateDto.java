@@ -12,6 +12,9 @@ public class HazardUpdateDto {
     @NotBlank
     private String name;
 
+    @NotBlank
+    private String code;
+
     private List<UUID> lossIds;
 
     private UUID fatherId;

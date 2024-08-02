@@ -1,7 +1,7 @@
 package microstamp.step1.service.impl;
 
 import microstamp.step1.client.MicroStampClient;
-import microstamp.step1.data.Loss;
+import microstamp.step1.entity.Loss;
 import microstamp.step1.dto.loss.LossInsertDto;
 import microstamp.step1.dto.loss.LossReadDto;
 import microstamp.step1.dto.loss.LossUpdateDto;

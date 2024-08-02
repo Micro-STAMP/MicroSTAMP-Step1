@@ -13,6 +13,9 @@ public class SystemSafetyConstraintUpdateDto {
     @NotBlank
     private String name;
 
+    @NotBlank
+    private String code;
+
     private List<UUID> hazardsId;
 
 }

@@ -17,4 +17,7 @@ public class LossReadDto {
     @NotBlank
     private String name;
 
+    @NotBlank
+    private String code;
+
 }

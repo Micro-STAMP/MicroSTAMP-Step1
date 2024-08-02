@@ -1,7 +1,6 @@
 package microstamp.step1.service.impl;
 
-import microstamp.step1.data.Assumption;
-import microstamp.step1.dto.analysis.AnalysisReadDto;
+import microstamp.step1.entity.Assumption;
 import microstamp.step1.dto.assumption.AssumptionInsertDto;
 import microstamp.step1.dto.assumption.AssumptionReadDto;
 import microstamp.step1.dto.assumption.AssumptionUpdateDto;

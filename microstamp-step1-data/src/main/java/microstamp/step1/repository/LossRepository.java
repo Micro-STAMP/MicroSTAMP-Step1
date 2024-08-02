@@ -1,6 +1,6 @@
 package microstamp.step1.repository;
 
-import microstamp.step1.data.Loss;
+import microstamp.step1.entity.Loss;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

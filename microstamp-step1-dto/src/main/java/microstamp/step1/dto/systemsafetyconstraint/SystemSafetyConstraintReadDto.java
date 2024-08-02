@@ -19,6 +19,9 @@ public class SystemSafetyConstraintReadDto {
     @NotBlank
     private String name;
 
+    @NotBlank
+    private String code;
+
     private List<HazardReadDto> hazards;
 
 }

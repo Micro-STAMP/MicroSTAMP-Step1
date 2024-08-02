@@ -1,4 +1,4 @@
-package microstamp.step1.data;
+package microstamp.step1.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
@@ -21,11 +21,14 @@ public class SystemGoal {
 
     private String name;
 
+    private String code;
+
     @JdbcTypeCode(Types.VARCHAR)
     private UUID analysisId;
 
-    public SystemGoal(String name, UUID analysisId) {
+    public SystemGoal(String name, String code, UUID analysisId) {
         this.name = name;
+        this.code = code;
         this.analysisId = analysisId;
     }
 }

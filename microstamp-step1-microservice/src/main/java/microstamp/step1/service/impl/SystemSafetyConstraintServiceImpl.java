@@ -1,8 +1,8 @@
 package microstamp.step1.service.impl;
 
 import microstamp.step1.client.MicroStampClient;
-import microstamp.step1.data.Hazard;
-import microstamp.step1.data.SystemSafetyConstraint;
+import microstamp.step1.entity.Hazard;
+import microstamp.step1.entity.SystemSafetyConstraint;
 import microstamp.step1.dto.systemsafetyconstraint.SystemSafetyConstraintInsertDto;
 import microstamp.step1.dto.systemsafetyconstraint.SystemSafetyConstraintReadDto;
 import microstamp.step1.dto.systemsafetyconstraint.SystemSafetyConstraintUpdateDto;

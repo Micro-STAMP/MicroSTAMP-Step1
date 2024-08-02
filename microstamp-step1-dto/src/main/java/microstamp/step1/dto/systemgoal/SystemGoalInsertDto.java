@@ -14,6 +14,9 @@ public class SystemGoalInsertDto {
     @NotBlank
     private String name;
 
+    @NotBlank
+    private String code;
+
     @NotNull
     private UUID analysisId;
 

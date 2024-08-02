@@ -19,6 +19,9 @@ public class HazardReadDto {
     @NotBlank
     private String name;
 
+    @NotBlank
+    private String code;
+
     private List<LossReadDto> losses;
 
     private HazardReadDto father;

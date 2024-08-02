@@ -11,4 +11,7 @@ public class SystemGoalUpdateDto {
     @NotBlank
     private String name;
 
+    @NotBlank
+    private String code;
+
 }

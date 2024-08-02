@@ -17,4 +17,7 @@ public class SystemGoalReadDto {
     @NotBlank
     private String name;
 
+    @NotBlank
+    private String code;
+
 }
