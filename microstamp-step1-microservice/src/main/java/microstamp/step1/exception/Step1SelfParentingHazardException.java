@@ -6,8 +6,4 @@ public class Step1SelfParentingHazardException extends RuntimeException {
         super("A Hazard can't have itself as its father");
     }
 
-    public Step1SelfParentingHazardException(final String message) {
-        super(message);
-    }
-
 }

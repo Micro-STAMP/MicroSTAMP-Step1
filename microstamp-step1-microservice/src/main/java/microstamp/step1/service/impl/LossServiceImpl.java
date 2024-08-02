@@ -1,5 +1,6 @@
 package microstamp.step1.service.impl;
 
+import microstamp.step1.client.MicroStampClient;
 import microstamp.step1.data.Loss;
 import microstamp.step1.dto.loss.LossInsertDto;
 import microstamp.step1.dto.loss.LossReadDto;
@@ -21,6 +22,9 @@ public class LossServiceImpl implements LossService {
     @Autowired
     private LossRepository lossRepository;
 
+    @Autowired
+    private MicroStampClient microStampClient;
+
     public List<LossReadDto> findAll() {
         return lossRepository.findAll().stream()
                 .map(LossMapper::toDto)
@@ -30,7 +34,7 @@ public class LossServiceImpl implements LossService {
 
     public LossReadDto findById(UUID id) throws Step1NotFoundException {
         return LossMapper.toDto(lossRepository.findById(id)
-                .orElseThrow(() -> new Step1NotFoundException("Loss not found with id: " + id)));
+                .orElseThrow(() -> new Step1NotFoundException("Loss", id.toString())));
     }
 
     public List<LossReadDto> findByAnalysisId(UUID id) {
@@ -41,8 +45,7 @@ public class LossServiceImpl implements LossService {
     }
 
     public LossReadDto insert(LossInsertDto lossInsertDto) throws Step1NotFoundException {
-       //Project project = projectRepository.findById(lossInsertDto.getProjectId())
-       //         .orElseThrow(() -> new Step1NotFoundException("Project not found with id: " + lossInsertDto.getProjectId()));
+        microStampClient.getAnalysisById(lossInsertDto.getAnalysisId());
 
         Loss loss = LossMapper.toEntity(lossInsertDto);
         lossRepository.save(loss);
@@ -52,7 +55,7 @@ public class LossServiceImpl implements LossService {
 
     public void update(UUID id, LossUpdateDto lossUpdateDto) throws Step1NotFoundException {
         Loss loss = lossRepository.findById(id)
-                .orElseThrow(() -> new Step1NotFoundException("Loss not found with id: " + id));
+                .orElseThrow(() -> new Step1NotFoundException("Loss", id.toString()));
 
         loss.setName(lossUpdateDto.getName());
 
@@ -61,7 +64,7 @@ public class LossServiceImpl implements LossService {
 
     public void delete(UUID id) throws Step1NotFoundException {
         Loss loss = lossRepository.findById(id)
-                .orElseThrow(() -> new Step1NotFoundException("Loss not found with id: " + id));
+                .orElseThrow(() -> new Step1NotFoundException("Loss", id.toString()));
         lossRepository.deleteHazardsAssociation(id.toString());
         lossRepository.deleteById(loss.getId());
     }

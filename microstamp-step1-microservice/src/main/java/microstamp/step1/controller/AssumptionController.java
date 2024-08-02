@@ -10,6 +10,8 @@ import microstamp.step1.service.AssumptionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -39,8 +41,8 @@ public class AssumptionController {
     }
 
     @PostMapping
-    public ResponseEntity<AssumptionReadDto> insert(@Valid @RequestBody AssumptionInsertDto assumptionInsertDto) throws Step1NotFoundException {
-        return new ResponseEntity<>(assumptionService.insert(assumptionInsertDto), HttpStatus.CREATED);
+    public ResponseEntity<AssumptionReadDto> insert(@AuthenticationPrincipal Jwt jwt, @Valid @RequestBody AssumptionInsertDto assumptionInsertDto) throws Step1NotFoundException {
+        return new ResponseEntity<>(assumptionService.insert(jwt.getTokenValue(), assumptionInsertDto), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")

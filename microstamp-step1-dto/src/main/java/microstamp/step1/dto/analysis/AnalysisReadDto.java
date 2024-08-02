@@ -12,6 +12,9 @@ import java.util.UUID;
 @AllArgsConstructor
 public class AnalysisReadDto {
 
+    @NotNull
+    private UUID id;
+
     @NotBlank
     private String name;
 

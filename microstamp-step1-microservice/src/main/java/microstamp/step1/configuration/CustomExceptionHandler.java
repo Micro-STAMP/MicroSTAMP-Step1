@@ -1,5 +1,6 @@
 package microstamp.step1.configuration;
 
+import feign.FeignException;
 import microstamp.step1.exception.*;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -31,6 +32,15 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 
         return handleExceptionInternal(ex, errorResponse,
                 new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+    }
+
+    @ExceptionHandler(value = { FeignException.class })
+    protected ResponseEntity<Object> handleFeignException(FeignException ex, WebRequest request) {
+        Step1ErrorResponse errorResponse = new Step1ErrorResponse();
+        HttpStatus httpStatus = HttpStatus.valueOf(ex.status());
+        errorResponse.addError(new Step1Error(ex.getClass().getSimpleName(),httpStatus.name(),ex.getMessage()));
+        return handleExceptionInternal(ex, errorResponse,
+                new HttpHeaders(), httpStatus, request);
     }
 
     @ExceptionHandler(value = { Step1NotFoundException.class })

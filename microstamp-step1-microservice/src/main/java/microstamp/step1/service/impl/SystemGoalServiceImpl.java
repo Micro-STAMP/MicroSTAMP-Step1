@@ -1,5 +1,6 @@
 package microstamp.step1.service.impl;
 
+import microstamp.step1.client.MicroStampClient;
 import microstamp.step1.data.SystemGoal;
 import microstamp.step1.dto.systemgoal.SystemGoalInsertDto;
 import microstamp.step1.dto.systemgoal.SystemGoalReadDto;
@@ -21,6 +22,9 @@ public class SystemGoalServiceImpl implements SystemGoalService {
     @Autowired
     private SystemGoalRepository systemGoalRepository;
 
+    @Autowired
+    private MicroStampClient microStampClient;
+
     public List<SystemGoalReadDto> findAll() {
         return systemGoalRepository.findAll().stream()
                 .map(SystemGoalMapper::toDto)
@@ -30,7 +34,7 @@ public class SystemGoalServiceImpl implements SystemGoalService {
 
     public SystemGoalReadDto findById(UUID id) throws Step1NotFoundException {
         return SystemGoalMapper.toDto(systemGoalRepository.findById(id)
-                .orElseThrow(() -> new Step1NotFoundException("SystemGoal not found with id: " + id)));
+                .orElseThrow(() -> new Step1NotFoundException("SystemGoal", id.toString())));
     }
 
     public List<SystemGoalReadDto> findByAnalysisId(UUID id) {
@@ -41,8 +45,7 @@ public class SystemGoalServiceImpl implements SystemGoalService {
     }
 
     public SystemGoalReadDto insert(SystemGoalInsertDto systemGoalInsertDto) throws Step1NotFoundException {
-        //Project project = projectRepository.findById(systemGoalInsertDto.getProjectId())
-        //        .orElseThrow(() -> new Step1NotFoundException("Project not found with id: " + systemGoalInsertDto.getProjectId()));
+        microStampClient.getAnalysisById(systemGoalInsertDto.getAnalysisId());
 
         SystemGoal systemGoal = SystemGoalMapper.toEntity(systemGoalInsertDto);
         systemGoalRepository.save(systemGoal);
@@ -52,7 +55,7 @@ public class SystemGoalServiceImpl implements SystemGoalService {
 
     public void update(UUID id, SystemGoalUpdateDto systemGoalUpdateDto) throws Step1NotFoundException {
         SystemGoal systemGoal = systemGoalRepository.findById(id)
-                .orElseThrow(() -> new Step1NotFoundException("SystemGoal not found with id: " + id));
+                .orElseThrow(() -> new Step1NotFoundException("SystemGoal", id.toString()));
 
         systemGoal.setName(systemGoalUpdateDto.getName());
 
@@ -61,7 +64,7 @@ public class SystemGoalServiceImpl implements SystemGoalService {
 
     public void delete(UUID id) throws Step1NotFoundException {
         SystemGoal systemGoal = systemGoalRepository.findById(id)
-                .orElseThrow(() -> new Step1NotFoundException("SystemGoal not found with id: " + id));
+                .orElseThrow(() -> new Step1NotFoundException("SystemGoal", id.toString()));
         systemGoalRepository.deleteById(systemGoal.getId());
     }
 }

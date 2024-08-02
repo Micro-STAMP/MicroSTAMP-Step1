@@ -6,8 +6,4 @@ public class Step1OrphanException extends RuntimeException {
         super("A Hazard can't be child of his child");
     }
 
-    public Step1OrphanException(final String message) {
-        super(message);
-    }
-
 }
