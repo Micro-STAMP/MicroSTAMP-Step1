@@ -3,8 +3,6 @@ package microstamp.step1.dto.assumption;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
-import java.util.UUID;
-
 @Getter
 @Setter
 @Builder
