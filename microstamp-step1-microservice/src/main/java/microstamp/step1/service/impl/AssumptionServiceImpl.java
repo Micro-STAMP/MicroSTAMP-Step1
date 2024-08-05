@@ -51,9 +51,9 @@ public class AssumptionServiceImpl implements AssumptionService {
     }
 
     public AssumptionReadDto insert(String jwt, AssumptionInsertDto assumptionInsertDto) throws Step1NotFoundException {
-        log.debug("Verifying if the assumption is valid");
+        log.debug("Verifying if the assumption insert is valid");
         if (Objects.isNull(assumptionInsertDto)) {
-            throw new Step1IllegalArgumentException("Unable to create a new assumption because the AssumptionInsertDto is null.");
+            throw new Step1IllegalArgumentException("Unable to create a new assumption because the provided AssumptionInsertDto is null.");
         }
 
         log.info("Verifying if the analysis exists on the database");
@@ -67,6 +67,11 @@ public class AssumptionServiceImpl implements AssumptionService {
     }
 
     public void update(UUID id, AssumptionUpdateDto assumptionUpdateDto) throws Step1NotFoundException {
+        log.debug("Verifying if the assumption update is valid");
+        if (Objects.isNull(assumptionUpdateDto)) {
+            throw new Step1IllegalArgumentException("Unable to update the assumption because the provided AssumptionUpdateDto is null.");
+        }
+
         log.debug("Finding if there is an assumption with id {} to update", id);
         Assumption assumption = assumptionRepository.findById(id)
                 .orElseThrow(() -> new Step1NotFoundException("Assumption", id.toString()));

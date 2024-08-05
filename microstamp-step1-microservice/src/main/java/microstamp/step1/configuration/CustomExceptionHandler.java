@@ -66,4 +66,12 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
         return handleExceptionInternal(ex, errorResponse,
                 new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
+
+    @ExceptionHandler(value = { Step1IllegalArgumentException.class })
+    protected ResponseEntity<Object> handleStep1IllegalArgumentException(Step1IllegalArgumentException ex, WebRequest request) {
+        Step1ErrorResponse errorResponse = new Step1ErrorResponse();
+        errorResponse.addError(new Step1Error(ex.getClass().getSimpleName(),"IllegalArgumentException",ex.getMessage()));
+        return handleExceptionInternal(ex, errorResponse,
+                new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+    }
 }
