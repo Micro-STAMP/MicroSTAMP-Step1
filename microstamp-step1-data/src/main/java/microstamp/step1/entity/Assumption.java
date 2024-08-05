@@ -1,18 +1,22 @@
 package microstamp.step1.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.JdbcTypeCode;
 
+import java.io.Serializable;
 import java.sql.Types;
 import java.util.UUID;
 
-@Entity(name = "Assumption")
-@Table(name = "assumptions")
-@Data
+@Getter
+@Setter
+@Builder
+@ToString
 @NoArgsConstructor
-public class Assumption {
+@AllArgsConstructor
+@Table(name = "assumptions")
+@Entity(name = "Assumption")
+public class Assumption implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -25,10 +29,5 @@ public class Assumption {
 
     @JdbcTypeCode(Types.VARCHAR)
     private UUID analysisId;
-
-    public Assumption(String name, String code, UUID analysisId) {
-        this.name = name;
-        this.code = code;
-        this.analysisId = analysisId;
-    }
+    
 }
