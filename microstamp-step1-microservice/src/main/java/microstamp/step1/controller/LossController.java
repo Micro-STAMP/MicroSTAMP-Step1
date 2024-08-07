@@ -33,7 +33,7 @@ public class LossController {
         return new ResponseEntity<>(lossService.findById(id), HttpStatus.OK);
     }
 
-    @GetMapping("/project/{id}")
+    @GetMapping("/analysis/{id}")
     public ResponseEntity<List<LossReadDto>> findByAnalysisId(@PathVariable(name = "id") UUID id) {
         return new ResponseEntity<>(lossService.findByAnalysisId(id), HttpStatus.OK);
     }

@@ -44,7 +44,7 @@ public class AssumptionServiceImpl implements AssumptionService {
                 .toList();
     }
 
-    public AssumptionReadDto insert(String jwt, AssumptionInsertDto assumptionInsertDto) throws Step1NotFoundException {
+    public AssumptionReadDto insert(AssumptionInsertDto assumptionInsertDto) throws Step1NotFoundException {
         microStampClient.getAnalysisById(assumptionInsertDto.getAnalysisId());
 
         Assumption assumption = AssumptionMapper.toEntity(assumptionInsertDto);

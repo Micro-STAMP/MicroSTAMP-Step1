@@ -33,7 +33,7 @@ public class SystemSafetyConstraintController {
         return new ResponseEntity<>(systemSafetyConstraintService.findById(id), HttpStatus.OK);
     }
 
-    @GetMapping("/project/{id}")
+    @GetMapping("/analysis/{id}")
     public ResponseEntity<List<SystemSafetyConstraintReadDto>> findByAnalysisId(@PathVariable(name = "id") UUID id) {
         return new ResponseEntity<>(systemSafetyConstraintService.findByAnalysisId(id), HttpStatus.OK);
     }
