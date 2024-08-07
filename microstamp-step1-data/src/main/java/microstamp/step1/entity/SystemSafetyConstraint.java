@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Entity(name = "SystemSafetyConstraint")
-@Table(name = "system_safety_constraints")
+@Table(name = "system_safety_constraints", uniqueConstraints = { @UniqueConstraint(columnNames = { "code", "analysis_id" }) })
 @Data
 @NoArgsConstructor
 public class SystemSafetyConstraint {
