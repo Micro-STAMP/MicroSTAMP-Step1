@@ -1,11 +1,14 @@
 package microstamp.step1.dto.loss;
 
 import jakarta.validation.constraints.NotBlank;
-import lombok.Data;
+import lombok.*;
 
-import java.util.UUID;
-
-@Data
+@Getter
+@Setter
+@Builder
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
 public class LossUpdateDto {
 
     @NotBlank

@@ -7,14 +7,18 @@ import microstamp.step1.dto.assumption.AssumptionReadDto;
 public class AssumptionMapper {
 
     public static AssumptionReadDto toDto(Assumption assumption){
-        return new AssumptionReadDto(assumption.getId(),
-                assumption.getName(),
-                assumption.getCode());
+        return AssumptionReadDto.builder()
+                .id(assumption.getId())
+                .name(assumption.getName())
+                .code(assumption.getCode())
+                .build();
     }
 
     public static Assumption toEntity(AssumptionInsertDto assumptionInsertDto){
-        return new Assumption(assumptionInsertDto.getName(),
-                assumptionInsertDto.getCode(),
-                assumptionInsertDto.getAnalysisId());
+        return Assumption.builder()
+                .name(assumptionInsertDto.getName())
+                .code(assumptionInsertDto.getCode())
+                .analysisId(assumptionInsertDto.getAnalysisId())
+                .build();
     }
 }
