@@ -1,20 +1,24 @@
 package microstamp.step1.mapper;
 
-import microstamp.step1.entity.Loss;
 import microstamp.step1.dto.loss.LossInsertDto;
 import microstamp.step1.dto.loss.LossReadDto;
+import microstamp.step1.entity.Loss;
 
 public class LossMapper {
 
     public static LossReadDto toDto(Loss loss){
-        return new LossReadDto(loss.getId(),
-                loss.getName(),
-                loss.getCode());
+        return LossReadDto.builder()
+                .id(loss.getId())
+                .name(loss.getName())
+                .code(loss.getCode())
+                .build();
     }
 
     public static Loss toEntity(LossInsertDto lossInsertDto){
-        return new Loss(lossInsertDto.getName(),
-                lossInsertDto.getCode(),
-                lossInsertDto.getAnalysisId());
+        return Loss.builder()
+                .name(lossInsertDto.getName())
+                .code(lossInsertDto.getCode())
+                .analysisId(lossInsertDto.getAnalysisId())
+                .build();
     }
 }

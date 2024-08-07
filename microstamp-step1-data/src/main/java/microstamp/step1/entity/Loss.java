@@ -1,17 +1,21 @@
 package microstamp.step1.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.JdbcTypeCode;
 
 import java.sql.Types;
 import java.util.UUID;
 
+
+@Getter
+@Setter
+@Builder
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity(name = "Loss")
 @Table(name = "losses")
-@Data
-@NoArgsConstructor
 public class Loss {
 
     @Id
@@ -26,9 +30,4 @@ public class Loss {
     @JdbcTypeCode(Types.VARCHAR)
     private UUID analysisId;
 
-    public Loss(String name, String code, UUID analysisId) {
-        this.name = name;
-        this.code = code;
-        this.analysisId = analysisId;
-    }
 }
