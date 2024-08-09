@@ -33,7 +33,7 @@ public class HazardController {
         return new ResponseEntity<>(hazardService.findById(id), HttpStatus.OK);
     }
 
-    @GetMapping("/project/{id}")
+    @GetMapping("/analysis/{id}")
     public ResponseEntity<List<HazardReadDto>> findByAnalysisId(@PathVariable(name = "id") UUID id) {
         return new ResponseEntity<>(hazardService.findByAnalysisId(id), HttpStatus.OK);
     }

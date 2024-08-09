@@ -9,7 +9,7 @@ import java.sql.Types;
 import java.util.UUID;
 
 @Entity(name = "SystemGoal")
-@Table(name = "system_goals")
+@Table(name = "system_goals", uniqueConstraints = { @UniqueConstraint(columnNames = { "code", "analysis_id" }) })
 @Data
 @NoArgsConstructor
 public class SystemGoal {

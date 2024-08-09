@@ -9,7 +9,7 @@ import java.sql.Types;
 import java.util.UUID;
 
 @Entity(name = "Loss")
-@Table(name = "losses")
+@Table(name = "losses", uniqueConstraints = { @UniqueConstraint(columnNames = { "code", "analysis_id" }) })
 @Data
 @NoArgsConstructor
 public class Loss {
