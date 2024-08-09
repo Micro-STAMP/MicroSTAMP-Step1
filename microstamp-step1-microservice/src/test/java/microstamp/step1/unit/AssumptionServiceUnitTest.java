@@ -125,11 +125,7 @@ public class AssumptionServiceUnitTest {
     @Test
     @DisplayName("#insert > When the input is invalid > Throw an exception")
     void insertWhenTheInputIsInvalidThrowAnException() {
-        assertAll(
-                () -> assertThrows(Step1IllegalArgumentException.class, () -> service.insert(null, null)),
-                () -> assertThrows(Step1IllegalArgumentException.class, () -> service.insert("", null)),
-                () -> assertThrows(Step1IllegalArgumentException.class, () -> service.insert("jwt", null))
-        );
+        assertThrows(Step1IllegalArgumentException.class, () -> service.insert(null));
     }
 
     @Test
@@ -140,7 +136,7 @@ public class AssumptionServiceUnitTest {
         when(microStampClient.getAnalysisById(mockAssumptionInsertDto.getAnalysisId())).thenReturn(null);
         when(assumptionRepository.save(any(Assumption.class))).thenAnswer(answer -> answer.getArguments()[0]);
 
-        AssumptionReadDto response = service.insert("jwt", mockAssumptionInsertDto);
+        AssumptionReadDto response = service.insert(mockAssumptionInsertDto);
         assertAll(
                 () -> assertEquals(mockAssumptionInsertDto.getName(), response.getName()),
                 () -> assertEquals(mockAssumptionInsertDto.getCode(), response.getCode())
