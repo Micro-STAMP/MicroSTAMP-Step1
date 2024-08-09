@@ -3,8 +3,6 @@ package microstamp.step1.service;
 import microstamp.step1.dto.assumption.AssumptionInsertDto;
 import microstamp.step1.dto.assumption.AssumptionReadDto;
 import microstamp.step1.dto.assumption.AssumptionUpdateDto;
-import microstamp.step1.exception.Step1NotFoundException;
-import org.springframework.security.oauth2.jwt.Jwt;
 
 import java.util.List;
 import java.util.UUID;
@@ -36,11 +34,10 @@ public interface AssumptionService {
     /**
      * Create a new record of the analysis
      *
-     * @param jwt The JWT containing the web token of the request
      * @param assumptionInsertDto The information of the new assumption
      * @return AssumptionReadDto containing the information of the created assumption
      */
-    AssumptionReadDto insert(String jwt, AssumptionInsertDto assumptionInsertDto);
+    AssumptionReadDto insert(AssumptionInsertDto assumptionInsertDto);
 
     /**
      * Updates the name of a provided assumption

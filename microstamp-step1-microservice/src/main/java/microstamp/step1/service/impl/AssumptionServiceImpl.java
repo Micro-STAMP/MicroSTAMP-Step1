@@ -50,7 +50,7 @@ public class AssumptionServiceImpl implements AssumptionService {
                 .toList();
     }
 
-    public AssumptionReadDto insert(String jwt, AssumptionInsertDto assumptionInsertDto) throws Step1NotFoundException {
+    public AssumptionReadDto insert(AssumptionInsertDto assumptionInsertDto) throws Step1NotFoundException {
         log.debug("Verifying if the assumption insert is valid");
         if (Objects.isNull(assumptionInsertDto)) {
             throw new Step1IllegalArgumentException("Unable to create a new assumption because the provided AssumptionInsertDto is null.");

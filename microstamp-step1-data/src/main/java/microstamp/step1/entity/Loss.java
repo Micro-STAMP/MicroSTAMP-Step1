@@ -15,7 +15,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity(name = "Loss")
-@Table(name = "losses")
+@Table(name = "losses", uniqueConstraints = { @UniqueConstraint(columnNames = { "code", "analysis_id" }) })
 public class Loss {
 
     @Id

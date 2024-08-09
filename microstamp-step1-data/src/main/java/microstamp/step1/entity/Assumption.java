@@ -14,8 +14,8 @@ import java.util.UUID;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "assumptions")
 @Entity(name = "Assumption")
+@Table(name = "assumptions", uniqueConstraints = { @UniqueConstraint(columnNames = { "code", "analysis_id" }) })
 public class Assumption implements Serializable {
 
     @Id
