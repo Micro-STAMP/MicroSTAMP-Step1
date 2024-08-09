@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import java.sql.SQLIntegrityConstraintViolationException;
+
 @ControllerAdvice
 public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 
@@ -41,6 +43,17 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
         errorResponse.addError(new Step1Error(ex.getClass().getSimpleName(),httpStatus.name(),ex.getMessage()));
         return handleExceptionInternal(ex, errorResponse,
                 new HttpHeaders(), httpStatus, request);
+    }
+
+    @ExceptionHandler(value = { SQLIntegrityConstraintViolationException.class })
+    protected ResponseEntity<Object> handleSQLIntegrityConstraintViolationException(SQLIntegrityConstraintViolationException ex, WebRequest request) {
+        Step1ErrorResponse errorResponse = new Step1ErrorResponse();
+        if(ex.getMessage().contains("Duplicate entry"))
+            errorResponse.addError(new Step1Error("Step1DuplicatedCodeException","DuplicatedCode", "Two artifacts of the same type cannot have the same code"));
+        else
+            errorResponse.addError(new Step1Error(ex.getClass().getSimpleName(),"SQLIntegrityConstraintViolation",ex.getCause().getMessage()));
+        return handleExceptionInternal(ex, errorResponse,
+                new HttpHeaders(), HttpStatus.CONFLICT, request);
     }
 
     @ExceptionHandler(value = { Step1NotFoundException.class })
